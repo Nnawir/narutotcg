@@ -43,7 +43,6 @@ const isActive = (href: string) => pathname === href || pathname.startsWith(href
 
   <div class="global-search">
     <form class="shell" action="/search/" method="get" role="search">
-      <label for="global-search">Search cards or guides</label>
       <div class="search-control">
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <circle cx="11" cy="11" r="6.5"></circle>
@@ -53,6 +52,7 @@ const isActive = (href: string) => pathname === href || pathname.startsWith(href
           id="global-search"
           name="q"
           type="search"
+          aria-label="Search cards or guides"
           placeholder="Search cards or guides"
           autocomplete="off"
         />
