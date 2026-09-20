@@ -1,0 +1,60 @@
+---
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import '../styles/global.css';
+
+type Props = {
+  title: string;
+  description: string;
+  noindex?: boolean;
+  fullTitle?: boolean;
+  canonicalPath?: string;
+  structuredData?: Record<string, unknown> | Array<Record<string, unknown>>;
+};
+
+const {
+  title,
+  description,
+  noindex = false,
+  fullTitle = false,
+  canonicalPath = Astro.url.pathname,
+  structuredData,
+} = Astro.props;
+const metaTitle = fullTitle ? title : `${title} | NINJA TCG`;
+const robots = noindex ? 'noindex, follow' : 'index, follow';
+const canonicalUrl = new URL(canonicalPath, Astro.site ?? Astro.url.origin).toString();
+---
+
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="theme-color" content="#0A0A0D" />
+    <meta name="description" content={description} />
+    <meta name="robots" content={robots} />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{metaTitle}</title>
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="NINJA TCG" />
+    <meta property="og:title" content={metaTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={metaTitle} />
+    <meta name="twitter:description" content={description} />
+    {structuredData && <script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>}
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">
+      Skip to content
+    </a>
+    <Header />
+    <main id="main-content">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

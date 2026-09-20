@@ -1,0 +1,172 @@
+---
+import BaseLayout from '../../../components/BaseLayout.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import GuideCard from '../../../components/GuideCard.astro';
+import NewsCard from '../../../components/NewsCard.astro';
+import type { Card } from '../../../data/content';
+import { cards, guides, news, sets } from '../../../data/content';
+import { formatDate } from '../../../lib/format';
+
+export function getStaticPaths() {
+  return cards.map((card) => ({
+    params: { extension: card.setCode.toLowerCase(), cardId: card.slug },
+    props: { card },
+  }));
+}
+
+const { card } = Astro.props as { card: Card };
+const relatedNews = news.filter((article) => card.relatedNewsSlugs.includes(article.slug));
+const relatedGuides = guides.filter((guide) => card.relatedGuideSlugs.includes(guide.slug));
+const cardSet = sets.find((set) => set.code === card.setCode);
+const setPath = `/sets/${cardSet?.slug ?? card.setCode.toLowerCase()}/`;
+const siteOrigin = Astro.site ?? Astro.url.origin;
+const absoluteUrl = (path: string) => new URL(path, siteOrigin).toString();
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Naruto Card List',
+      item: absoluteUrl('/cards-list/'),
+    },
+    { '@type': 'ListItem', position: 3, name: card.setCode, item: absoluteUrl(setPath) },
+    {
+      '@type': 'ListItem',
+      position: 4,
+      name: card.name,
+      item: absoluteUrl(`/cards-list/${card.setCode.toLowerCase()}/${card.slug}/`),
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title={`${card.name} (${card.id})`}
+  description={`Confirmed card information for ${card.name}, ${card.id}, from ${card.setName}.`}
+  canonicalPath={`/cards-list/${card.setCode.toLowerCase()}/${card.slug}/`}
+  structuredData={structuredData}
+>
+  <div class="shell">
+    <Breadcrumbs
+      items={[
+        { label: 'Home', href: '/' },
+        { label: 'Naruto Card List', href: '/cards-list/' },
+        { label: card.setCode, href: setPath },
+        { label: card.name },
+      ]}
+    />
+
+    <article class="card-detail-grid">
+      <div class="card-detail-image">
+        <img
+          src={card.image.src}
+          alt={card.image.alt || `${card.name} card`}
+          width={card.image.width}
+          height={card.image.height}
+          decoding="async"
+        />
+      </div>
+      <div>
+        <header class="detail-header">
+          <p class="eyebrow">
+            {card.setCode} · {card.setName}
+          </p>
+          <h1>{card.name}</h1>
+          <p class="detail-id">{card.id}</p>
+        </header>
+
+        <dl class="detail-list">
+          <div>
+            <dt>Card identifier</dt>
+            <dd>{card.id}</dd>
+          </div>
+          <div>
+            <dt>Set</dt>
+            <dd>
+              <a href={setPath}>
+                {card.setCode} · {card.setName}
+              </a>
+            </dd>
+          </div>
+          {card.confirmedFields.map((field) => (
+            <div>
+              <dt>{field.label}</dt>
+              <dd>{field.value}</dd>
+            </div>
+          ))}
+          {card.revealedAt && (
+            <div>
+              <dt>Reveal date</dt>
+              <dd>
+                <time datetime={card.revealedAt}>{formatDate(card.revealedAt)}</time>
+              </dd>
+            </div>
+          )}
+          <div>
+            <dt>Last verified</dt>
+            <dd>
+              <time datetime={card.updatedAt}>{formatDate(card.updatedAt)}</time>
+            </dd>
+          </div>
+          <div>
+            <dt>Official source</dt>
+            <dd>
+              <a class="external-link" href={card.sourceUrl} target="_blank" rel="noopener noreferrer">
+                {card.sourceLabel}
+                <span class="visually-hidden"> (opens in a new tab)</span>
+              </a>
+            </dd>
+          </div>
+        </dl>
+
+        {card.printings.length > 0 && (
+          <section class="related-section" aria-labelledby="printings-title">
+            <h2 id="printings-title">Printings and artwork variants</h2>
+            <div class="variant-grid">
+              {card.printings.map((printing) => (
+                <article class="empty-state">
+                  {printing.image && (
+                    <img
+                      src={printing.image.src}
+                      alt={printing.image.alt}
+                      width={printing.image.width}
+                      height={printing.image.height}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  )}
+                  <h3>{printing.label}</h3>
+                  <p>{printing.id}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
+      </div>
+    </article>
+
+    {relatedNews.length > 0 && (
+      <section class="related-section section" aria-labelledby="card-news-title">
+        <h2 id="card-news-title">Related news</h2>
+        <div class="news-grid">
+          {relatedNews.map((article) => (
+            <NewsCard article={article} />
+          ))}
+        </div>
+      </section>
+    )}
+    {relatedGuides.length > 0 && (
+      <section class="related-section section" aria-labelledby="card-guides-title">
+        <h2 id="card-guides-title">Related guides</h2>
+        <div class="guide-grid">
+          {relatedGuides.map((guide) => (
+            <GuideCard guide={guide} />
+          ))}
+        </div>
+      </section>
+    )}
+  </div>
+</BaseLayout>

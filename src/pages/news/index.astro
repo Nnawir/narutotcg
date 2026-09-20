@@ -1,0 +1,123 @@
+---
+import BaseLayout from '../../components/BaseLayout.astro';
+import EmptyState from '../../components/EmptyState.astro';
+import NewsCard from '../../components/NewsCard.astro';
+import { news, newsCategories } from '../../data/content';
+
+const sortedNews = [...news].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+const featured = sortedNews.find((article) => article.featured) ?? sortedNews[0];
+const gridArticles = sortedNews.filter((article) => article.slug !== featured?.slug);
+const categoryCounts = Object.fromEntries(
+  newsCategories.map((category) => [
+    category,
+    gridArticles.filter((article) => article.category === category).length,
+  ]),
+);
+---
+
+<BaseLayout
+  title="News"
+  description="Confirmed NARUTO CARD GAME announcements, card reveals, products, events, and rules coverage."
+  canonicalPath="/news/"
+  noindex={news.length === 0}
+>
+  <header class="page-hero shell">
+    <p class="eyebrow">Verified reporting</p>
+    <h1>News</h1>
+    <p>
+      Official announcements and carefully labeled context for the NARUTO CARD GAME. No rumors, no invented
+      updates.
+    </p>
+  </header>
+
+  <div class="shell">
+    {featured ? (
+      <section class="news-index-feature" aria-labelledby="featured-news-title">
+        <h2 id="featured-news-title" class="eyebrow">
+          Featured
+        </h2>
+        <NewsCard article={featured} featured />
+      </section>
+    ) : (
+      <EmptyState
+        eyebrow="Newsroom ready"
+        title="No confirmed news has been published"
+        message="This page will begin reporting when official announcements and source-backed updates are available."
+      />
+    )}
+  </div>
+
+  <section class="section shell" aria-labelledby="all-news-title">
+    <div class="filter-region">
+      <div class="filter-toolbar">
+        <h2 id="all-news-title">All reporting</h2>
+        <div class="filter-chips" role="group" aria-label="Filter news by category">
+          <button class="filter-chip" type="button" data-news-filter="All" aria-pressed="true">
+            All <span>({gridArticles.length})</span>
+          </button>
+          {newsCategories.map((category) => (
+            <button
+              class="filter-chip"
+              type="button"
+              data-news-filter={category}
+              aria-pressed="false"
+              disabled={categoryCounts[category] === 0}
+            >
+              {category} <span>({categoryCounts[category]})</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    {gridArticles.length > 0 ? (
+      <>
+        <p class="sr-status" id="news-filter-status" aria-live="polite">
+          Showing {gridArticles.length} articles
+        </p>
+        <div class="news-grid" id="news-grid">
+          {gridArticles.map((article) => (
+            <NewsCard article={article} />
+          ))}
+        </div>
+        <div id="news-no-results" hidden>
+          <EmptyState
+            title="No articles match this filter"
+            message="Choose another category to see available reporting."
+          />
+        </div>
+      </>
+    ) : (
+      <EmptyState
+        title="The article archive is empty"
+        message="Confirmed stories will appear here in reverse chronological order."
+      />
+    )}
+  </section>
+</BaseLayout>
+
+<script>
+  const filterButtons = [...document.querySelectorAll('[data-news-filter]')];
+  const articleCards = [...document.querySelectorAll('#news-grid [data-news-card]')];
+  const status = document.querySelector('#news-filter-status');
+  const noResults = document.querySelector('#news-no-results');
+
+  filterButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      if (!(button instanceof HTMLButtonElement)) return;
+      const selected = button.dataset.newsFilter ?? 'All';
+      filterButtons.forEach((candidate) =>
+        candidate.setAttribute('aria-pressed', String(candidate === button)),
+      );
+      let visible = 0;
+      articleCards.forEach((card) => {
+        const show = selected === 'All' || card.getAttribute('data-category') === selected;
+        card.toggleAttribute('hidden', !show);
+        if (show) visible += 1;
+      });
+      if (status)
+        status.textContent = `Showing ${visible} ${visible === 1 ? 'article' : 'articles'} in ${selected}`;
+      if (noResults instanceof HTMLElement) noResults.hidden = visible > 0;
+    });
+  });
+</script>

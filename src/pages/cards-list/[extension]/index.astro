@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../../../components/BaseLayout.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import CardTile from '../../../components/CardTile.astro';
+import type { CardSet } from '../../../data/content';
+import { cards, sets } from '../../../data/content';
+
+export function getStaticPaths() {
+  return sets.map((set) => ({ params: { extension: set.slug }, props: { set } }));
+}
+
+const { set } = Astro.props as { set: CardSet };
+const setCards = cards.filter((card) => set.cardIds.includes(card.id));
+---
+
+<BaseLayout
+  title={`${set.code} Card List`}
+  description={`Browse confirmed cards from ${set.name} (${set.code}).`}
+  canonicalPath={`/cards-list/${set.slug}/`}
+  noindex
+>
+  <div class="shell">
+    <Breadcrumbs
+      items={[
+        { label: 'Home', href: '/' },
+        { label: 'Naruto Card List', href: '/cards-list/' },
+        { label: set.code },
+      ]}
+    />
+    <header class="page-hero">
+      <p class="eyebrow">Filtered card list</p>
+      <h1>
+        {set.code} · {set.name}
+      </h1>
+      <p>
+        {setCards.length} currently revealed {setCards.length === 1 ? 'card' : 'cards'}.
+      </p>
+    </header>
+    <section class="section" aria-labelledby="set-cards-title">
+      <h2 id="set-cards-title" class="visually-hidden">
+        Cards in {set.name}
+      </h2>
+      <div class="card-grid">
+        {setCards.map((card) => (
+          <CardTile card={card} />
+        ))}
+      </div>
+    </section>
+  </div>
+</BaseLayout>

@@ -1,0 +1,152 @@
+---
+import BaseLayout from '../../components/BaseLayout.astro';
+import CardTile from '../../components/CardTile.astro';
+import EmptyState from '../../components/EmptyState.astro';
+import { cards } from '../../data/content';
+
+const availableSets = [...new Map(cards.map((card) => [card.setCode, card.setName])).entries()]
+  .map(([code, name]) => ({ code, name }))
+  .sort((a, b) => a.code.localeCompare(b.code));
+---
+
+<BaseLayout
+  title="Naruto Card List"
+  description="Browse confirmed NARUTO CARD GAME cards by name, identifier, and set. Every record links back to its official source."
+  canonicalPath="/cards-list/"
+  noindex={cards.length === 0}
+>
+  <header class="page-hero shell">
+    <p class="eyebrow">Verified card archive</p>
+    <h1>Naruto Card List</h1>
+    <p>
+      Search revealed cards by name or identifier. Only officially confirmed card information is included.
+    </p>
+  </header>
+
+  <section class="shell section" aria-labelledby="card-search-title">
+    <h2 id="card-search-title" class="visually-hidden">
+      Search and filter cards
+    </h2>
+    <div class="card-search-panel">
+      <div>
+        <label class="field-label" for="card-search">
+          Search cards
+        </label>
+        <div class="input-wrap">
+          <input
+            id="card-search"
+            type="search"
+            placeholder="Search by card name or identifier"
+            autocomplete="off"
+          />
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="11" cy="11" r="6.5"></circle>
+            <path d="m16 16 4 4"></path>
+          </svg>
+        </div>
+      </div>
+      {availableSets.length > 0 && (
+        <div>
+          <label class="field-label" for="set-filter">
+            Set
+          </label>
+          <select class="filter-select" id="set-filter">
+            <option value="">All sets</option>
+            {availableSets.map((set) => (
+              <option value={set.code}>
+                {set.code} · {set.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+    </div>
+
+    <div class="results-bar">
+      <p id="card-result-count" aria-live="polite">
+        <strong>{cards.length}</strong> {cards.length === 1 ? 'card' : 'cards'}
+      </p>
+      <button class="reset-button" id="card-reset" type="button" hidden>
+        Reset search and filters
+      </button>
+    </div>
+    <div class="active-filters" id="active-filters" aria-label="Active filters"></div>
+
+    {cards.length > 0 ? (
+      <>
+        <div class="card-grid" id="card-results">
+          {cards.map((card, index) => (
+            <CardTile card={card} eager={index < 4} />
+          ))}
+        </div>
+        <div id="card-no-results" hidden>
+          <EmptyState
+            title="No cards match your search"
+            message="Try a different name, identifier, or set—or reset the filters."
+          />
+        </div>
+      </>
+    ) : (
+      <EmptyState
+        eyebrow="Archive ready"
+        title="No verified cards are available yet"
+        message="Card records will be added after official images, identifiers, and set information can be confirmed."
+      />
+    )}
+  </section>
+</BaseLayout>
+
+<script>
+  const searchInput = document.querySelector('#card-search');
+  const setSelect = document.querySelector('#set-filter');
+  const items = [...document.querySelectorAll('#card-results [data-card-item]')];
+  const count = document.querySelector('#card-result-count');
+  const reset = document.querySelector('#card-reset');
+  const indicators = document.querySelector('#active-filters');
+  const noResults = document.querySelector('#card-no-results');
+
+  const updateIndicators = (query: string, selectedSet: string) => {
+    if (!(indicators instanceof HTMLElement)) return;
+    indicators.replaceChildren();
+    const values = [query && `Search: ${query}`, selectedSet && `Set: ${selectedSet}`].filter(Boolean);
+    values.forEach((value) => {
+      const tag = document.createElement('span');
+      tag.className = 'filter-indicator';
+      tag.textContent = value;
+      indicators.append(tag);
+    });
+  };
+
+  const applyFilters = () => {
+    const query = searchInput instanceof HTMLInputElement ? searchInput.value.trim().toLowerCase() : '';
+    const selectedSet = setSelect instanceof HTMLSelectElement ? setSelect.value : '';
+    let visible = 0;
+    items.forEach((item) => {
+      const searchable = `${item.getAttribute('data-name')} ${item.getAttribute('data-id')}`;
+      const matchesQuery = !query || searchable.includes(query);
+      const matchesSet = !selectedSet || item.getAttribute('data-set') === selectedSet;
+      const show = matchesQuery && matchesSet;
+      item.toggleAttribute('hidden', !show);
+      if (show) visible += 1;
+    });
+    if (count) count.innerHTML = `<strong>${visible}</strong> ${visible === 1 ? 'card' : 'cards'}`;
+    if (reset instanceof HTMLButtonElement) reset.hidden = !query && !selectedSet;
+    if (noResults instanceof HTMLElement) noResults.hidden = visible > 0;
+    updateIndicators(query, selectedSet);
+  };
+
+  let frame = 0;
+  const scheduleUpdate = () => {
+    window.cancelAnimationFrame(frame);
+    frame = window.requestAnimationFrame(applyFilters);
+  };
+  searchInput?.addEventListener('input', scheduleUpdate);
+  setSelect?.addEventListener('change', applyFilters);
+  reset?.addEventListener('click', () => {
+    if (searchInput instanceof HTMLInputElement) searchInput.value = '';
+    if (setSelect instanceof HTMLSelectElement) setSelect.value = '';
+    applyFilters();
+    if (searchInput instanceof HTMLInputElement) searchInput.focus();
+  });
+  applyFilters();
+</script>

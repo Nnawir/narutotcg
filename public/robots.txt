@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /search/
+Disallow: /tournaments-decklists/
+Disallow: /meta-analysis/
+Disallow: /deck-guides/
+Disallow: /banlist/

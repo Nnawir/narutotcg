@@ -1,0 +1,74 @@
+---
+import SiteLogo from './SiteLogo.astro';
+import { navigation } from '../data/content';
+
+const pathname = Astro.url.pathname;
+const isActive = (href: string) => pathname === href || pathname.startsWith(href);
+---
+
+<header class="site-header">
+  <div class="header-row shell">
+    <SiteLogo />
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      {navigation.map((item) => (
+        <a
+          class:list={{ active: isActive(item.href) }}
+          href={item.href}
+          aria-current={isActive(item.href) ? 'page' : undefined}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+    <details class="mobile-menu">
+      <summary aria-label="Open navigation">
+        <span>Menu</span>
+        <svg viewBox="0 0 20 20" aria-hidden="true">
+          <path d="M3 5.5h14M3 10h14M3 14.5h14"></path>
+        </svg>
+      </summary>
+      <nav aria-label="Mobile navigation">
+        {navigation.map((item) => (
+          <a
+            class:list={{ active: isActive(item.href) }}
+            href={item.href}
+            aria-current={isActive(item.href) ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        ))}
+      </nav>
+    </details>
+  </div>
+
+  <div class="global-search">
+    <form class="shell" action="/search/" method="get" role="search">
+      <label for="global-search">Search cards or guides</label>
+      <div class="search-control">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="11" cy="11" r="6.5"></circle>
+          <path d="m16 16 4 4"></path>
+        </svg>
+        <input
+          id="global-search"
+          name="q"
+          type="search"
+          placeholder="Search cards or guides"
+          autocomplete="off"
+        />
+        <button type="submit">Search</button>
+      </div>
+    </form>
+  </div>
+</header>
+
+<script>
+  const menu = document.querySelector('.mobile-menu');
+  menu?.addEventListener('keydown', (event) => {
+    if (!(event instanceof KeyboardEvent)) return;
+    if (event.key === 'Escape' && menu instanceof HTMLDetailsElement) {
+      menu.open = false;
+      menu.querySelector('summary')?.focus();
+    }
+  });
+</script>

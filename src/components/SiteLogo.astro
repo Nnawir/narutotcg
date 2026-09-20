@@ -1,0 +1,35 @@
+---
+type Props = { class?: string };
+const { class: className } = Astro.props;
+---
+
+<a class:list={['site-logo', className]} href="/" aria-label="NINJA TCG home">
+  <span>NINJA</span>
+  <i aria-hidden="true"></i>
+  <span>TCG</span>
+</a>
+
+<style>
+  .site-logo {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-primary);
+    font-size: 0.82rem;
+    font-weight: 760;
+    letter-spacing: 0.16em;
+    text-decoration: none;
+  }
+
+  .site-logo i {
+    width: 0.55rem;
+    height: 0.18rem;
+    background: var(--accent);
+    transform: skewX(-22deg);
+  }
+
+  .site-logo:hover {
+    color: var(--text-primary);
+  }
+</style>

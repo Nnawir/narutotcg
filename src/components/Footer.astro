@@ -1,0 +1,26 @@
+---
+import SiteLogo from './SiteLogo.astro';
+import { navigation } from '../data/content';
+---
+
+<footer class="site-footer">
+  <div class="shell footer-grid">
+    <div>
+      <SiteLogo />
+      <p class="footer-intro">An independent resource for the NARUTO CARD GAME.</p>
+    </div>
+    <nav aria-label="Footer navigation">
+      {navigation.map((item) => (
+        <a href={item.href}>{item.label}</a>
+      ))}
+    </nav>
+    <p class="legal">
+      NINJA TCG is an independent fan resource and is not affiliated with, endorsed by, or licensed by Bandai
+      or the NARUTO rights holders.
+    </p>
+  </div>
+  <div class="shell footer-bottom">
+    <span>Built around confirmed information.</span>
+    <span>&copy; {new Date().getFullYear()} NINJA TCG</span>
+  </div>
+</footer>

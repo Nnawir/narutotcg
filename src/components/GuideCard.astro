@@ -1,0 +1,24 @@
+---
+import type { Guide } from '../data/content';
+import { formatDate } from '../lib/format';
+
+type Props = { guide: Guide; recommended?: boolean };
+const { guide, recommended = false } = Astro.props;
+---
+
+<article class:list={['guide-card', { recommended }]}>
+  <a href={`/beginner-guides/${guide.slug}/`}>
+    <span class="meta-row">
+      <span>{guide.category}</span>
+      {recommended && <span>Recommended first</span>}
+    </span>
+    <h3>{guide.title}</h3>
+    <span class="summary">{guide.summary}</span>
+    <span class="guide-meta">
+      {guide.difficulty} · {guide.readingTime} · Verified {formatDate(guide.verifiedAt)}
+    </span>
+    <span class="card-action">
+      Read guide <span aria-hidden="true">→</span>
+    </span>
+  </a>
+</article>

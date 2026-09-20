@@ -1,0 +1,36 @@
+---
+import type { Card } from '../data/content';
+import { formatDate } from '../lib/format';
+
+type Props = { card: Card; eager?: boolean };
+const { card, eager = false } = Astro.props;
+---
+
+<article
+  class="card-tile"
+  data-card-item
+  data-name={card.name.toLowerCase()}
+  data-id={card.id.toLowerCase()}
+  data-set={card.setCode}
+>
+  <a href={`/cards-list/${card.setCode.toLowerCase()}/${card.slug}/`}>
+    <span class="card-image" style={`--image-ratio: ${card.image.width} / ${card.image.height}`}>
+      <img
+        src={card.image.src}
+        alt={card.image.alt || `${card.name} card`}
+        width={card.image.width}
+        height={card.image.height}
+        loading={eager ? 'eager' : 'lazy'}
+        decoding="async"
+      />
+    </span>
+    <span class="card-copy">
+      <strong>{card.name}</strong>
+      <span>{card.id}</span>
+      <span>
+        {card.setCode} · {card.setName}
+      </span>
+      {card.revealedAt && <time datetime={card.revealedAt}>Revealed {formatDate(card.revealedAt)}</time>}
+    </span>
+  </a>
+</article>

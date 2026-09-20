@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../../components/BaseLayout.astro';
+import EmptyState from '../../components/EmptyState.astro';
+import { cards, guides } from '../../data/content';
+
+const searchItems = [
+  ...cards.map((card) => ({
+    type: 'Card',
+    title: card.name,
+    meta: `${card.id} · ${card.setCode} · ${card.setName}`,
+    href: `/cards-list/${card.setCode.toLowerCase()}/${card.slug}/`,
+    search: `${card.name} ${card.id} ${card.setCode} ${card.setName}`.toLowerCase(),
+  })),
+  ...guides.map((guide) => ({
+    type: 'Guide',
+    title: guide.title,
+    meta: `${guide.category} · ${guide.difficulty} · ${guide.readingTime}`,
+    href: `/beginner-guides/${guide.slug}/`,
+    search: `${guide.title} ${guide.summary} ${guide.category}`.toLowerCase(),
+  })),
+];
+---
+
+<BaseLayout
+  title="Search"
+  description="Search confirmed Naruto Card Game cards and beginner guides."
+  canonicalPath="/search/"
+  noindex
+>
+  <header class="page-hero shell">
+    <p class="eyebrow">Cards and guides</p>
+    <h1>Search</h1>
+    <p id="search-summary" aria-live="polite">
+      Enter a card name, identifier, or guide topic in the search field.
+    </p>
+  </header>
+
+  <section class="section shell" aria-labelledby="search-results-title">
+    <h2 id="search-results-title" class="visually-hidden">
+      Search results
+    </h2>
+    {searchItems.length > 0 ? (
+      <>
+        <div class="search-results" id="search-results">
+          {searchItems.map((item) => (
+            <a class="search-result" href={item.href} data-search-item={item.search} hidden>
+              <span class="result-type">{item.type}</span>
+              <span>
+                <strong>{item.title}</strong>
+                <span>{item.meta}</span>
+              </span>
+            </a>
+          ))}
+        </div>
+        <div id="search-empty">
+          <EmptyState
+            title="No results to show"
+            message="Try a different card name, identifier, or guide topic."
+          />
+        </div>
+      </>
+    ) : (
+      <EmptyState
+        title="The searchable archive is not populated yet"
+        message="Search will return cards and beginner guides as soon as verified records are published."
+      />
+    )}
+  </section>
+</BaseLayout>
+
+<script>
+  const rawQuery = new URLSearchParams(window.location.search).get('q')?.trim() ?? '';
+  const query = rawQuery.toLowerCase();
+  const results = [...document.querySelectorAll('[data-search-item]')];
+  const summary = document.querySelector('#search-summary');
+  const empty = document.querySelector('#search-empty');
+  const globalInput = document.querySelector('#global-search');
+  if (globalInput instanceof HTMLInputElement) globalInput.value = rawQuery;
+  let visible = 0;
+  results.forEach((result) => {
+    const show = Boolean(query) && (result.getAttribute('data-search-item') ?? '').includes(query);
+    result.toggleAttribute('hidden', !show);
+    if (show) visible += 1;
+  });
+  if (summary) {
+    summary.textContent = query
+      ? `${visible} ${visible === 1 ? 'result' : 'results'} for “${rawQuery}”`
+      : 'Enter a card name, identifier, or guide topic in the search field.';
+  }
+  if (empty instanceof HTMLElement) empty.hidden = visible > 0;
+</script>

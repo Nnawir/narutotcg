@@ -1,0 +1,39 @@
+---
+import type { NewsArticle } from '../data/content';
+import { formatDate } from '../lib/format';
+
+type Props = { article: NewsArticle; featured?: boolean };
+const { article, featured = false } = Astro.props;
+---
+
+<article
+  class:list={['news-card', { featured, 'has-image': Boolean(article.image) }]}
+  data-news-card
+  data-category={article.category}
+>
+  <a href={`/news/${article.slug}/`}>
+    {article.image && (
+      <span class="news-image" style={`--image-ratio: ${article.image.width} / ${article.image.height}`}>
+        <img
+          src={article.image.src}
+          alt={article.image.alt}
+          width={article.image.width}
+          height={article.image.height}
+          loading={featured ? 'eager' : 'lazy'}
+          decoding="async"
+        />
+      </span>
+    )}
+    <span class="news-copy">
+      <span class="meta-row">
+        <span>{article.category}</span>
+        <time datetime={article.publishedAt}>{formatDate(article.publishedAt)}</time>
+      </span>
+      <h3>{article.title}</h3>
+      <span class="summary">{article.summary}</span>
+      <span class="card-action">
+        Read article <span aria-hidden="true">→</span>
+      </span>
+    </span>
+  </a>
+</article>
