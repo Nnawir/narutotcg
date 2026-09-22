@@ -137,8 +137,29 @@ h3 {
   display: flex;
   min-height: 4.25rem;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 2rem;
+}
+.site-brand {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 0.75rem;
+  color: #c7473d;
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.site-brand img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+.site-brand:hover {
+  color: #c7473d;
 }
 .desktop-nav {
   display: flex;
