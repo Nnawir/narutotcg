@@ -135,10 +135,11 @@ h3 {
 }
 .header-row {
   display: flex;
-  min-height: 4.25rem;
+  min-height: 5.5rem;
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
+  padding-inline: 1.5rem;
 }
 .site-brand {
   display: inline-flex;
@@ -1245,6 +1246,9 @@ h3 {
 }
 
 @media (max-width: 45rem) {
+  .header-row {
+    padding-inline: 0.5rem;
+  }
   .desktop-nav {
     display: none;
   }
