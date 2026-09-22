@@ -137,7 +137,7 @@ h3 {
   display: flex;
   min-height: 4.25rem;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 2rem;
 }
 .desktop-nav {
