@@ -3,10 +3,8 @@ type Props = { class?: string };
 const { class: className } = Astro.props;
 ---
 
-<a class:list={['site-logo', className]} href="/" aria-label="NINJA TCG home">
-  <span>NINJA</span>
-  <i aria-hidden="true"></i>
-  <span>TCG</span>
+<a class:list={['site-logo', className]} href="/" aria-label="NarutoCardGuide home">
+  <span>NarutoCardGuide</span>
 </a>
 
 <style>
@@ -20,13 +18,6 @@ const { class: className } = Astro.props;
     font-weight: 760;
     letter-spacing: 0.16em;
     text-decoration: none;
-  }
-
-  .site-logo i {
-    width: 0.55rem;
-    height: 0.18rem;
-    background: var(--accent);
-    transform: skewX(-22deg);
   }
 
   .site-logo:hover {

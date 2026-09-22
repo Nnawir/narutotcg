@@ -20,7 +20,7 @@ const {
   canonicalPath = Astro.url.pathname,
   structuredData,
 } = Astro.props;
-const metaTitle = fullTitle ? title : `${title} | NINJA TCG`;
+const metaTitle = fullTitle ? title : `${title} | NarutoCardGuide`;
 const robots = noindex ? 'noindex, follow' : 'index, follow';
 const canonicalUrl = new URL(canonicalPath, Astro.site ?? Astro.url.origin).toString();
 ---
@@ -38,7 +38,7 @@ const canonicalUrl = new URL(canonicalPath, Astro.site ?? Astro.url.origin).toSt
     <title>{metaTitle}</title>
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_US" />
-    <meta property="og:site_name" content="NINJA TCG" />
+    <meta property="og:site_name" content="NarutoCardGuide" />
     <meta property="og:title" content={metaTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
