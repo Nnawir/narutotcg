@@ -135,10 +135,32 @@ h3 {
 }
 .header-row {
   display: flex;
-  min-height: 4.25rem;
+  min-height: 5.5rem;
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
+  padding-inline: 1.5rem;
+}
+.site-brand {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 0.75rem;
+  color: #c7473d;
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.site-brand img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+.site-brand:hover {
+  color: #c7473d;
 }
 .desktop-nav {
   display: flex;
@@ -1224,6 +1246,9 @@ h3 {
 }
 
 @media (max-width: 45rem) {
+  .header-row {
+    padding-inline: 0.5rem;
+  }
   .desktop-nav {
     display: none;
   }
