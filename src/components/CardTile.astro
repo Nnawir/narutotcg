@@ -21,7 +21,7 @@ const { card, eager = false, interactive = false, showDetails = true } = Astro.p
         width={card.image.width}
         height={card.image.height}
         loading={eager ? 'eager' : 'lazy'}
-        decoding="async"
+        decoding={eager ? 'sync' : 'async'}
       />
     </span>
     {showDetails && (
