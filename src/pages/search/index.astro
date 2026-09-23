@@ -8,7 +8,7 @@ const searchItems = [
     type: 'Card',
     title: card.name,
     meta: `${card.id} · ${card.setCode} · ${card.setName}`,
-    href: `/cards-list/${card.setCode.toLowerCase()}/${card.slug}/`,
+    href: undefined,
     search: `${card.name} ${card.id} ${card.setCode} ${card.setName}`.toLowerCase(),
   })),
   ...guides.map((guide) => ({

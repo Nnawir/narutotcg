@@ -527,6 +527,16 @@ h3 {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1rem;
 }
+.cards-list-grid {
+  grid-template-columns: repeat(6, minmax(0, 11rem));
+  justify-content: center;
+}
+.cards-list-grid .card-image {
+  aspect-ratio: 600 / 884 !important;
+}
+.cards-list-grid .card-image img {
+  object-fit: fill;
+}
 .learning-path {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -635,10 +645,35 @@ h3 {
 .page-hero {
   padding-block: clamp(4rem, 8vw, 7rem) clamp(2.75rem, 5vw, 4.5rem);
 }
+.cards-list-hero {
+  padding-bottom: clamp(1.375rem, 2.5vw, 2.25rem);
+}
+.cards-list-section {
+  padding-top: clamp(2rem, 4vw, 3.5rem);
+}
 .page-hero h1 {
   max-width: 52rem;
   margin-bottom: 1rem;
   font-size: clamp(2.55rem, 6vw, 5rem);
+}
+.page-hero .card-list-title {
+  font-size: clamp(2.4rem, 4vw, 3.6rem);
+}
+.page-hero .card-list-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgb(224 139 131 / 0.28);
+  border-radius: 999px;
+  padding: 0.7rem 1.1rem;
+  background: linear-gradient(135deg, rgb(199 71 61 / 0.16), rgb(224 139 131 / 0.25));
+  color: var(--accent);
+  letter-spacing: 0.03em;
+}
+.page-hero .card-list-news-link {
+  color: var(--accent);
+}
+.page-hero .card-list-news-link::after {
+  content: none;
 }
 .page-hero > p:last-child {
   max-width: 45rem;
@@ -733,6 +768,14 @@ h3 {
   background: var(--surface-elevated);
   color: var(--text-primary);
   transform: translateY(-2px);
+}
+.card-tile-static > a {
+  cursor: default;
+}
+.card-tile-static > a:hover {
+  border-color: var(--border);
+  background: var(--surface);
+  transform: none;
 }
 .news-card > a:focus-visible,
 .guide-card > a:focus-visible,
