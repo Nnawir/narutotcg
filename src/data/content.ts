@@ -85,12 +85,64 @@ export type CardSet = {
   relatedNewsSlugs: string[];
 };
 
-// Production content stays empty until an authoritative source confirms it.
-// Add records here without changing page or component code.
+type N01CardAsset = [id: string, filename: string, width: number, height: number];
+
+const n01Cards: Card[] = (
+  [
+    ['N01-001', 'N01-001_small.jpg', 600, 831],
+    ['N01-002', 'N01-002-small.jpg', 600, 806],
+    ['N01-003', 'N01-003_small.jpg', 600, 807],
+    ['N01-004', 'N01-004_small.jpg', 600, 838],
+    ['N01-005', 'N01-005_small.jpg', 600, 884],
+    ['N01-006', 'N01-006_small.jpg', 600, 857],
+    ['N01-007', 'N01-007_small.jpg', 600, 838],
+    ['N01-008', 'N01-008_small.jpg', 600, 838],
+    ['N01-009', 'N01-009_small.jpg', 600, 831],
+    ['N01-010', 'N01-010_small.jpg', 600, 853],
+    ['N01-011', 'N01-011_small.jpg', 600, 838],
+    ['N01-012', 'N01-012_small.jpg', 600, 826],
+    ['N01-013', 'N01-013_small.jpg', 600, 838],
+    ['N01-014', 'N01-014_small.jpg', 600, 835],
+    ['N01-015', 'N01-015_small.jpg', 600, 838],
+    ['N01-016', 'N01-016_small.jpg', 600, 831],
+    ['N01-017', 'N01-017_small.jpg', 600, 834],
+    ['N01-018', 'N01-018_small.jpg', 600, 837],
+  ] satisfies N01CardAsset[]
+).map(([id, filename, width, height]) => ({
+  id,
+  slug: id.toLowerCase(),
+  name: id,
+  setCode: 'N01',
+  setName: 'N01',
+  image: {
+    src: `/Cards/N01/${filename}`,
+    alt: `${id} card`,
+    width,
+    height,
+  },
+  confirmedFields: [],
+  updatedAt: '2026-09-23',
+  sourceLabel: 'NarutoCardGuide card archive',
+  sourceUrl: '/cards-list/',
+  printings: [],
+  relatedNewsSlugs: [],
+  relatedGuideSlugs: [],
+}));
+
 export const news: NewsArticle[] = [];
-export const cards: Card[] = [];
+export const cards: Card[] = n01Cards;
 export const guides: Guide[] = [];
-export const sets: CardSet[] = [];
+export const sets: CardSet[] = [
+  {
+    code: 'N01',
+    slug: 'n01',
+    name: 'N01',
+    sourceLabel: 'NarutoCardGuide card archive',
+    sourceUrl: '/cards-list/',
+    cardIds: n01Cards.map((card) => card.id),
+    relatedNewsSlugs: [],
+  },
+];
 
 export const releaseMilestones = [
   {

@@ -2,18 +2,18 @@
 import type { Card } from '../data/content';
 import { formatDate } from '../lib/format';
 
-type Props = { card: Card; eager?: boolean };
-const { card, eager = false } = Astro.props;
+type Props = { card: Card; eager?: boolean; interactive?: boolean; showDetails?: boolean };
+const { card, eager = false, interactive = false, showDetails = true } = Astro.props;
 ---
 
 <article
-  class="card-tile"
+  class:list={['card-tile', !interactive && 'card-tile-static']}
   data-card-item
   data-name={card.name.toLowerCase()}
   data-id={card.id.toLowerCase()}
   data-set={card.setCode}
 >
-  <a href={`/cards-list/${card.setCode.toLowerCase()}/${card.slug}/`}>
+  <a href={interactive ? `/cards-list/${card.setCode.toLowerCase()}/${card.slug}/` : undefined}>
     <span class="card-image" style={`--image-ratio: ${card.image.width} / ${card.image.height}`}>
       <img
         src={card.image.src}
@@ -24,13 +24,15 @@ const { card, eager = false } = Astro.props;
         decoding="async"
       />
     </span>
-    <span class="card-copy">
-      <strong>{card.name}</strong>
-      <span>{card.id}</span>
-      <span>
-        {card.setCode} · {card.setName}
+    {showDetails && (
+      <span class="card-copy">
+        <strong>{card.name}</strong>
+        <span>{card.id}</span>
+        <span>
+          {card.setCode} · {card.setName}
+        </span>
+        {card.revealedAt && <time datetime={card.revealedAt}>Revealed {formatDate(card.revealedAt)}</time>}
       </span>
-      {card.revealedAt && <time datetime={card.revealedAt}>Revealed {formatDate(card.revealedAt)}</time>}
-    </span>
+    )}
   </a>
 </article>
