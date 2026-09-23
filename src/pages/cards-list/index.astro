@@ -38,7 +38,7 @@ import { cards } from '../../data/content';
       <>
         <div class="card-grid cards-list-grid" id="card-results">
           {cards.map((card) => (
-            <CardTile card={card} eager interactive={false} showDetails={false} />
+            <CardTile card={card} eager showDetails={false} />
           ))}
         </div>
         <div id="card-no-results" hidden>

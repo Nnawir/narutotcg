@@ -2,18 +2,25 @@
 import type { Card } from '../data/content';
 import { formatDate } from '../lib/format';
 
-type Props = { card: Card; eager?: boolean; interactive?: boolean; showDetails?: boolean };
-const { card, eager = false, interactive = false, showDetails = true } = Astro.props;
+type Props = { card: Card; eager?: boolean; showDetails?: boolean };
+const { card, eager = false, showDetails = true } = Astro.props;
 ---
 
 <article
-  class:list={['card-tile', !interactive && 'card-tile-static']}
+  class="card-tile"
   data-card-item
   data-name={card.name.toLowerCase()}
   data-id={card.id.toLowerCase()}
   data-set={card.setCode}
 >
-  <a href={interactive ? `/cards-list/${card.setCode.toLowerCase()}/${card.slug}/` : undefined}>
+  <button
+    class="card-tile-trigger"
+    type="button"
+    data-card-preview
+    data-image-src={card.image.src}
+    data-image-alt={card.image.alt || `${card.name} card`}
+    aria-label={`Zoom ${card.name} card`}
+  >
     <span class="card-image" style={`--image-ratio: ${card.image.width} / ${card.image.height}`}>
       <img
         src={card.image.src}
@@ -34,5 +41,5 @@ const { card, eager = false, interactive = false, showDetails = true } = Astro.p
         {card.revealedAt && <time datetime={card.revealedAt}>Revealed {formatDate(card.revealedAt)}</time>}
       </span>
     )}
-  </a>
+  </button>
 </article>
