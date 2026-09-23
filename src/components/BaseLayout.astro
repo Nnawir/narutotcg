@@ -56,5 +56,40 @@ const canonicalUrl = new URL(canonicalPath, Astro.site ?? Astro.url.origin).toSt
       <slot />
     </main>
     <Footer />
+    <dialog class="card-lightbox" id="card-lightbox" aria-label="Card preview">
+      <button
+        class="card-lightbox-close"
+        type="button"
+        data-card-lightbox-close
+        aria-label="Close card preview"
+      >
+        ×
+      </button>
+      <img data-card-lightbox-image alt="" />
+    </dialog>
   </body>
 </html>
+
+<script>
+  const lightbox = document.querySelector('#card-lightbox');
+  const lightboxImage = lightbox?.querySelector('[data-card-lightbox-image]');
+  const closeLightbox = () => {
+    if (lightbox instanceof HTMLDialogElement && lightbox.open) lightbox.close();
+  };
+
+  document.addEventListener('click', (event) => {
+    const target = event.target instanceof Element ? event.target.closest('[data-card-preview]') : null;
+    if (!(target instanceof HTMLButtonElement)) return;
+    if (!(lightbox instanceof HTMLDialogElement) || !(lightboxImage instanceof HTMLImageElement)) return;
+    lightboxImage.src = target.dataset.imageSrc ?? '';
+    lightboxImage.alt = target.dataset.imageAlt ?? '';
+    document.documentElement.classList.add('lightbox-open');
+    lightbox.showModal();
+  });
+
+  lightbox?.querySelector('[data-card-lightbox-close]')?.addEventListener('click', closeLightbox);
+  lightbox?.addEventListener('close', () => document.documentElement.classList.remove('lightbox-open'));
+  lightbox?.addEventListener('click', (event) => {
+    if (event.target === lightbox) closeLightbox();
+  });
+</script>
