@@ -4,8 +4,22 @@ function connect(path) {
   return new Promise((resolve, reject) => {
     const socket = new WebSocket(`${base}${path}`);
     const timer = setTimeout(() => reject(new Error(`Timed out connecting to ${path}`)), 8_000);
-    socket.addEventListener('open', () => { clearTimeout(timer); resolve(socket); }, { once: true });
-    socket.addEventListener('error', () => { clearTimeout(timer); reject(new Error(`WebSocket error for ${path}`)); }, { once: true });
+    socket.addEventListener(
+      'open',
+      () => {
+        clearTimeout(timer);
+        resolve(socket);
+      },
+      { once: true },
+    );
+    socket.addEventListener(
+      'error',
+      () => {
+        clearTimeout(timer);
+        reject(new Error(`WebSocket error for ${path}`));
+      },
+      { once: true },
+    );
   });
 }
 
@@ -34,24 +48,52 @@ if (sessionA.matchId !== matchedB.matchId || sessionA.playerId === matchedB.play
   throw new Error('Matchmaker did not assign two distinct players to one match.');
 }
 
-const gameA = await connect(`/api/games/${sessionA.matchId}?playerId=${sessionA.playerId}&ticket=${sessionA.ticket}`);
+const gameA = await connect(
+  `/api/games/${sessionA.matchId}?playerId=${sessionA.playerId}&ticket=${sessionA.ticket}`,
+);
 const stateA = await nextMessage(gameA, (message) => message.type === 'state');
-const gameB = await connect(`/api/games/${matchedB.matchId}?playerId=${matchedB.playerId}&ticket=${matchedB.ticket}`);
+const gameB = await connect(
+  `/api/games/${matchedB.matchId}?playerId=${matchedB.playerId}&ticket=${matchedB.ticket}`,
+);
 const stateB = await nextMessage(gameB, (message) => message.type === 'state');
 
-for (const [state, own] of [[stateA, sessionA.playerId], [stateB, matchedB.playerId]]) {
+for (const [state, own] of [
+  [stateA, sessionA.playerId],
+  [stateB, matchedB.playerId],
+]) {
+  if (
+    !state.rulesProfile?.id ||
+    !Number.isInteger(state.rulesProfile.version) ||
+    !state.rulesProfile.status
+  ) {
+    throw new Error('The upstream rules profile was not preserved in the PvP projection.');
+  }
   const other = own === 'p1' ? 'p2' : 'p1';
   if (state.players[other].hand !== null || !Number.isInteger(state.players[other].handCount)) {
     throw new Error('Opponent hand was not redacted in the projected state.');
   }
   if ('deck' in state.players[other]) throw new Error('Opponent deck order leaked in the projection.');
+  if (!state.players[own].chakra.every((card) => typeof card.cardId === 'string')) {
+    throw new Error('Upstream Chakra card identities were not preserved in the PvP projection.');
+  }
+  if (typeof state.players[own].summon?.cardId !== 'string') {
+    throw new Error('Upstream Summon card identity was not preserved in the PvP projection.');
+  }
 }
 
 const actorSession = stateA.decider === sessionA.playerId ? sessionA : matchedB;
 const actorSocket = actorSession === sessionA ? gameA : gameB;
 const actorState = actorSession === sessionA ? stateA : stateB;
-const illegal = nextMessage(actorSocket, (message) => message.type === 'error' && message.code === 'unauthorized_action');
-actorSocket.send(JSON.stringify({ type: 'action', action: { type: 'END_TURN', player: actorSession.playerId === 'p1' ? 'p2' : 'p1' } }));
+const illegal = nextMessage(
+  actorSocket,
+  (message) => message.type === 'error' && message.code === 'unauthorized_action',
+);
+actorSocket.send(
+  JSON.stringify({
+    type: 'action',
+    action: { type: 'END_TURN', player: actorSession.playerId === 'p1' ? 'p2' : 'p1' },
+  }),
+);
 await illegal;
 
 const valid = actorState.availableActions[0];
@@ -68,8 +110,9 @@ for (let step = 0; step < 8 && !updatedA.winner; step += 1) {
   const actorSessionForStep = updatedA.decider === sessionA.playerId ? sessionA : matchedB;
   const actorSocketForStep = actorSessionForStep === sessionA ? gameA : gameB;
   const actorStateForStep = actorSessionForStep === sessionA ? updatedA : updatedB;
-  const action = actorStateForStep.availableActions.find((candidate) => candidate.action.type === 'END_TURN')
-    ?? actorStateForStep.availableActions[0];
+  const action =
+    actorStateForStep.availableActions.find((candidate) => candidate.action.type === 'END_TURN') ??
+    actorStateForStep.availableActions[0];
   if (!action) throw new Error(`No legal action available at progression step ${step}.`);
   const nextA = nextMessage(gameA, (message) => message.type === 'state');
   const nextB = nextMessage(gameB, (message) => message.type === 'state');
@@ -81,18 +124,26 @@ for (let step = 0; step < 8 && !updatedA.winner; step += 1) {
 }
 
 gameA.close();
-const reconnectA = await connect(`/api/games/${sessionA.matchId}?playerId=${sessionA.playerId}&ticket=${sessionA.ticket}`);
+const reconnectA = await connect(
+  `/api/games/${sessionA.matchId}?playerId=${sessionA.playerId}&ticket=${sessionA.ticket}`,
+);
 const reconnected = await nextMessage(reconnectA, (message) => message.type === 'state');
-if (reconnected.turn !== updatedA.turn) throw new Error('Reconnect did not restore the authoritative match state.');
+if (reconnected.turn !== updatedA.turn)
+  throw new Error('Reconnect did not restore the authoritative match state.');
 
-console.log(JSON.stringify({
-  matchId: sessionA.matchId,
-  players: [sessionA.playerId, matchedB.playerId],
-  legalAction: valid.label,
-  turn: reconnected.turn,
-  progressedActions: 9,
-  privateStateRedacted: true,
-  reconnect: true,
-}));
+console.log(
+  JSON.stringify({
+    matchId: sessionA.matchId,
+    players: [sessionA.playerId, matchedB.playerId],
+    legalAction: valid.label,
+    turn: reconnected.turn,
+    progressedActions: 9,
+    privateStateRedacted: true,
+    reconnect: true,
+  }),
+);
 
-queueA.close(); queueB.close(); gameB.close(); reconnectA.close();
+queueA.close();
+queueB.close();
+gameB.close();
+reconnectA.close();

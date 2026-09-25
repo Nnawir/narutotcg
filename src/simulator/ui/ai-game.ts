@@ -1,20 +1,12 @@
 import {
-  applyAction,
-  chooseAiAction,
-  createInitialState,
-  deciderOf,
-  PREVIEW_DECKS,
-  previewDeckList,
-} from '../../../vendor/tcg-engines/submodules/naruto/packages/engine/src/index.ts';
-import type {
-  Action,
-  CardInstance,
-  CharacterInstance,
-  GameState,
-  PlayerId,
-  SupportInstance,
-} from '../../../vendor/tcg-engines/submodules/naruto/packages/engine/src/index.ts';
-import { getCardById } from '@tcg-engines/naruto-cards';
+  applyNarutoAction,
+  availableNarutoActions,
+  chooseNarutoAiAction,
+  createNarutoPreviewMatch,
+  narutoCard,
+  narutoDecider,
+} from '../engine/naruto';
+import type { Action, CardInstance, CharacterInstance, PlayerId } from '../engine/naruto';
 import { cardImageMarkup, enhanceCardImages } from './card-image';
 
 const player: PlayerId = 'p1';
@@ -23,12 +15,8 @@ const root = document.querySelector<HTMLElement>('#naruto-ai-game');
 
 if (!root) throw new Error('Naruto AI game root is missing.');
 
-let state = createInitialState({
+let state = createNarutoPreviewMatch({
   seed: 42,
-  decks: {
-    p1: previewDeckList(PREVIEW_DECKS[0]!),
-    p2: previewDeckList(PREVIEW_DECKS[2]!),
-  },
   firstPlayer: player,
   names: { p1: 'You', p2: 'AI opponent' },
 });
@@ -46,68 +34,70 @@ const escapeHtml = (value: string | number | null | undefined) =>
     .replaceAll("'", '&#039;');
 
 function cardName(cardId: string): string {
-  return getCardById(cardId)?.nameEn ?? cardId;
+  return narutoCard(cardId)?.nameEn ?? cardId;
 }
 
 function cardMeta(cardId: string): string {
-  const card = getCardById(cardId);
+  const card = narutoCard(cardId);
   if (!card) return cardId;
-  const stats = [card.power !== null ? `${card.power} POW` : '', card.damage !== null ? `${card.damage} DMG` : '', card.health !== null ? `${card.health} HP` : ''].filter(Boolean);
+  const stats = [
+    card.power !== null ? `${card.power} POW` : '',
+    card.damage !== null ? `${card.damage} DMG` : '',
+    card.health !== null ? `${card.health} HP` : '',
+  ].filter(Boolean);
   return [card.cardType.replace('_', ' '), ...stats].join(' · ');
 }
 
-function isLegal(action: Action): boolean {
-  return applyAction(state, action) !== state;
+function currentActions(): Candidate[] {
+  return availableNarutoActions(state, player);
 }
 
 function handCandidates(card: CardInstance): Candidate[] {
-  return [
-    { label: 'Summon', action: { type: 'SUMMON', player, handUid: card.uid } },
-    { label: 'Set support', action: { type: 'SET_SUPPORT', player, handUid: card.uid } },
-    { label: 'Play support', action: { type: 'ACTIVATE_SUPPORT_FROM_HAND', player, handUid: card.uid } },
-  ].filter((candidate) => isLegal(candidate.action));
+  return currentActions().filter(
+    (candidate) =>
+      (candidate.action.type === 'SUMMON' ||
+        candidate.action.type === 'SET_SUPPORT' ||
+        candidate.action.type === 'ACTIVATE_SUPPORT_FROM_HAND') &&
+      candidate.action.handUid === card.uid,
+  );
 }
 
 function attackCandidates(kind: 'leader' | 'character', attackerUid: string): Candidate[] {
-  const opponent = state.players[ai];
-  const targets: Array<{ label: string; targetKind: 'leader' | 'character'; targetUid: string }> = [
-    { label: `Attack ${opponent.name}'s Leader`, targetKind: 'leader', targetUid: `leader:${ai}` },
-    ...opponent.characters.flatMap((character) =>
-      character ? [{ label: `Attack ${cardName(character.cardId)}`, targetKind: 'character' as const, targetUid: character.uid }] : [],
-    ),
-  ];
-  return targets
-    .map((target) => ({
-      label: target.label,
-      action: { type: 'DECLARE_ATTACK', player, attackerKind: kind, attackerUid, targetKind: target.targetKind, targetUid: target.targetUid },
-    }))
-    .filter((candidate) => isLegal(candidate.action));
+  return currentActions().filter(
+    (candidate) =>
+      candidate.action.type === 'DECLARE_ATTACK' &&
+      candidate.action.attackerKind === kind &&
+      candidate.action.attackerUid === attackerUid,
+  );
 }
 
 function characterCandidates(character: CharacterInstance): Candidate[] {
   return [
-    { label: 'Activate ability', action: { type: 'ACTIVATE_CHARACTER', player, uid: character.uid } },
+    ...currentActions().filter(
+      (candidate) => candidate.action.type === 'ACTIVATE_CHARACTER' && candidate.action.uid === character.uid,
+    ),
     ...attackCandidates('character', character.uid),
-  ].filter((candidate) => isLegal(candidate.action));
+  ];
 }
 
-function supportCandidates(support: SupportInstance, slot: number): Candidate[] {
-  return [{ label: 'Activate support', action: { type: 'ACTIVATE_SUPPORT', player, slot } }].filter((candidate) =>
-    isLegal(candidate.action),
+function supportCandidates(slot: number): Candidate[] {
+  return currentActions().filter(
+    (candidate) => candidate.action.type === 'ACTIVATE_SUPPORT' && candidate.action.slot === slot,
   );
 }
 
 function leaderCandidates(): Candidate[] {
   return [
-    { label: 'Activate Leader effect', action: { type: 'LEADER_EFFECT', player } },
-    { label: 'Recovery', action: { type: 'RECOVERY', player } },
+    ...currentActions().filter(
+      (candidate) => candidate.action.type === 'LEADER_EFFECT' || candidate.action.type === 'RECOVERY',
+    ),
     ...attackCandidates('leader', `leader:${player}`),
-  ].filter((candidate) => isLegal(candidate.action));
+  ];
 }
 
 function dispatch(action: Action): void {
-  if (deciderOf(state) !== player) return;
-  const next = applyAction(state, action);
+  if (narutoDecider(state) !== player) return;
+  const next = applyNarutoAction(state, action);
   if (next === state) {
     notice = 'That action is no longer legal in the current state.';
     render();
@@ -120,16 +110,16 @@ function dispatch(action: Action): void {
 }
 
 function scheduleAi(): void {
-  if (aiTimer !== null || deciderOf(state) !== ai || state.winner) return;
+  if (aiTimer !== null || narutoDecider(state) !== ai || state.winner) return;
   aiTimer = window.setTimeout(() => {
     aiTimer = null;
-    const action = chooseAiAction(state, ai);
+    const action = chooseNarutoAiAction(state, ai);
     if (!action) {
       notice = 'The upstream AI has no action for this state.';
       render();
       return;
     }
-    const next = applyAction(state, action);
+    const next = applyNarutoAction(state, action);
     if (next === state) {
       notice = 'The upstream AI proposed an action rejected by the engine.';
       render();
@@ -158,14 +148,17 @@ function renderCard(card: CardInstance, options: Candidate[] = [], extra = ''): 
 function renderCharacter(character: CharacterInstance | null, side: PlayerId): string {
   if (!character) return '<div class="game-slot empty-slot">Empty</div>';
   const options = side === player ? characterCandidates(character) : [];
-  const stateLabels = [character.rested ? 'Rested' : 'Ready', character.damage ? `${character.damage} damage` : ''];
+  const stateLabels = [
+    character.rested ? 'Rested' : 'Ready',
+    character.damage ? `${character.damage} damage` : '',
+  ];
   return `<div class="game-slot">${renderCard(character, options, character.rested ? 'rested' : '')}<small>${stateLabels.filter(Boolean).join(' · ')}</small></div>`;
 }
 
 function renderSupport(support: SupportInstance | null, slot: number, side: PlayerId): string {
   if (!support) return '<div class="game-slot empty-slot">Support</div>';
   const visibleCard = support.revealed || side === player;
-  const options = side === player ? supportCandidates(support, slot) : [];
+  const options = side === player ? supportCandidates(slot) : [];
   return `<div class="game-slot">${visibleCard ? renderCard(support, options, support.revealed ? '' : 'face-down') : '<div class="game-card face-down"><strong>Set support</strong></div>'}</div>`;
 }
 
@@ -174,7 +167,12 @@ function renderPlayerBoard(id: PlayerId): string {
   const own = id === player;
   const leader = { uid: `leader:${id}`, cardId: boardPlayer.leaderId };
   const leaderOptions = own ? leaderCandidates() : [];
-  const chakra = boardPlayer.chakra.map((card) => `<span class="chakra-card ${card.faceUp ? 'ready' : 'spent'}" title="${escapeHtml(cardName(card.cardId))}">${cardImageMarkup(card.cardId, cardName(card.cardId))}</span>`).join('');
+  const chakra = boardPlayer.chakra
+    .map(
+      (card) =>
+        `<span class="chakra-card ${card.faceUp ? 'ready' : 'spent'}" title="${escapeHtml(cardName(card.cardId))}">${cardImageMarkup(card.cardId, cardName(card.cardId))}</span>`,
+    )
+    .join('');
   return `<section class="player-board ${own ? 'you' : 'opponent'}" aria-label="${escapeHtml(boardPlayer.name)} board">
     <header class="player-summary">
       <div><span>${own ? 'You' : 'AI opponent'}</span><strong>${escapeHtml(boardPlayer.name)}</strong></div>
@@ -190,25 +188,26 @@ function renderPlayerBoard(id: PlayerId): string {
 }
 
 function renderControls(): string {
-  const decider = deciderOf(state);
-  if (state.winner) return `<section class="game-controls winner"><h2>${state.winner === player ? 'You win' : 'AI wins'}</h2><button class="game-action primary" type="button" data-restart>Start a new game</button></section>`;
-  if (decider !== player) return `<section class="game-controls"><h2>AI is taking its turn</h2><p>The upstream engine and <code>chooseAiAction</code> control the AI action.</p></section>`;
+  const decider = narutoDecider(state);
+  if (state.winner)
+    return `<section class="game-controls winner"><h2>${state.winner === player ? 'You win' : 'AI wins'}</h2><button class="game-action primary" type="button" data-restart>Start a new game</button></section>`;
+  if (decider !== player)
+    return `<section class="game-controls"><h2>AI is taking its turn</h2><p>The upstream engine and <code>chooseAiAction</code> control the AI action.</p></section>`;
   if (state.awaitingMulligan === player) {
-    return `<section class="game-controls"><h2>Opening hand</h2><p>Keep this hand or use the engine’s mulligan action.</p>${actionButton({ label: 'Keep hand', action: { type: 'MULLIGAN', player, keep: true } }, 'primary')}${actionButton({ label: 'Mulligan', action: { type: 'MULLIGAN', player, keep: false } })}</section>`;
+    const actions = currentActions();
+    return `<section class="game-controls"><h2>Opening hand</h2><p>Keep this hand or use the engine’s mulligan action.</p>${actions.map((candidate) => actionButton(candidate, candidate.action.type === 'MULLIGAN' && candidate.action.keep ? 'primary' : '')).join('')}</section>`;
   }
   if (state.pendingChoice?.player === player) {
     const choice = state.pendingChoice;
-    const options = choice.options.map((option) => ({ label: `${cardName(option.cardId)} · ${option.zone}`, action: { type: 'RESOLVE_CHOICE' as const, player, key: option.key } }));
-    if (choice.cancellable) options.push({ label: 'Cancel choice', action: { type: 'RESOLVE_CHOICE', player, key: null } });
+    const options = currentActions();
     return `<section class="game-controls"><h2>Choose a target</h2><p>${escapeHtml(choice.promptKey.replace('prompt.', '').replaceAll('.', ' '))}</p><div class="choice-actions">${options.map((candidate) => actionButton(candidate, 'primary')).join('')}</div></section>`;
   }
   if (state.step === 'counter') {
-    const supports = state.players[player].supports.flatMap((support, slot) => support ? supportCandidates(support, slot) : []);
-    const pass: Candidate = { label: 'Pass priority', action: { type: 'PASS_COUNTER', player } };
-    return `<section class="game-controls"><h2>Counter window</h2><p>You have priority. Play a legal set support or pass.</p><div class="choice-actions">${supports.map((candidate) => actionButton(candidate)).join('')}${isLegal(pass.action) ? actionButton(pass, 'primary') : ''}</div></section>`;
+    const actions = currentActions();
+    return `<section class="game-controls"><h2>Counter window</h2><p>You have priority. Play a legal set support or pass.</p><div class="choice-actions">${actions.map((candidate) => actionButton(candidate, candidate.action.type === 'PASS_COUNTER' ? 'primary' : '')).join('')}</div></section>`;
   }
-  const endTurn: Candidate = { label: 'End turn', action: { type: 'END_TURN', player } };
-  return `<section class="game-controls"><h2>Your action window</h2><p>Select an action on a Leader, Character, Support, or card in your hand.</p>${isLegal(endTurn.action) ? actionButton(endTurn, 'primary') : ''}</section>`;
+  const endTurn = currentActions().find((candidate) => candidate.action.type === 'END_TURN');
+  return `<section class="game-controls"><h2>Your action window</h2><p>Select an action on a Leader, Character, Support, or card in your hand.</p>${endTurn ? actionButton(endTurn, 'primary') : ''}</section>`;
 }
 
 function renderHand(): string {
@@ -229,7 +228,10 @@ function render(): void {
     button.addEventListener('click', () => dispatch(JSON.parse(button.dataset.action ?? '{}') as Action));
   });
   root.querySelector<HTMLButtonElement>('[data-restart]')?.addEventListener('click', () => {
-    state = createInitialState({ seed: Math.floor(Math.random() * 1_000_000), decks: { p1: previewDeckList(PREVIEW_DECKS[0]!), p2: previewDeckList(PREVIEW_DECKS[2]!) }, names: { p1: 'You', p2: 'AI opponent' } });
+    state = createNarutoPreviewMatch({
+      seed: Math.floor(Math.random() * 1_000_000),
+      names: { p1: 'You', p2: 'AI opponent' },
+    });
     notice = 'New game created.';
     render();
     scheduleAi();

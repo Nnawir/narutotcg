@@ -16,7 +16,9 @@
     "format:check": "prettier --check \"src/**/*.{astro,ts,css}\" \"astro.config.mjs\" \"eslint.config.js\" \"package.json\"",
     "worker:dev": "wrangler dev --local --port 8787",
     "worker:check": "wrangler deploy --dry-run",
-    "test:pvp": "node workers/test/pvp-smoke.mjs"
+    "test:pvp": "node workers/test/pvp-smoke.mjs",
+    "test:upstream": "pnpm --dir vendor/tcg-engines/submodules/naruto --filter @tcg-engines/naruto-engine test",
+    "verify:simulator": "npm run test:upstream && npm run build"
   },
   "dependencies": {
     "astro": "^7.3.1"

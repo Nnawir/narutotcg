@@ -1,18 +1,17 @@
 import {
-  applyAction,
-  createInitialState,
-  deciderOf,
-  PREVIEW_DECKS,
-  previewDeckList,
-} from '../../vendor/tcg-engines/submodules/naruto/packages/engine/src/index.ts';
+  applyNarutoAction,
+  availableNarutoActions,
+  createNarutoPreviewMatch,
+  narutoCard,
+  narutoDecider,
+} from '../../src/simulator/engine/naruto';
 import type {
   Action,
   CardInstance,
   GameState,
   PlayerId,
   SupportInstance,
-} from '../../vendor/tcg-engines/submodules/naruto/packages/engine/src/index.ts';
-import { getCardById } from '@tcg-engines/naruto-cards';
+} from '../../src/simulator/engine/naruto';
 
 type PlayerSession = { matchId: string; playerId: PlayerId; ticket: string };
 type SocketAttachment = { playerId: PlayerId } | { queueToken: string };
@@ -45,7 +44,7 @@ function readPlayerId(value: string | null): PlayerId | null {
 }
 
 function cardView(card: CardInstance) {
-  const definition = getCardById(card.cardId);
+  const definition = narutoCard(card.cardId);
   return { uid: card.uid, cardId: card.cardId, name: definition?.nameEn ?? card.cardId };
 }
 
@@ -53,75 +52,6 @@ function projectSupport(support: SupportInstance | null, owner: PlayerId, viewer
   if (!support) return null;
   if (owner !== viewer && !support.revealed) return { uid: support.uid, revealed: false };
   return { ...cardView(support), revealed: Boolean(support.revealed) };
-}
-
-function legalActions(state: GameState, player: PlayerId): Array<{ label: string; action: Action }> {
-  if (deciderOf(state) !== player || state.winner) return [];
-  const legal = (label: string, action: Action) => (applyAction(state, action) === state ? [] : [{ label, action }]);
-  const actor = state.players[player];
-  const opponentId: PlayerId = player === 'p1' ? 'p2' : 'p1';
-  const opponent = state.players[opponentId];
-
-  if (state.awaitingMulligan === player) {
-    return [
-      ...legal('Keep hand', { type: 'MULLIGAN', player, keep: true }),
-      ...legal('Mulligan', { type: 'MULLIGAN', player, keep: false }),
-    ];
-  }
-  if (state.pendingChoice?.player === player) {
-    const choices = state.pendingChoice.options.flatMap((option) =>
-      legal(`Choose ${cardView({ uid: option.key, cardId: option.cardId }).name}`, {
-        type: 'RESOLVE_CHOICE', player, key: option.key,
-      }),
-    );
-    return state.pendingChoice.cancellable
-      ? [...choices, ...legal('Cancel choice', { type: 'RESOLVE_CHOICE', player, key: null })]
-      : choices;
-  }
-  if (state.step === 'counter') {
-    return [
-      ...actor.supports.flatMap((support, slot) =>
-        support ? legal(`Activate ${cardView(support).name}`, { type: 'ACTIVATE_SUPPORT', player, slot }) : [],
-      ),
-      ...legal('Pass priority', { type: 'PASS_COUNTER', player }),
-    ];
-  }
-
-  const actions: Array<{ label: string; action: Action }> = [];
-  for (const card of actor.hand) {
-    const name = cardView(card).name;
-    actions.push(...legal(`Summon ${name}`, { type: 'SUMMON', player, handUid: card.uid }));
-    actions.push(...legal(`Set ${name} as support`, { type: 'SET_SUPPORT', player, handUid: card.uid }));
-    actions.push(...legal(`Play ${name} support`, { type: 'ACTIVATE_SUPPORT_FROM_HAND', player, handUid: card.uid }));
-  }
-  actions.push(...legal('Activate Leader effect', { type: 'LEADER_EFFECT', player }));
-  actions.push(...legal('Recovery', { type: 'RECOVERY', player }));
-
-  const targets = [
-    { label: `${opponent.name}'s Leader`, targetKind: 'leader' as const, targetUid: `leader:${opponentId}` },
-    ...opponent.characters.flatMap((character) =>
-      character ? [{ label: cardView(character).name, targetKind: 'character' as const, targetUid: character.uid }] : [],
-    ),
-  ];
-  for (const target of targets) {
-    actions.push(...legal(`Attack ${target.label}`, {
-      type: 'DECLARE_ATTACK', player, attackerKind: 'leader', attackerUid: `leader:${player}`,
-      targetKind: target.targetKind, targetUid: target.targetUid,
-    }));
-  }
-  for (const character of actor.characters) {
-    if (!character) continue;
-    const name = cardView(character).name;
-    actions.push(...legal(`Activate ${name}`, { type: 'ACTIVATE_CHARACTER', player, uid: character.uid }));
-    for (const target of targets) {
-      actions.push(...legal(`${name}: attack ${target.label}`, {
-        type: 'DECLARE_ATTACK', player, attackerKind: 'character', attackerUid: character.uid,
-        targetKind: target.targetKind, targetUid: target.targetUid,
-      }));
-    }
-  }
-  actions.push(...legal('End turn', { type: 'END_TURN', player }));
-  return actions;
 }
 
 function projectState(state: GameState, viewer: PlayerId) {
@@ -132,7 +62,7 @@ function projectState(state: GameState, viewer: PlayerId) {
       id,
       name: player.name,
       leaderId: player.leaderId,
-      leaderName: getCardById(player.leaderId)?.nameEn ?? player.leaderId,
+      leaderName: narutoCard(player.leaderId)?.nameEn ?? player.leaderId,
       life: player.life,
       leaderRested: player.leaderRested,
       deckCount: player.deck.length,
@@ -149,24 +79,41 @@ function projectState(state: GameState, viewer: PlayerId) {
   };
   return {
     type: 'state',
-    rulesProfile: { id: state.rulesProfile.id, version: state.rulesProfile.version, status: state.rulesProfile.status },
+    rulesProfile: {
+      id: state.rulesProfile.id,
+      version: state.rulesProfile.version,
+      status: state.rulesProfile.status,
+    },
     turn: state.turn,
     phase: state.phase,
     step: state.step,
     activePlayer: state.activePlayer,
-    decider: deciderOf(state),
+    decider: narutoDecider(state),
     winner: state.winner,
     players: { p1: projectPlayer('p1'), p2: projectPlayer('p2') },
-    pendingChoice: state.pendingChoice?.player === viewer
-      ? { promptKey: state.pendingChoice.promptKey, options: state.pendingChoice.options.map((option) => ({ key: option.key, cardId: option.cardId, name: getCardById(option.cardId)?.nameEn ?? option.cardId })) }
-      : state.pendingChoice ? { player: state.pendingChoice.player } : null,
+    pendingChoice:
+      state.pendingChoice?.player === viewer
+        ? {
+            promptKey: state.pendingChoice.promptKey,
+            options: state.pendingChoice.options.map((option) => ({
+              key: option.key,
+              cardId: option.cardId,
+              name: narutoCard(option.cardId)?.nameEn ?? option.cardId,
+            })),
+          }
+        : state.pendingChoice
+          ? { player: state.pendingChoice.player }
+          : null,
     log: state.log.slice(-12).map(({ turn, actor, key }) => ({ turn, actor, key })),
-    availableActions: legalActions(state, viewer),
+    availableActions: availableNarutoActions(state, viewer),
   };
 }
 
 export class Matchmaker {
-  constructor(readonly state: DurableObjectState, readonly env: Env) {}
+  constructor(
+    readonly state: DurableObjectState,
+    readonly env: Env,
+  ) {}
 
   async fetch(request: Request): Promise<Response> {
     const url = new URL(request.url);
@@ -200,9 +147,12 @@ export class Matchmaker {
       socket.send(json({ type: 'queued' }));
       return;
     }
-    const waitingSocket = this.state.getWebSockets().find((candidate) =>
-      (candidate.deserializeAttachment() as SocketAttachment | null)?.queueToken === waiting.queueToken,
-    );
+    const waitingSocket = this.state
+      .getWebSockets()
+      .find(
+        (candidate) =>
+          (candidate.deserializeAttachment() as SocketAttachment | null)?.queueToken === waiting.queueToken,
+      );
     if (!waitingSocket) {
       await this.state.storage.put('waiting', { queueToken });
       socket.send(json({ type: 'queued' }));
@@ -234,7 +184,10 @@ export class GameRoom {
   private stored: StoredMatch | null = null;
   private readonly ready: Promise<void>;
 
-  constructor(readonly state: DurableObjectState, readonly env: Env) {
+  constructor(
+    readonly state: DurableObjectState,
+    readonly env: Env,
+  ) {
     this.ready = state.blockConcurrencyWhile(async () => {
       this.stored = (await state.storage.get<StoredMatch>('match')) ?? null;
     });
@@ -252,12 +205,17 @@ export class GameRoom {
       return new Response('Unauthorized game session', { status: 401 });
     }
     if (!this.stored) {
-      const game = createInitialState({
+      const game = createNarutoPreviewMatch({
         seed: Math.floor(Math.random() * 0x7fffffff),
-        decks: { p1: previewDeckList(PREVIEW_DECKS[0]!), p2: previewDeckList(PREVIEW_DECKS[2]!) },
         names: { p1: 'Player 1', p2: 'Player 2' },
       });
-      this.stored = { matchId, game, startedAt: new Date().toISOString(), firstPlayer: game.activePlayer, resultSaved: false };
+      this.stored = {
+        matchId,
+        game,
+        startedAt: new Date().toISOString(),
+        firstPlayer: game.activePlayer,
+        resultSaved: false,
+      };
       await this.persist();
     }
     const pair = new WebSocketPair();
@@ -273,15 +231,33 @@ export class GameRoom {
     const attachment = socket.deserializeAttachment() as SocketAttachment | null;
     if (!attachment || !('playerId' in attachment) || !this.stored || typeof message !== 'string') return;
     let payload: { type?: string; action?: Action };
-    try { payload = JSON.parse(message) as { type?: string; action?: Action }; } catch { socket.send(json({ type: 'error', code: 'invalid_message', message: 'Invalid message.' })); return; }
+    try {
+      payload = JSON.parse(message) as { type?: string; action?: Action };
+    } catch {
+      socket.send(json({ type: 'error', code: 'invalid_message', message: 'Invalid message.' }));
+      return;
+    }
     if (payload.type !== 'action' || !payload.action || payload.action.player !== attachment.playerId) {
-      socket.send(json({ type: 'error', code: 'unauthorized_action', message: 'This player cannot submit that action.' }));
+      socket.send(
+        json({
+          type: 'error',
+          code: 'unauthorized_action',
+          message: 'This player cannot submit that action.',
+        }),
+      );
       return;
     }
     let next: GameState;
-    try { next = applyAction(this.stored.game, payload.action); } catch { socket.send(json({ type: 'error', code: 'invalid_action', message: 'Action payload rejected.' })); return; }
+    try {
+      next = applyNarutoAction(this.stored.game, payload.action);
+    } catch {
+      socket.send(json({ type: 'error', code: 'invalid_action', message: 'Action payload rejected.' }));
+      return;
+    }
     if (next === this.stored.game) {
-      socket.send(json({ type: 'error', code: 'illegal_action', message: 'The engine rejected that action.' }));
+      socket.send(
+        json({ type: 'error', code: 'illegal_action', message: 'The engine rejected that action.' }),
+      );
       return;
     }
     this.stored.game = next;
@@ -293,7 +269,9 @@ export class GameRoom {
   private async authorize(matchId: string, playerId: PlayerId, ticket: string): Promise<boolean> {
     if (!matchId || !ticket) return false;
     const matcher = this.env.MATCHMAKER.get(this.env.MATCHMAKER.idFromName('global'));
-    const response = await matcher.fetch(`https://matchmaker/claim?matchId=${encodeURIComponent(matchId)}&playerId=${playerId}&ticket=${encodeURIComponent(ticket)}`);
+    const response = await matcher.fetch(
+      `https://matchmaker/claim?matchId=${encodeURIComponent(matchId)}&playerId=${playerId}&ticket=${encodeURIComponent(ticket)}`,
+    );
     return response.ok;
   }
 
@@ -320,7 +298,21 @@ export class GameRoom {
     await this.env.MATCH_RESULTS.prepare(
       `INSERT OR IGNORE INTO match_results (match_id, mode, p1_leader_id, p2_leader_id, winner_player_id, loser_player_id, first_player_id, turn_count, ruleset_id, ruleset_version, started_at, completed_at)
        VALUES (?, 'pvp', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    ).bind(this.stored.matchId, game.players.p1.leaderId, game.players.p2.leaderId, winner, loser, this.stored.firstPlayer, game.turn, game.rulesProfile.id, game.rulesProfile.version, this.stored.startedAt, new Date().toISOString()).run();
+    )
+      .bind(
+        this.stored.matchId,
+        game.players.p1.leaderId,
+        game.players.p2.leaderId,
+        winner,
+        loser,
+        this.stored.firstPlayer,
+        game.turn,
+        game.rulesProfile.id,
+        game.rulesProfile.version,
+        this.stored.startedAt,
+        new Date().toISOString(),
+      )
+      .run();
     this.stored.resultSaved = true;
     await this.persist();
   }
