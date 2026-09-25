@@ -13,7 +13,12 @@
     "check": "astro check",
     "lint": "eslint \"src/**/*.astro\"",
     "format": "prettier --write \"src/**/*.{astro,ts,css}\" \"astro.config.mjs\" \"eslint.config.js\" \"package.json\"",
-    "format:check": "prettier --check \"src/**/*.{astro,ts,css}\" \"astro.config.mjs\" \"eslint.config.js\" \"package.json\""
+    "format:check": "prettier --check \"src/**/*.{astro,ts,css}\" \"astro.config.mjs\" \"eslint.config.js\" \"package.json\"",
+    "worker:dev": "wrangler dev --local --port 8787",
+    "worker:check": "wrangler deploy --dry-run",
+    "test:pvp": "node workers/test/pvp-smoke.mjs",
+    "test:upstream": "pnpm --dir vendor/tcg-engines/submodules/naruto --filter @tcg-engines/naruto-engine test",
+    "verify:simulator": "npm run test:upstream && npm run build"
   },
   "dependencies": {
     "astro": "^7.3.1"
@@ -23,11 +28,13 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "@cloudflare/workers-types": "^5.20260924.1",
     "@typescript-eslint/parser": "^8.70.0",
     "eslint": "^10.11.0",
     "eslint-plugin-astro": "^3.2.1",
     "prettier": "^3.9.8",
     "prettier-plugin-astro": "^1.0.1",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "wrangler": "^4.138.0"
   }
 }

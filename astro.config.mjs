@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import { fileURLToPath } from 'node:url';
 
 // https://astro.build/config
 export default defineConfig({
@@ -8,5 +9,14 @@ export default defineConfig({
   redirects: {
     '/actualites/': '/news/',
     '/cartes/': '/cards-list/',
+  },
+  vite: {
+    resolve: {
+      alias: {
+        '@tcg-engines/naruto-cards': fileURLToPath(
+          new URL('./vendor/tcg-engines/submodules/naruto/packages/cards/src/index.ts', import.meta.url),
+        ),
+      },
+    },
   },
 });

@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../../components/BaseLayout.astro';
+import { narutoEngineUpstream } from '../../simulator/engine/upstream';
+---
+
+<BaseLayout
+  title="Simulator"
+  description="The NarutoCardGuide simulator entry point for online and AI play."
+  canonicalPath="/simulator/"
+>
+  <section class="simulator-hero">
+    <div class="shell">
+      <p class="eyebrow">NarutoCardGuide · Simulator</p>
+      <h1>Play the Naruto Card Game here.</h1>
+      <p>
+        This is the NarutoCardGuide simulator entry point. It will run on this site — never as a
+        redirect to an external simulator.
+      </p>
+      <p class="simulator-preview-note">
+        <strong>Preview ruleset:</strong> the upstream Naruto engine is provisional while the
+        official rules are still evolving.
+      </p>
+    </div>
+  </section>
+
+  <section class="section shell" aria-labelledby="simulator-modes-title">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Choose a mode</p>
+        <h2 id="simulator-modes-title">The game room is being prepared</h2>
+        <p>Both modes will share the same Naruto rules engine and action validation.</p>
+      </div>
+    </div>
+
+    <div class="simulator-mode-grid">
+      <article class="simulator-mode-card">
+        <div class="mode-card-topline">
+          <span>01</span>
+          <span class="status-pill">In development</span>
+        </div>
+        <h3>Play Online</h3>
+        <p>
+          Real-time matchmaking and synchronized matches will be backed by an authoritative game
+          service, so the browser cannot alter the game state on its own.
+        </p>
+        <a class="mode-button" href="/simulator/online/">Play Online</a>
+      </article>
+
+      <article class="simulator-mode-card">
+        <div class="mode-card-topline">
+          <span>02</span>
+          <span class="status-pill">In development</span>
+        </div>
+        <h3>Play vs AI</h3>
+        <p>
+          The AI will choose only actions accepted by the same engine that validates player moves.
+        AI matches will remain separate from PvP statistics.
+        </p>
+        <a class="mode-button" href="/simulator/ai/">Play vs AI</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="section simulator-foundation" aria-labelledby="foundation-title">
+    <div class="shell simulator-foundation-grid">
+      <div>
+        <p class="eyebrow">Integration foundation</p>
+        <h2 id="foundation-title">One rules engine, kept upstream.</h2>
+      </div>
+      <dl>
+        <div>
+          <dt>Rules engine</dt>
+          <dd>{narutoEngineUpstream.enginePackage}</dd>
+        </div>
+        <div>
+          <dt>Ruleset status</dt>
+          <dd>Provisional preview</dd>
+        </div>
+        <div>
+          <dt>Future hosting</dt>
+          <dd>Cloudflare Workers, Durable Objects, WebSockets, and D1</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+</BaseLayout>
