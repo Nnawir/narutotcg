@@ -76,7 +76,8 @@ const structuredData = [
         </div>
       </header>
 
-      <div class="article-layout">
+      {(guide.sections.length > 0 || guide.officialResources.length > 0) && (
+        <div class="article-layout">
         <div class="article-body">
           {guide.sections.map((section) => (
             <section aria-labelledby={section.id}>
@@ -120,7 +121,8 @@ const structuredData = [
             </nav>
           </aside>
         )}
-      </div>
+        </div>
+      )}
 
       {relatedCards.length > 0 && (
         <section class="related-section" aria-labelledby="guide-cards-title">

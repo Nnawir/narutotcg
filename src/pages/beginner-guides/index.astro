@@ -5,10 +5,6 @@ import GuideCard from '../../components/GuideCard.astro';
 import { guides } from '../../data/content';
 
 const orderedGuides = [...guides].sort((a, b) => a.order - b.order);
-const recommendedGuide = orderedGuides[0];
-const pathGuides = orderedGuides.filter((guide) => guide.slug !== recommendedGuide?.slug);
-const recentGuides = [...guides].sort((a, b) => b.verifiedAt.localeCompare(a.verifiedAt)).slice(0, 3);
-const glossary = guides.find((guide) => guide.category === 'Glossary');
 ---
 
 <BaseLayout
@@ -18,73 +14,28 @@ const glossary = guides.find((guide) => guide.category === 'Glossary');
   noindex={guides.length === 0}
 >
   <header class="page-hero shell">
-    <p class="eyebrow">Learn in order</p>
+    <p class="eyebrow card-list-eyebrow">Beginner Guides</p>
     <h1>Beginner Guides</h1>
     <p>
-      A practical learning path for new players, published only when official rules support accurate
-      instruction.
+      Start with the essentials, learn to read your cards, and build your game vocabulary one guide
+      at a time.
     </p>
   </header>
 
   <div class="shell">
-    {recommendedGuide ? (
-      <section class="section" aria-labelledby="recommended-guide-title">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">Recommended starting guide</p>
-            <h2 id="recommended-guide-title">Start here</h2>
-          </div>
-          {glossary && (
-            <a class="text-link" href={`/beginner-guides/${glossary.slug}/`}>
-              Open the glossary
-            </a>
-          )}
+    <section class="section beginner-guides-section" aria-labelledby="beginner-guides-list-title">
+      <h2 id="beginner-guides-list-title" class="visually-hidden">Beginner guide articles</h2>
+      {orderedGuides.length > 0 ? (
+        <div class="guide-grid">
+          {orderedGuides.map((guide) => <GuideCard guide={guide} />)}
         </div>
-        <GuideCard guide={recommendedGuide} recommended />
-      </section>
-    ) : (
-      <section class="section" aria-labelledby="guide-empty-title">
-        <h2 id="guide-empty-title" class="visually-hidden">
-          Guide status
-        </h2>
+      ) : (
         <EmptyState
           eyebrow="Learning path ready"
-          title="Guides are waiting for official rules"
-          message="We will publish an ordered beginner path when the game’s rules and core mechanics can be verified. No speculative rules explanations will be presented as fact."
+          title="Guides are coming soon"
+          message="Beginner guides will be added here as they are prepared."
         />
-      </section>
-    )}
-
-    {pathGuides.length > 0 && (
-      <section class="section" aria-labelledby="learning-path-title">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">Continue learning</p>
-            <h2 id="learning-path-title">Your beginner path</h2>
-          </div>
-        </div>
-        <div class="guide-grid">
-          {pathGuides.map((guide) => (
-            <GuideCard guide={guide} />
-          ))}
-        </div>
-      </section>
-    )}
-
-    {recentGuides.length > 0 && (
-      <section class="section" aria-labelledby="recent-guides-title">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">Recently verified</p>
-            <h2 id="recent-guides-title">Updated guides</h2>
-          </div>
-        </div>
-        <div class="guide-grid">
-          {recentGuides.map((guide) => (
-            <GuideCard guide={guide} />
-          ))}
-        </div>
-      </section>
-    )}
+      )}
+    </section>
   </div>
 </BaseLayout>

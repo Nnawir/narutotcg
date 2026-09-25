@@ -145,7 +145,50 @@ const n01Cards: Card[] = (
 
 export const news: NewsArticle[] = [];
 export const cards: Card[] = n01Cards;
-export const guides: Guide[] = [];
+export const guides: Guide[] = [
+  {
+    slug: 'complete-naruto-card-game-rules',
+    title: 'Complete Naruto Card Game Rules',
+    summary: 'A clear starting point for understanding the flow of a NARUTO CARD GAME match.',
+    category: 'Rules',
+    difficulty: 'Beginner',
+    readingTime: '5 min read',
+    verifiedAt: '2026-09-25',
+    sections: [],
+    officialResources: [],
+    relatedCardIds: [],
+    relatedGuideSlugs: ['how-to-read-cards', 'glossary-key-terms'],
+    order: 1,
+  },
+  {
+    slug: 'how-to-read-cards',
+    title: 'How to read cards : Stats, Costs & Effects',
+    summary: 'Learn where to find the key information on a card and how to read it at a glance.',
+    category: 'Core Mechanics',
+    difficulty: 'Beginner',
+    readingTime: '4 min read',
+    verifiedAt: '2026-09-25',
+    sections: [],
+    officialResources: [],
+    relatedCardIds: [],
+    relatedGuideSlugs: ['complete-naruto-card-game-rules', 'glossary-key-terms'],
+    order: 2,
+  },
+  {
+    slug: 'glossary-key-terms',
+    title: 'Glossary : Key Terms & Keywords Explained',
+    summary: 'A quick reference for the words and keywords you will encounter while learning the game.',
+    category: 'Glossary',
+    difficulty: 'Beginner',
+    readingTime: '3 min read',
+    verifiedAt: '2026-09-25',
+    sections: [],
+    officialResources: [],
+    relatedCardIds: [],
+    relatedGuideSlugs: ['complete-naruto-card-game-rules', 'how-to-read-cards'],
+    order: 3,
+  },
+];
 export const sets: CardSet[] = [
   {
     code: 'N01',
