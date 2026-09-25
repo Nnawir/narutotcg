@@ -1,0 +1,26 @@
+name = "naruto-card-guide-simulator"
+main = "workers/src/index.ts"
+compatibility_date = "2026-09-24"
+
+[alias]
+"@tcg-engines/naruto-cards" = "./vendor/tcg-engines/submodules/naruto/packages/cards/src/index.ts"
+
+[[durable_objects.bindings]]
+name = "MATCHMAKER"
+class_name = "Matchmaker"
+
+[[durable_objects.bindings]]
+name = "GAME_ROOM"
+class_name = "GameRoom"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["Matchmaker", "GameRoom"]
+
+# Add this binding after creating a D1 database. It is intentionally absent so
+# local play works without a Cloudflare account or remote database.
+# [[d1_databases]]
+# binding = "MATCH_RESULTS"
+# database_name = "naruto-simulator-results"
+# database_id = "<replace-with-d1-database-id>"
+# migrations_dir = "workers/migrations"

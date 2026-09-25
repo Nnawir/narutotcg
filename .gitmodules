@@ -1,0 +1,4 @@
+[submodule "vendor/tcg-engines"]
+	path = vendor/tcg-engines
+	url = https://github.com/TheCardGoat/tcg-engines.git
+	branch = main

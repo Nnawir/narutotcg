@@ -167,6 +167,7 @@ export const releaseMilestones = [
 ] as const;
 
 export const navigation = [
+  { label: 'Simulator', href: '/simulator/' },
   { label: 'News', href: '/news/' },
   { label: 'Cards List', href: '/cards-list/' },
   { label: 'Beginner Guides', href: '/beginner-guides/' },
