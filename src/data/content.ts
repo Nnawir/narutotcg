@@ -61,6 +61,7 @@ export type GuideSection = {
   table?: { headers: string[]; rows: string[][] };
   links?: Array<{ label: string; href: string }>;
   subsections?: Array<{
+    id?: string;
     heading: string;
     paragraphs?: string[];
     bullets?: string[];
@@ -171,7 +172,7 @@ export const guides: Guide[] = [
         heading: 'Who this guide is for',
         paragraphs: [
           'This guide is for someone who has never played the NARUTO CARD GAME. It explains the parts of a game that Bandai has publicly described so far, so you can understand the game’s purpose and the role of its main cards.',
-          'The game is still in development. Bandai has not yet published a complete English rulebook covering every phase, timing window, or combat procedure. Any point marked “not yet confirmed” must be checked against a future official rules release.',
+          'The game is still in development. Bandai has not yet published a complete English rulebook covering every phase, timing window, or combat procedure.',
         ],
         callout: {
           label: 'Update note',
@@ -182,8 +183,8 @@ export const guides: Guide[] = [
         id: 'the-goal',
         heading: 'The goal of the game',
         paragraphs: [
-          'Each player builds a deck around one Leader card. Your goal is to reduce your opponent’s Leader Life to 0. Bandai’s official overview identifies this as the win condition currently confirmed for the game.',
-          'Characters form the front line of the battle. They can battle opposing Characters or the opposing Leader, while some Characters can also use Ninjutsu by paying Chakra. The complete rules for declaring and resolving an attack have not yet been published.',
+          'Each player builds a deck around one Leader card. Your goal is to reduce your opponent’s Leader Life to 0. When the opposing Leader reaches 0 Life, you win the game.',
+          'Characters form the front line of the battle. They can battle opposing Characters or the opposing Leader, while some Characters can also use Ninjutsu by paying Chakra.',
         ],
       },
       {
@@ -231,23 +232,47 @@ export const guides: Guide[] = [
         id: 'turn-structure',
         heading: 'How a turn works',
         paragraphs: [
-          'Both players open on 5 cards. Only the player going second may mulligan, and only once. A turn then has two phases: Draw and Main.',
+          'Both players open on 5 cards. Only the player going second may mulligan, and only once. A turn begins with a Refresh phase, followed by Draw and Main phases, and ends with an End phase.',
         ],
         subsections: [
           {
+            id: 'refresh-phase',
+            heading: 'Refresh phase',
+            paragraphs: [
+              'At the beginning of the turn, return cards in Rest Mode to Active Mode by straightening them.',
+            ],
+          },
+          {
+            id: 'draw-phase',
             heading: 'Draw phase',
             paragraphs: [
               'On turn one, the player going first draws 1 card and the player going second draws 2 cards. From then on, each player draws 2 cards per turn.',
             ],
           },
           {
+            id: 'main-phase',
             heading: 'Main phase',
             paragraphs: [
-              'During the Main phase, you can deploy Characters, activate Jutsu by paying Chakra, and attack. There is no separate battle phase and no refresh step.',
+              'During the Main phase, you can deploy Characters, activate Jutsu by paying Chakra, activate Leader effects, and attack.',
             ],
           },
           {
-            heading: 'Deploying Characters',
+            id: 'end-phase',
+            heading: 'End phase',
+            paragraphs: [
+              'End effects lasting “for the turn” resolve, then you pass the turn to your opponent.',
+            ],
+          },
+        ],
+      },
+      {
+        id: 'cards-and-resources',
+        heading: 'Main phase actions in detail',
+        paragraphs: [],
+        subsections: [
+          {
+            id: 'deploying-characters',
+            heading: '1) Deploying Characters',
             bullets: [
               'Normal deployment happens once per turn by resting your Summon card. That single card limits how quickly a board can develop.',
               'Deployment via an EX Character or a card effect does not use the Summon card, so it is additional deployment beyond the normal limit.',
@@ -255,9 +280,38 @@ export const guides: Guide[] = [
             ],
           },
           {
-            heading: 'How battle resolves',
+            id: 'deploy-support-cards',
+            heading: '2) Deploy Support cards and activate their effects with Chakra cards',
+            bullets: [
+              'Deploy it normally to the field as a Character (and set it face-down in the Support area).',
+              'Use Chakra to activate Support effects. These effects can be used during the Main phase according to their printed conditions and costs.',
+              'Costs are paid by flipping Chakra face-down.',
+            ],
+          },
+          {
+            id: 'leader-and-recovery-effects',
+            heading: '3) Play your Leader effect and Recovery effect to restore Chakra',
+            bullets: [
+              'Your Leader possesses its own unique effect that you can activate.',
+              'Your Leader possesses the [Recovery] ability, which rests the Leader to flip all of your CHAKRA face-up from the second turn onward. Resting it that way costs you your attack for the turn. The Leader chooses each turn between attacking the opponent and recovering Chakra.',
+            ],
+          },
+          {
+            id: 'how-battle-resolves',
+            heading: '4) How battle resolves',
             paragraphs: [
               'Characters carry two different attack values, and which one applies depends on what you attack.',
+            ],
+            bullets: [
+              'You may attack the Leader to reduce its Life depending on the DMG of the cards you are using.',
+              'You may only attack Characters that are already rested. Standing Characters cannot be targeted.',
+            ],
+            steps: [
+              'Declare the attack. The attacking Character rests.',
+              'Resolve the damage step by subtracting your POW value from the target.',
+              'The defending player may activate an effect with the [During Your Opponent\'s Attack] timing to resolve that effect.',
+              'A Character reduced to 0 HP goes to the trash.',
+              'A Leader reduced to 0 Life loses the game.',
             ],
             table: {
               headers: ['Value', 'Used when'],
@@ -266,54 +320,11 @@ export const guides: Guide[] = [
                 ['POW', 'Attacking a rested Character, reducing its HP.'],
               ],
             },
-            steps: [
-              'Declare the attack. The attacking Character rests.',
-              'Resolve the damage step by subtracting your value from the target.',
-              'A Character reduced to 0 HP goes to the trash.',
-              'A Leader reduced to 0 Life loses the game.',
-            ],
-            bullets: [
-              'You may only attack Characters that are already rested. Standing Characters cannot be targeted, so resting to attack is what exposes the attacking Character.',
-            ],
           },
-          {
-            heading: 'Activate Support effects with Chakra',
-            paragraphs: [
-              'Use Chakra to activate Support effects such as Jutsu. These effects can be used during the Main phase according to their printed conditions and costs.',
-            ],
-          },
-        ],
-      },
-      {
-        id: 'cards-and-resources',
-        heading: 'Playing cards and using resources',
-        paragraphs: [
-          'The Summon card and Chakra cards have different jobs. The official overview says that the Summon card is required to play Character cards, while Chakra cards are used to activate Support effects such as Ninjutsu.',
-          'In the public material, some Characters also activate Ninjutsu by paying a required Chakra cost. EX Characters are played after specific play conditions are met. The exact cost icons, payment procedure, timing rules, and whether other cards can be played outside the normal sequence are not yet confirmed.',
-          'For a visual explanation of printed values, costs, and effects, continue with the dedicated card-reading guide. The glossary is available whenever a game term needs a short definition.',
         ],
         links: [
           { label: 'How to read cards: Stats, Costs & Effects', href: '/beginner-guides/how-to-read-cards/' },
           { label: 'Glossary', href: '/beginner-guides/glossary-key-terms/' },
-        ],
-      },
-      {
-        id: 'attacks-and-combat',
-        heading: 'Attacks and combat',
-        paragraphs: [
-          'Bandai’s announcement confirms that Characters can battle opposing Characters or the opposing Leader. The official overview also shows that Support cards such as Ninjutsu can be used to stop attacks.',
-          'The complete combat sequence is not yet confirmed. Bandai has not yet published the official order for choosing an attacker, choosing a target, declaring a defense, comparing printed values, applying damage, or handling a Character that leaves the field. This guide intentionally does not fill those gaps with rules from another game.',
-        ],
-        callout: {
-          label: 'What to wait for',
-          text: 'Look for Bandai’s future rulebook or tutorial material before treating any detailed attack, defense, damage, or response sequence as final.',
-        },
-      },
-      {
-        id: 'how-to-win',
-        heading: 'How to win',
-        paragraphs: [
-          'The currently confirmed win condition is to reduce your opponent’s Leader Life to 0. Bandai has not yet published a complete list of alternative victory or loss conditions, such as what happens when a deck is empty or when a player cannot draw.',
         ],
       },
     ],

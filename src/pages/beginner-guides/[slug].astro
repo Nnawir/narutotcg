@@ -63,9 +63,9 @@ const structuredData = [
       ]}
     />
     <article>
-      <header class="article-header">
-        <p class="eyebrow">{guide.category}</p>
-        <h1>{guide.title}</h1>
+      <header class="article-header guide-article-header">
+        <p class="eyebrow card-list-eyebrow">Beginner Guides</p>
+        <h1 class="card-list-title">{guide.title}</h1>
         <p class="article-standfirst">{guide.summary}</p>
         <div class="article-meta">
           <span>{guide.difficulty}</span>
@@ -123,7 +123,7 @@ const structuredData = [
               )}
               {section.subsections?.map((subsection) => (
                 <div class="article-subsection">
-                  <h3>{subsection.heading}</h3>
+                  <h3 id={subsection.id}>{subsection.heading}</h3>
                   {subsection.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
                   {subsection.bullets && (
                     <ul>
