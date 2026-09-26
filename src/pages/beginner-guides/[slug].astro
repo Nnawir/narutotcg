@@ -85,6 +85,74 @@ const structuredData = [
               {section.paragraphs.map((paragraph) => (
                 <p>{paragraph}</p>
               ))}
+              {section.bullets && (
+                <ul>
+                  {section.bullets.map((bullet) => <li>{bullet}</li>)}
+                </ul>
+              )}
+              {section.steps && (
+                <ol>
+                  {section.steps.map((step) => <li>{step}</li>)}
+                </ol>
+              )}
+              {section.table && (
+                <div class="article-table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        {section.table.headers.map((header) => <th scope="col">{header}</th>)}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {section.table.rows.map((row) => (
+                        <tr>{row.map((cell) => <td>{cell}</td>)}</tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+              {section.links && (
+                <p class="guide-inline-links">
+                  {section.links.map((link, index) => (
+                    <>
+                      {index > 0 && ' · '}
+                      <a href={link.href}>{link.label}</a>
+                    </>
+                  ))}
+                </p>
+              )}
+              {section.subsections?.map((subsection) => (
+                <div class="article-subsection">
+                  <h3>{subsection.heading}</h3>
+                  {subsection.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+                  {subsection.bullets && (
+                    <ul>
+                      {subsection.bullets.map((bullet) => <li>{bullet}</li>)}
+                    </ul>
+                  )}
+                  {subsection.steps && (
+                    <ol>
+                      {subsection.steps.map((step) => <li>{step}</li>)}
+                    </ol>
+                  )}
+                  {subsection.table && (
+                    <div class="article-table-wrap">
+                      <table>
+                        <thead>
+                          <tr>
+                            {subsection.table.headers.map((header) => <th scope="col">{header}</th>)}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {subsection.table.rows.map((row) => (
+                            <tr>{row.map((cell) => <td>{cell}</td>)}</tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
+              ))}
               {section.callout && (
                 <aside class="callout">
                   <strong>{section.callout.label}</strong>
