@@ -907,6 +907,136 @@ h3 {
   font-size: 0.65rem;
   font-weight: 760;
 }
+
+/* AI simulator: compact, board-first layout. */
+.simulator-game-page { background: radial-gradient(circle at 50% 20%, #20202a, #09090c 60%); }
+.game-shell { width: min(100%, 118rem); padding: .5rem; }
+.game-layout { grid-template-columns: minmax(0, 1fr) 15rem; gap: .55rem; margin-top: .55rem; }
+.game-sidebar { display: grid; align-content: start; gap: .55rem; position: sticky; top: .5rem; min-width: 0; }
+.game-sidebar .game-log { position: static; max-height: none; }
+.card-preview-panel { min-height: 22rem; border: 1px solid var(--border); border-radius: var(--radius); padding: .7rem; background: #111116; }
+.card-preview-panel h2 { margin: 0 0 .5rem; font-size: .86rem; }
+.card-preview-content { display: grid; min-height: 18rem; place-items: center; border: 1px dashed #3b3b47; border-radius: .5rem; color: var(--text-dim); font-size: .68rem; text-align: center; }
+.card-preview-content img { display: block; width: 100%; max-height: 28rem; object-fit: contain; border-radius: .35rem; }
+.simulator-game-page { height: 100dvh; overflow: hidden; }
+.game-shell { width: min(100%, 128rem); height: 100dvh; display: grid; grid-template-rows: auto auto minmax(0, 1fr); padding: .35rem; }
+.game-layout { grid-template-columns: minmax(0, 1fr) 20rem; min-height: 0; margin-top: .4rem; }
+.battlefield { min-height: 0; grid-template-rows: minmax(0, 1fr) auto minmax(0, 1fr) auto auto auto; gap: .3rem; overflow: hidden; }
+.player-board { min-height: 0; }
+.board-zones { grid-template-columns: 6rem minmax(0, 2.3fr) minmax(0, 1.35fr) 6rem 7rem; gap: .35rem; padding: .35rem .5rem; }
+.pile-zone { display: grid; grid-template-columns: 1fr 1fr; gap: .25rem; align-content: start; }
+.pile { display: grid; justify-items: center; align-content: start; gap: .15rem; color: var(--text-dim); font-size: .58rem; text-align: center; }
+.pile strong { color: var(--beige); font-size: .75rem; }
+.pile-stack { display: block; width: 2.7rem; height: 3.7rem; border: 1px solid #555362; border-radius: .25rem; background: repeating-linear-gradient(135deg, #282833 0 3px, #1a1a22 3px 6px); box-shadow: 2px 2px 0 #0e0e13, 4px 4px 0 #30303b; }
+.trash-stack { background: linear-gradient(145deg, #3b2529, #17131a); }
+.card-preview-panel { min-height: 0; height: 100%; }
+.card-preview-content { min-height: 0; height: calc(100% - 1.5rem); }
+@media (max-width: 70rem) { .simulator-game-page, .game-shell { height: auto; min-height: 100dvh; overflow: visible; } .game-layout { grid-template-columns: 1fr; } .battlefield { overflow: visible; } }
+@media (max-width: 48rem) { .board-zones { grid-template-columns: 5.5rem minmax(0, 1fr) 5.5rem; } .pile-zone { grid-column: 1 / -1; } }
+
+/* Keep every playable control in the desktop viewport. The preview is the
+   reading surface; field cards can therefore be compact without losing use. */
+@media (min-width: 71rem) {
+  .game-shell { grid-template-rows: 3.2rem 3.1rem minmax(0, 1fr); }
+  .game-topbar { min-height: 0; padding-block: .35rem; }
+  .game-status { min-height: 0; margin-top: .35rem; padding-block: .45rem; }
+  .game-layout { height: 100%; }
+  .game-layout { height: calc(100dvh - 7rem); }
+  .game-layout > .battlefield { height: 100%; }
+  .battlefield { display: flex; flex-direction: column; gap: .3rem; overflow: hidden; }
+  .player-board { flex: 0 0 11.4rem; height: 11.4rem; min-height: 11.4rem; }
+  .versus-divider { flex: 0 0 .75rem; }
+  .player-summary { padding-block: .25rem; }
+  .board-zones { height: 8.9rem; min-height: 8.9rem; padding-block: .2rem; }
+  .player-board .game-card { min-height: 0; }
+  .player-board .game-card:has(.game-card-image) { height: 100%; }
+  .player-board .empty-slot { min-height: 0; height: 100%; }
+  .hand-zone { flex: 0 0 7rem; max-height: 7rem; padding-block: .3rem; }
+  .hand-cards .game-card { flex-basis: clamp(5rem, 6vw, 7rem); }
+  .battlefield > .game-controls { min-height: 2.8rem; padding-block: .35rem; }
+  .battlefield > .game-controls { flex: 0 0 auto; }
+  .target-strip { flex: 0 0 auto; }
+  .game-controls p { margin-block: 0; }
+}
+
+@media (min-width: 71rem) {
+  .game-sidebar { grid-template-rows: minmax(0, 1fr) auto auto; height: 100%; }
+  .game-sidebar .card-preview-panel { min-height: 0; }
+  .game-sidebar .card-preview-content { height: calc(100% - 1.5rem); }
+  .side-actions .game-controls { border-color: #8d4c47; border-radius: var(--radius); }
+  .side-actions .choice-actions { display: grid; grid-template-columns: 1fr 1fr; margin-top: .35rem; }
+  .side-actions .game-action { width: 100%; }
+  .game-sidebar .game-log { max-height: 9rem; }
+}
+
+@media (min-width: 71rem) {
+  .player-summary { position: relative; height: 2.35rem; min-height: 2.35rem; overflow: hidden; }
+  .player-summary dl { gap: .45rem; }
+  .player-summary dl div { min-width: 2.1rem; }
+  .hand-count, .opponent-hand { display: flex; align-items: center; gap: .25rem; margin-left: auto; }
+  .hand-count { text-align: center; }
+  .hand-count span { color: var(--text-dim); font-size: .58rem; text-transform: uppercase; }
+  .hand-count strong { color: var(--beige); font-size: .75rem; }
+  .opponent-hand { max-width: 12rem; overflow: hidden; }
+  .hand-back { display: block; flex: 0 0 1.35rem; height: 1.8rem; border: 1px solid #5c526d; border-radius: .15rem; background: repeating-linear-gradient(135deg, #29233e 0 3px, #171526 3px 6px); box-shadow: 1px 1px 0 #0b0a12; }
+  .board-zones { height: 7rem; min-height: 7rem; }
+  .player-board .game-card:has(.game-card-image) { width: auto; height: 6.7rem !important; min-height: 6.7rem; max-height: 6.7rem; aspect-ratio: .72; }
+  .player-board .game-card-image { object-fit: contain; }
+  .player-board .leader-zone .game-card { width: 4.82rem; }
+  .player-board .game-slot { align-content: start; }
+  .player-board .game-slot .game-card { width: 4.82rem; }
+  .player-board .slots { gap: .2rem; }
+  .player-board .empty-slot { font-size: .55rem; }
+  .player-board .pile-stack { width: 2rem; height: 2.8rem; }
+  .player-board .pile-zone { gap: .15rem; }
+}
+.battlefield { gap: .45rem; }
+.player-board { border-radius: .65rem; background: #15151b; }
+.player-board.opponent { opacity: .9; }
+.player-board.you { border-color: #8d4c47; box-shadow: 0 0 0 1px rgb(199 71 61 / .12); }
+.player-summary { padding: .4rem .65rem; }
+.player-summary strong { font-size: .85rem; }
+.player-summary dl { gap: .7rem; }
+.player-summary dd { font-size: .8rem; }
+.board-zones { grid-template-columns: 7rem minmax(0, 2.3fr) minmax(0, 1.4fr) 7.5rem; gap: .45rem; padding: .5rem .65rem; }
+.slots { grid-template-columns: repeat(5, minmax(3.7rem, 1fr)); gap: .3rem; }
+.game-card { min-height: 5.2rem; padding: .3rem; }
+.game-card:has(.game-card-image) { aspect-ratio: .7; }
+#naruto-ai-game .game-card-copy { display: none; }
+.game-card strong { font-size: clamp(.58rem, .8vw, .75rem); }
+.game-card > span { font-size: .5rem; }
+.game-card.is-usable { border-color: #d2a36b; box-shadow: 0 0 0 1px rgb(210 163 107 / .25), 0 0 1rem rgb(210 163 107 / .12); cursor: pointer; }
+.game-card.is-usable:hover, .game-card.is-selected { border-color: #f0c77f; transform: translateY(-3px); box-shadow: 0 0 0 2px #f0c77f, 0 0 1.2rem rgb(240 199 127 / .28); }
+.game-card:not(.is-usable)[data-select] { cursor: zoom-in; }
+.hand-zone { padding: .55rem .7rem .7rem; }
+.hand-cards { display: flex; gap: .45rem; overflow-x: auto; padding: .25rem .1rem .35rem; }
+.hand-cards .game-card { flex: 0 0 clamp(6rem, 9vw, 8.5rem); min-height: 0; }
+.hand-cards .game-card-image { cursor: pointer; }
+.hand-zone .zone-heading { margin-bottom: .25rem; }
+.zone-heading small { color: var(--text-dim); font-size: .65rem; }
+.resource-empty { color: var(--text-dim); font-size: .65rem; }
+.versus-divider { display: grid; place-items: center; height: .8rem; color: #6e6b76; font-size: .55rem; font-weight: 800; letter-spacing: .2em; }
+.turn-indicator { display: flex; align-items: center; gap: .5rem; }
+.turn-indicator i, .pulse-dot { width: .55rem; height: .55rem; border-radius: 50%; background: #77737f; }
+.turn-indicator.your-turn i, .pulse-dot { background: #d26e62; box-shadow: 0 0 0 .25rem rgb(210 110 98 / .15); }
+.turn-indicator span { color: var(--text-dim); font-size: .7rem; text-transform: capitalize; }
+.game-controls { display: flex; align-items: center; gap: .8rem; padding: .65rem .8rem; }
+.battlefield > .game-controls { min-height: 3.2rem; z-index: 2; }
+.game-controls h2 { margin: 0; font-size: .92rem; }
+.game-controls p { margin: .15rem 0 0; }
+.game-controls .choice-actions { margin-left: auto; }
+.game-controls.focus { border-color: #d2a36b; background: linear-gradient(100deg, rgb(210 163 107 / .12), var(--surface)); }
+.game-controls .eyebrow { color: var(--beige); font-size: .63rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.end-turn { border-color: #8d4c47; margin-left: .4rem; }
+.target-strip { display: flex; align-items: center; flex-wrap: wrap; gap: .35rem; border: 1px solid #d2a36b; border-radius: .55rem; padding: .4rem .55rem; background: rgb(210 163 107 / .08); }
+.target-strip > span { color: var(--beige); font-size: .72rem; font-weight: 750; margin-right: .3rem; }
+.target-action { border-color: #d2a36b; }
+.log-heading { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+.log-heading button { border: 0; background: transparent; color: var(--text-dim); cursor: pointer; font-size: .65rem; }
+.game-log { align-self: start; position: sticky; top: .5rem; max-height: calc(100vh - 1rem); overflow: auto; }
+@media (max-width: 70rem) { .game-layout { grid-template-columns: 1fr; } .game-sidebar { position: static; display: grid; grid-template-columns: minmax(0, 1fr) minmax(12rem, 16rem); } .game-sidebar .game-log { position: fixed; z-index: 5; right: .6rem; bottom: .6rem; width: min(19rem, calc(100vw - 1.2rem)); max-height: 60vh; transform: translateY(calc(100% + 1rem)); transition: transform .2s ease; } .log-open .game-log { transform: translateY(0); } .card-preview-panel { min-height: 14rem; } .card-preview-content { min-height: 10rem; } }
+@media (max-width: 48rem) { .game-sidebar { grid-template-columns: 1fr; } .card-preview-panel { order: -1; min-height: 0; } .card-preview-content { min-height: 0; aspect-ratio: .72; max-height: 21rem; } .card-preview-content img { max-height: 20rem; width: auto; max-width: 100%; } }
+@media (max-width: 48rem) { .board-zones { grid-template-columns: 5.5rem minmax(0, 1fr) 5.5rem; } .resource-zone { grid-column: 1 / -1; grid-template-columns: auto 1fr auto auto; align-items: center; } .game-controls { display: block; } .game-controls .choice-actions { margin-top: .55rem; } }
 .simulator-card-preview {
   max-width: min(34rem, calc(100vw - 2rem));
   max-height: calc(100vh - 2rem);
