@@ -1858,6 +1858,44 @@ h3 {
 .article-body li {
   color: #cfcbc5;
 }
+.inline-keyword {
+  display: inline-block;
+  position: relative;
+  height: 1em;
+  margin-inline: 0.12em;
+  overflow: hidden;
+  vertical-align: -0.1em;
+}
+.inline-keyword img {
+  position: absolute;
+  display: block;
+  max-width: none;
+  height: auto;
+}
+.inline-keyword-recovery {
+  width: 3.89em;
+}
+.inline-keyword-recovery img {
+  top: -0.056em;
+  left: -0.17em;
+  width: 3.89em;
+}
+.inline-keyword-rush {
+  width: 2.7em;
+}
+.inline-keyword-rush img {
+  top: -0.5em;
+  left: -0.97em;
+  width: 4.6em;
+}
+.inline-keyword-during-attack {
+  width: 6.46em;
+}
+.inline-keyword-during-attack img {
+  top: -0.62em;
+  left: -0.23em;
+  width: 6.92em;
+}
 .article-body ol,
 .article-body ul {
   margin: 1rem 0 1.5rem;

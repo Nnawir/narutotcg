@@ -16,6 +16,17 @@ const relatedCards = cards.filter((card) => guide.relatedCardIds.includes(card.i
 const relatedGuides = guides.filter((item) => guide.relatedGuideSlugs.includes(item.slug));
 const siteOrigin = Astro.site ?? Astro.url.origin;
 const absoluteUrl = (path: string) => new URL(path, siteOrigin).toString();
+const renderGuideText = (text: string) =>
+  text.replace(
+    '[[RECOVERY]]',
+    '<span class="inline-keyword inline-keyword-recovery"><img src="/assets/keywords/recovery.png" alt="Recovery" /></span>',
+  ).replace(
+    '[[RUSH]]',
+    '<span class="inline-keyword inline-keyword-rush"><img src="/assets/keywords/rush.png" alt="Rush" /></span>',
+  ).replace(
+    '[[DURING_ATTACK]]',
+    '<span class="inline-keyword inline-keyword-during-attack"><img src="/assets/keywords/during-your-opponent\'s-attack.png" alt="During Your Opponent\'s Attack" /></span>',
+  );
 const structuredData = [
   {
     '@context': 'https://schema.org',
@@ -83,16 +94,16 @@ const structuredData = [
             <section aria-labelledby={section.id}>
               <h2 id={section.id}>{section.heading}</h2>
               {section.paragraphs.map((paragraph) => (
-                <p>{paragraph}</p>
+                <p set:html={renderGuideText(paragraph)}></p>
               ))}
               {section.bullets && (
                 <ul>
-                  {section.bullets.map((bullet) => <li>{bullet}</li>)}
+                  {section.bullets.map((bullet) => <li set:html={renderGuideText(bullet)}></li>)}
                 </ul>
               )}
               {section.steps && (
                 <ol>
-                  {section.steps.map((step) => <li>{step}</li>)}
+                  {section.steps.map((step) => <li set:html={renderGuideText(step)}></li>)}
                 </ol>
               )}
               {section.table && (
@@ -124,15 +135,21 @@ const structuredData = [
               {section.subsections?.map((subsection) => (
                 <div class="article-subsection">
                   <h3 id={subsection.id}>{subsection.heading}</h3>
-                  {subsection.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+                  {subsection.paragraphs?.map((paragraph) => (
+                    <p set:html={renderGuideText(paragraph)}></p>
+                  ))}
                   {subsection.bullets && (
                     <ul>
-                      {subsection.bullets.map((bullet) => <li>{bullet}</li>)}
+                      {subsection.bullets.map((bullet) => (
+                        <li set:html={renderGuideText(bullet)}></li>
+                      ))}
                     </ul>
                   )}
                   {subsection.steps && (
                     <ol>
-                      {subsection.steps.map((step) => <li>{step}</li>)}
+                      {subsection.steps.map((step) => (
+                        <li set:html={renderGuideText(step)}></li>
+                      ))}
                     </ol>
                   )}
                   {subsection.table && (
