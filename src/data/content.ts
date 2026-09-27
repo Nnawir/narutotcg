@@ -56,6 +56,18 @@ export type GuideSection = {
   heading: string;
   paragraphs: string[];
   callout?: { label: string; text: string };
+  bullets?: string[];
+  steps?: string[];
+  table?: { headers: string[]; rows: string[][] };
+  links?: Array<{ label: string; href: string }>;
+  subsections?: Array<{
+    id?: string;
+    heading: string;
+    paragraphs?: string[];
+    bullets?: string[];
+    steps?: string[];
+    table?: { headers: string[]; rows: string[][] };
+  }>;
 };
 
 export type Guide = {
@@ -154,8 +166,174 @@ export const guides: Guide[] = [
     difficulty: 'Beginner',
     readingTime: '5 min read',
     verifiedAt: '2026-09-25',
-    sections: [],
-    officialResources: [],
+    sections: [
+      {
+        id: 'introduction',
+        heading: 'Who this guide is for',
+        paragraphs: [
+          'This guide is for someone who has never played the NARUTO CARD GAME. It explains the parts of a game that Bandai has publicly described so far, so you can understand the game’s purpose and the role of its main cards.',
+          'The game is still in development. Bandai has not yet published a complete English rulebook covering every phase, timing window, or combat procedure.',
+        ],
+        callout: {
+          label: 'Update note',
+          text: 'This article is based on the official NARUTO CARD GAME website and Bandai’s July 29, 2026 announcement. It will be updated when Bandai publishes more complete rules.',
+        },
+      },
+      {
+        id: 'the-goal',
+        heading: 'The goal of the game',
+        paragraphs: [
+          'Each player builds a deck around one Leader card. Your goal is to reduce your opponent’s Leader Life to 0. When the opposing Leader reaches 0 Life, you win the game.',
+          'Characters form the front line of the battle. They can battle opposing Characters or the opposing Leader, while some Characters can also use Ninjutsu by paying Chakra.',
+        ],
+      },
+      {
+        id: 'what-you-need',
+        heading: 'What you need to play',
+        paragraphs: [
+          'The official materials currently describe the following cards for each player. The 50-card main deck is separate from the Leader, Chakra cards, and Summon card.',
+        ],
+        table: {
+          headers: ['Cards', 'Confirmed role'],
+          rows: [
+            ['1 Leader', 'The card your deck is built around. Its color determines the cards you can use, and it has Life.'],
+            ['50-card main deck', 'The main deck contains the cards you play during the game. Official materials identify Character and EX Character cards as part of the game’s card types.'],
+            ['5 Chakra cards', 'Used as costs for Support effects such as Ninjutsu.'],
+            ['1 Summon card', 'Required to play Character cards onto the battlefield.'],
+          ],
+        },
+        links: [
+          { label: 'Browse the Cards List', href: '/cards-list/' },
+          { label: 'Learn how to read cards', href: '/beginner-guides/how-to-read-cards/' },
+        ],
+      },
+      {
+        id: 'card-types-and-zones',
+        heading: 'The card types and main areas',
+        paragraphs: [
+          'NARUTO CARD GAME currently uses five card types.',
+        ],
+        table: {
+          headers: ['Card type', 'What is confirmed'],
+          rows: [
+            ['Leader', 'Your deck is built around this card. Its color determines which cards you can use, and its Life is the target of the game.'],
+            ['Character', 'Characters form your front line and can battle opposing Characters or a Leader. Some can activate Ninjutsu by paying Chakra.'],
+            ['EX Character', 'A powerful Character that can be played after specific play conditions are met.'],
+            ['Chakra', 'A resource card used to activate Support effects such as Ninjutsu.'],
+            ['Summon', 'A card required to play Character cards onto the battlefield.'],
+          ],
+        },
+        links: [
+          { label: 'See the future card-reading guide', href: '/beginner-guides/how-to-read-cards/' },
+          { label: 'Check the glossary', href: '/beginner-guides/glossary-key-terms/' },
+        ],
+      },
+      {
+        id: 'turn-structure',
+        heading: 'How a turn works',
+        paragraphs: [
+          'Both players open on 5 cards. Only the player going second may mulligan, and only once. A turn begins with a Refresh phase, followed by Draw and Main phases, and ends with an End phase.',
+        ],
+        subsections: [
+          {
+            id: 'refresh-phase',
+            heading: 'Refresh phase',
+            paragraphs: [
+              'At the beginning of the turn, return cards in Rest Mode to Active Mode by straightening them.',
+            ],
+          },
+          {
+            id: 'draw-phase',
+            heading: 'Draw phase',
+            paragraphs: [
+              'On turn one, the player going first draws 1 card and the player going second draws 2 cards. From then on, each player draws 2 cards per turn.',
+            ],
+          },
+          {
+            id: 'main-phase',
+            heading: 'Main phase',
+            paragraphs: [
+              'During the Main phase, you can deploy Characters, activate Jutsu by paying Chakra, activate Leader effects, and attack.',
+            ],
+          },
+          {
+            id: 'end-phase',
+            heading: 'End phase',
+            paragraphs: [
+              'End effects lasting “for the turn” resolve, then you pass the turn to your opponent.',
+            ],
+          },
+        ],
+      },
+      {
+        id: 'cards-and-resources',
+        heading: 'Main phase actions in detail',
+        paragraphs: [],
+        subsections: [
+          {
+            id: 'deploying-characters',
+            heading: '1) Deploying Characters',
+            bullets: [
+              'Normal deployment happens once per turn by resting your Summon card. That single card limits how quickly a board can develop.',
+              'Deployment via an EX Character or a card effect does not use the Summon card, so it is additional deployment beyond the normal limit.',
+              'A Character cannot attack on the turn it is deployed unless it has [Rush].',
+            ],
+          },
+          {
+            id: 'deploy-support-cards',
+            heading: '2) Deploy Support cards and activate their effects with Chakra cards',
+            bullets: [
+              'Deploy it normally to the field as a Character (and set it face-down in the Support area).',
+              'Use Chakra to activate Support effects. These effects can be used during the Main phase according to their printed conditions and costs.',
+              'Costs are paid by flipping Chakra face-down.',
+            ],
+          },
+          {
+            id: 'leader-and-recovery-effects',
+            heading: '3) Play your Leader effect and Recovery effect to restore Chakra',
+            bullets: [
+              'Your Leader possesses its own unique effect that you can activate.',
+              'Your Leader possesses the [Recovery] ability, which rests the Leader to flip all of your CHAKRA face-up from the second turn onward. Resting it that way costs you your attack for the turn. The Leader chooses each turn between attacking the opponent and recovering Chakra.',
+            ],
+          },
+          {
+            id: 'how-battle-resolves',
+            heading: '4) How battle resolves',
+            paragraphs: [
+              'Characters carry two different attack values, and which one applies depends on what you attack.',
+            ],
+            bullets: [
+              'You may attack the Leader to reduce its Life depending on the DMG of the cards you are using.',
+              'You may only attack Characters that are already rested. Standing Characters cannot be targeted.',
+            ],
+            steps: [
+              'Declare the attack. The attacking Character rests.',
+              'Resolve the damage step by subtracting your POW value from the target.',
+              'The defending player may activate an effect with the [During Your Opponent\'s Attack] timing to resolve that effect.',
+              'A Character reduced to 0 HP goes to the trash.',
+              'A Leader reduced to 0 Life loses the game.',
+            ],
+            table: {
+              headers: ['Value', 'Used when'],
+              rows: [
+                ['DMG', 'Attacking the opposing Leader, reducing its Life.'],
+                ['POW', 'Attacking a rested Character, reducing its HP.'],
+              ],
+            },
+          },
+        ],
+        links: [
+          { label: 'How to read cards: Stats, Costs & Effects', href: '/beginner-guides/how-to-read-cards/' },
+          { label: 'Glossary', href: '/beginner-guides/glossary-key-terms/' },
+        ],
+      },
+    ],
+    officialResources: [
+      {
+        label: 'Bandai — Official How to Play Guide (accessed September 26, 2026)',
+        url: 'https://www.naruto-cardgame.com/en/',
+      },
+    ],
     relatedCardIds: [],
     relatedGuideSlugs: ['how-to-read-cards', 'glossary-key-terms'],
     order: 1,
