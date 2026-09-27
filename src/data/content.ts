@@ -276,7 +276,7 @@ export const guides: Guide[] = [
             bullets: [
               'Normal deployment happens once per turn by resting your Summon card. That single card limits how quickly a board can develop.',
               'Deployment via an EX Character or a card effect does not use the Summon card, so it is additional deployment beyond the normal limit.',
-              'A Character cannot attack on the turn it is deployed unless it has [Rush].',
+              'A Character cannot attack on the turn it is deployed unless it has [[RUSH]].',
             ],
           },
           {
@@ -293,7 +293,7 @@ export const guides: Guide[] = [
             heading: '3) Play your Leader effect and Recovery effect to restore Chakra',
             bullets: [
               'Your Leader possesses its own unique effect that you can activate.',
-              'Your Leader possesses the [Recovery] ability, which rests the Leader to flip all of your CHAKRA face-up from the second turn onward. Resting it that way costs you your attack for the turn. The Leader chooses each turn between attacking the opponent and recovering Chakra.',
+              'Your Leader possesses the [[RECOVERY]] ability, which rests the Leader to flip all of your CHAKRA face-up from the second turn onward. Resting it that way costs you your attack for the turn. The Leader chooses each turn between attacking the opponent and recovering Chakra.',
             ],
           },
           {
@@ -309,7 +309,7 @@ export const guides: Guide[] = [
             steps: [
               'Declare the attack. The attacking Character rests.',
               'Resolve the damage step by subtracting your POW value from the target.',
-              'The defending player may activate an effect with the [During Your Opponent\'s Attack] timing to resolve that effect.',
+              'The defending player may activate an effect with the [[DURING_ATTACK]] timing to resolve that effect.',
               'A Character reduced to 0 HP goes to the trash.',
               'A Leader reduced to 0 Life loses the game.',
             ],

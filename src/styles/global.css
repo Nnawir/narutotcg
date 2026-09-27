@@ -1728,6 +1728,44 @@ h3 {
 .article-body li {
   color: #cfcbc5;
 }
+.inline-keyword {
+  display: inline-block;
+  position: relative;
+  height: 1em;
+  margin-inline: 0.12em;
+  overflow: hidden;
+  vertical-align: -0.1em;
+}
+.inline-keyword img {
+  position: absolute;
+  display: block;
+  max-width: none;
+  height: auto;
+}
+.inline-keyword-recovery {
+  width: 3.89em;
+}
+.inline-keyword-recovery img {
+  top: -0.056em;
+  left: -0.17em;
+  width: 3.89em;
+}
+.inline-keyword-rush {
+  width: 2.78em;
+}
+.inline-keyword-rush img {
+  top: -0.54em;
+  left: -1.01em;
+  width: 4.79em;
+}
+.inline-keyword-during-attack {
+  width: 6.84em;
+}
+.inline-keyword-during-attack img {
+  top: -0.79em;
+  left: -0.26em;
+  width: 7.35em;
+}
 .article-body ol,
 .article-body ul {
   margin: 1rem 0 1.5rem;
