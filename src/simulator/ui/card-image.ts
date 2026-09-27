@@ -44,13 +44,13 @@ function ensurePreviewDialog(): HTMLDialogElement {
 }
 
 /** Attach shared image fallback and click-to-zoom behavior after a board render. */
-export function enhanceCardImages(root: HTMLElement): void {
+export function enhanceCardImages(root: HTMLElement, options: { clickPreview?: boolean } = {}): void {
   root.querySelectorAll<HTMLImageElement>('[data-card-image]').forEach((image) => {
     const fallback = () => image.closest('.game-card')?.classList.add('image-missing');
     image.addEventListener('error', fallback, { once: true });
     if (image.complete && image.naturalWidth === 0) fallback();
   });
-  if (root.dataset.cardImageEvents === 'true') return;
+  if (options.clickPreview === false || root.dataset.cardImageEvents === 'true') return;
   root.dataset.cardImageEvents = 'true';
   root.addEventListener('click', (event) => {
     const image = event.target instanceof Element ? event.target.closest<HTMLImageElement>('[data-card-preview]') : null;
