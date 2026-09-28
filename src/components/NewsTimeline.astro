@@ -1,0 +1,167 @@
+---
+import type { TimelineItem } from '../data/content';
+
+type Props = { items: TimelineItem[] };
+const { items } = Astro.props;
+---
+
+<section class="news-timeline" aria-labelledby="timeline-title">
+  <div class="timeline-heading">
+    <div>
+      <p class="eyebrow">Official calendar</p>
+      <h2 id="timeline-title">Around today</h2>
+    </div>
+    <p>
+      Published news, announced events and official roadmap dates. The timeline keeps the last 30 days and
+      every known upcoming item.
+    </p>
+  </div>
+  <div class="timeline-legend" aria-label="Timeline legend">
+    <span class="legend-news">Official news</span>
+    <span class="legend-event">Event</span>
+    <span class="legend-roadmap">Roadmap</span>
+  </div>
+  <div class="timeline-frame">
+    <button class="timeline-nav timeline-nav-previous" type="button" data-timeline-previous aria-label="Show previous timeline events">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 5-7 7 7 7" /></svg>
+    </button>
+    <div class="timeline-viewport" data-timeline-viewport tabindex="0" aria-label="News timeline">
+      <div class="timeline-track" data-timeline-track>
+      <div class="today-marker" data-today-marker>
+        <span>TODAY</span>
+      </div>
+      {items.map((item) => (
+        <article
+          class="timeline-item"
+          data-timeline-item
+          data-date={item.date}
+          data-type={item.type.toLowerCase().replace(' ', '-')}
+        >
+          <span class="timeline-dot" aria-hidden="true"></span>
+          <div class="timeline-card">
+            <span class="timeline-type">{item.type}</span>
+            <time datetime={item.date}>{item.dateLabel}</time>
+            <h3>
+              {item.articleSlug ? (
+                <a href={`/news/${item.articleSlug}/`}>{item.title}</a>
+              ) : (
+                <a href={item.sourceUrl} target="_blank" rel="noopener noreferrer">
+                  {item.title}
+                  <span class="visually-hidden"> (opens official source in a new tab)</span>
+                </a>
+              )}
+            </h3>
+            <p>{item.summary}</p>
+            <a class="timeline-source" href={item.sourceUrl} target="_blank" rel="noopener noreferrer">
+              Official source ↗
+            </a>
+          </div>
+        </article>
+      ))}
+      </div>
+    </div>
+    <button class="timeline-nav timeline-nav-next" type="button" data-timeline-next aria-label="Show next timeline events">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 5 7 7-7 7" /></svg>
+    </button>
+  </div>
+  <p class="timeline-empty" data-timeline-empty hidden>
+    No official news or announced future dates match this period.
+  </p>
+  <ol class="mobile-timeline" data-mobile-timeline>
+    <li class="mobile-today" data-mobile-today><span class="mobile-dot" aria-hidden="true"></span><strong>Today</strong><span>Upcoming official dates</span></li>
+    {items.map((item) => (
+      <li data-mobile-item data-date={item.date} data-type={item.type.toLowerCase().replace(' ', '-')}>
+        <span class="mobile-dot" aria-hidden="true"></span>
+        <span class="timeline-type">{item.type}</span>
+        <time datetime={item.date}>{item.dateLabel}</time>
+        <h3>
+          {item.articleSlug ? (
+            <a href={`/news/${item.articleSlug}/`}>{item.title}</a>
+          ) : (
+            <a href={item.sourceUrl} target="_blank" rel="noopener noreferrer">
+              {item.title}
+            </a>
+          )}
+        </h3>
+        <p>{item.summary}</p>
+        <a class="timeline-source" href={item.sourceUrl} target="_blank" rel="noopener noreferrer">
+          Official source ↗
+        </a>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<script>
+  const day = 86_400_000;
+  const startOfToday = new Date();
+  startOfToday.setHours(0, 0, 0, 0);
+  const cutoff = startOfToday.getTime() - 30 * day;
+  const parseDate = (value: string) => new Date(`${value}T00:00:00`).getTime();
+  const items = [...document.querySelectorAll<HTMLElement>('[data-timeline-item], [data-mobile-item]')];
+  const visibleItems = items.filter((item) => {
+    const visible = parseDate(item.dataset.date ?? '') >= cutoff;
+    item.hidden = !visible;
+    return visible;
+  });
+  const mobileToday = document.querySelector<HTMLElement>('[data-mobile-today]');
+  const firstFutureMobile = [...document.querySelectorAll<HTMLElement>('[data-mobile-item]')].find(
+    (item) => !item.hidden && parseDate(item.dataset.date ?? '') > startOfToday.getTime(),
+  );
+  if (mobileToday) {
+    mobileToday.hidden = !firstFutureMobile;
+    if (firstFutureMobile) firstFutureMobile.before(mobileToday);
+  }
+  const track = document.querySelector<HTMLElement>('[data-timeline-track]');
+  const marker = document.querySelector<HTMLElement>('[data-today-marker]');
+  const viewport = document.querySelector<HTMLElement>('[data-timeline-viewport]');
+  const empty = document.querySelector<HTMLElement>('[data-timeline-empty]');
+  const previousButton = document.querySelector<HTMLButtonElement>('[data-timeline-previous]');
+  const nextButton = document.querySelector<HTMLButtonElement>('[data-timeline-next]');
+  if (track && marker && viewport) {
+    const now = startOfToday.getTime();
+    const desktopItems = [...document.querySelectorAll<HTMLElement>('[data-timeline-item]')]
+      .filter((item) => !item.hidden)
+      .sort((a, b) => parseDate(a.dataset.date ?? '') - parseDate(b.dataset.date ?? ''));
+    const distanceForGap = (days: number) => Math.min(330, 210 + Math.log1p(days) * 70);
+    const past = desktopItems.filter((item) => parseDate(item.dataset.date ?? '') <= now).reverse();
+    const future = desktopItems.filter((item) => parseDate(item.dataset.date ?? '') > now);
+    const positions = new Map<HTMLElement, number>();
+    let pastCursor = -250;
+    past.forEach((item, index) => {
+      positions.set(item, pastCursor);
+      const next = past[index + 1];
+      if (next) pastCursor -= distanceForGap((parseDate(item.dataset.date ?? '') - parseDate(next.dataset.date ?? '')) / day);
+    });
+    let futureCursor = 250;
+    future.forEach((item, index) => {
+      positions.set(item, futureCursor);
+      const next = future[index + 1];
+      if (next) futureCursor += distanceForGap((parseDate(next.dataset.date ?? '') - parseDate(item.dataset.date ?? '')) / day);
+    });
+    const leftPadding = 180 - pastCursor;
+    const todayX = leftPadding;
+    track.style.width = `${leftPadding + futureCursor + 180}px`;
+    marker.style.left = `${todayX}px`;
+    desktopItems.forEach((item, index) => {
+      const x = todayX + (positions.get(item) ?? 0);
+      item.style.left = `${x}px`;
+      item.classList.toggle('is-future', parseDate(item.dataset.date ?? '') > now);
+      item.classList.toggle('is-upper', index % 2 === 0);
+    });
+    viewport.scrollLeft = Math.max(0, todayX - viewport.clientWidth * 0.42);
+    const updateNavigation = () => {
+      const maxScroll = viewport.scrollWidth - viewport.clientWidth;
+      if (previousButton) previousButton.disabled = viewport.scrollLeft <= 1;
+      if (nextButton) nextButton.disabled = viewport.scrollLeft >= maxScroll - 1;
+    };
+    const moveTimeline = (direction: -1 | 1) => {
+      viewport.scrollBy({ left: direction * Math.round(viewport.clientWidth * 0.78), behavior: 'smooth' });
+    };
+    previousButton?.addEventListener('click', () => moveTimeline(-1));
+    nextButton?.addEventListener('click', () => moveTimeline(1));
+    viewport.addEventListener('scroll', updateNavigation, { passive: true });
+    updateNavigation();
+  }
+  if (empty) empty.hidden = visibleItems.length > 0;
+</script>
