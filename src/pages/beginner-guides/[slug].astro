@@ -115,22 +115,83 @@ const structuredData = [
                       </tr>
                     </thead>
                     <tbody>
-                      {section.table.rows.map((row) => (
-                        <tr>{row.map((cell) => <td>{cell}</td>)}</tr>
+                      {section.table.rows.map((row, rowIndex) => (
+                        <tr>
+                          {row.map((cell, cellIndex) => {
+                            const image = section.table?.images?.[rowIndex]?.[cellIndex];
+                            return (
+                              <td>
+                                {image ? (
+                                  <span class="table-cell-with-image">
+                                    <span>{cell}</span>
+                                    <img src={image.src} alt={image.alt} />
+                                  </span>
+                                ) : (
+                                  cell
+                                )}
+                              </td>
+                            );
+                          })}
+                        </tr>
                       ))}
                     </tbody>
                   </table>
                 </div>
               )}
-              {section.links && (
-                <p class="guide-inline-links">
-                  {section.links.map((link, index) => (
-                    <>
-                      {index > 0 && ' · '}
-                      <a href={link.href}>{link.label}</a>
-                    </>
+              {section.image && (
+                <figure class="guide-section-image">
+                  <button
+                    class="guide-section-image-button"
+                    type="button"
+                    data-card-preview
+                    data-image-src={section.image.src}
+                    data-image-alt={section.image.alt}
+                    aria-label={`Zoom ${section.image.alt}`}
+                  >
+                    <img src={section.image.src} alt={section.image.alt} loading="lazy" />
+                  </button>
+                </figure>
+              )}
+              {section.statBlocks?.map((statBlock) => (
+                <article class="guide-stat-block">
+                  <span class="guide-stat-block-label">{statBlock.label}</span>
+                  <div class="guide-stat-block-copy">
+                    {statBlock.stats.map((stat) => (
+                      <p>
+                        <strong>{stat.name}:</strong> {stat.description}
+                      </p>
+                    ))}
+                  </div>
+                  <button
+                    class="guide-stat-block-image-button"
+                    type="button"
+                    data-card-preview
+                    data-image-src={statBlock.image.src}
+                    data-image-alt={statBlock.image.alt}
+                    aria-label={`Zoom ${statBlock.image.alt}`}
+                  >
+                    <img src={statBlock.image.src} alt={statBlock.image.alt} loading="lazy" />
+                  </button>
+                </article>
+              ))}
+              {section.cards && (
+                <div class="guide-card-type-list">
+                  {section.cards.map((card) => (
+                    <article class="guide-card-type">
+                      <p>{card.text}</p>
+                      <button
+                        class="guide-card-type-image-button"
+                        type="button"
+                        data-card-preview
+                        data-image-src={card.image.src}
+                        data-image-alt={card.image.alt}
+                        aria-label={`Zoom ${card.image.alt}`}
+                      >
+                        <img src={card.image.src} alt={card.image.alt} />
+                      </button>
+                    </article>
                   ))}
-                </p>
+                </div>
               )}
               {section.subsections?.map((subsection) => (
                 <div class="article-subsection">
@@ -161,8 +222,24 @@ const structuredData = [
                           </tr>
                         </thead>
                         <tbody>
-                          {subsection.table.rows.map((row) => (
-                            <tr>{row.map((cell) => <td>{cell}</td>)}</tr>
+                          {subsection.table.rows.map((row, rowIndex) => (
+                            <tr>
+                              {row.map((cell, cellIndex) => {
+                                const image = subsection.table?.images?.[rowIndex]?.[cellIndex];
+                                return (
+                                  <td>
+                                    {image ? (
+                                      <span class="table-cell-with-image">
+                                        <span>{cell}</span>
+                                        <img src={image.src} alt={image.alt} />
+                                      </span>
+                                    ) : (
+                                      cell
+                                    )}
+                                  </td>
+                                );
+                              })}
+                            </tr>
                           ))}
                         </tbody>
                       </table>
@@ -170,6 +247,16 @@ const structuredData = [
                   )}
                 </div>
               ))}
+              {section.links && (
+                <p class="guide-inline-links">
+                  {section.links.map((link, index) => (
+                    <>
+                      {index > 0 && ' · '}
+                      <a href={link.href}>{link.label}</a>
+                    </>
+                  ))}
+                </p>
+              )}
               {section.callout && (
                 <aside class="callout">
                   <strong>{section.callout.label}</strong>
@@ -203,6 +290,7 @@ const structuredData = [
               {guide.sections.map((section) => (
                 <a href={`#${section.id}`}>{section.heading}</a>
               ))}
+              {relatedGuides.length > 0 && <a href="#more-guides-title">Continue learning</a>}
             </nav>
           </aside>
         )}

@@ -26,6 +26,18 @@ export type NewsArticle = {
   relatedGuideSlugs: string[];
 };
 
+export type TimelineItem = {
+  id: string;
+  title: string;
+  summary: string;
+  type: 'Official news' | 'Event' | 'Roadmap';
+  /** ISO date used only to place the item. `dateLabel` is the official wording shown to visitors. */
+  date: string;
+  dateLabel: string;
+  sourceUrl: string;
+  articleSlug?: string;
+};
+
 export type CardPrinting = {
   id: string;
   label: string;
@@ -58,7 +70,14 @@ export type GuideSection = {
   callout?: { label: string; text: string };
   bullets?: string[];
   steps?: string[];
-  table?: { headers: string[]; rows: string[][] };
+  table?: GuideTable;
+  image?: { src: string; alt: string };
+  statBlocks?: Array<{
+    label: string;
+    image: { src: string; alt: string };
+    stats: Array<{ name: string; description: string }>;
+  }>;
+  cards?: Array<{ text: string; image: { src: string; alt: string } }>;
   links?: Array<{ label: string; href: string }>;
   subsections?: Array<{
     id?: string;
@@ -66,8 +85,14 @@ export type GuideSection = {
     paragraphs?: string[];
     bullets?: string[];
     steps?: string[];
-    table?: { headers: string[]; rows: string[][] };
+    table?: GuideTable;
   }>;
+};
+
+type GuideTable = {
+  headers: string[];
+  rows: string[][];
+  images?: Array<Array<{ src: string; alt: string } | undefined>>;
 };
 
 export type Guide = {
@@ -155,7 +180,198 @@ const n01Cards: Card[] = (
   relatedGuideSlugs: [],
 }));
 
-export const news: NewsArticle[] = [];
+export const news: NewsArticle[] = [
+  {
+    slug: 'spiel-essen-2026-event-information',
+    title: 'SPIEL Essen Event Information',
+    summary: 'Bandai announced NARUTO CARD GAME Tutorial Sessions at SPIEL Essen in Germany.',
+    category: 'Events',
+    publishedAt: '2026-09-04',
+    sourceLabel: 'NARUTO CARD GAME Official Website — SPIEL Essen Event Information',
+    sourceUrl: 'https://www.naruto-cardgame.com/en/news/spielessen-2026.php',
+    featured: true,
+    confirmedFacts: [
+      'SPIEL Essen runs from October 22 to 25, 2026.',
+      'The event is at Messe Essen, Germany.',
+      'Bandai lists a NARUTO CARD GAME Tutorial Session.',
+    ],
+    sections: [
+      {
+        heading: 'Official announcement',
+        paragraphs: [
+          'Bandai states that NARUTO CARD GAME is coming to SPIEL Essen. Details on Tutorial Session participation are to be announced later.',
+        ],
+      },
+    ],
+    relatedCardIds: [],
+    relatedGuideSlugs: [],
+  },
+  {
+    slug: 'paris-games-week-2026-event-information',
+    title: 'Paris Games Week Event Information',
+    summary: 'Bandai announced NARUTO CARD GAME Tutorial Sessions at Paris Games Week in France.',
+    category: 'Events',
+    publishedAt: '2026-09-04',
+    sourceLabel: 'NARUTO CARD GAME Official Website — Paris Games Week Event Information',
+    sourceUrl: 'https://www.naruto-cardgame.com/en/news/parisgamesweek-2026.php',
+    featured: false,
+    confirmedFacts: [
+      'Paris Games Week runs from October 22 to 25, 2026.',
+      'The event is at Paris Expo Porte de Versailles, France.',
+      'Bandai lists a NARUTO CARD GAME Tutorial Session.',
+    ],
+    sections: [
+      {
+        heading: 'Official announcement',
+        paragraphs: [
+          'Bandai states that NARUTO CARD GAME is coming to Paris Games Week. Details on Tutorial Session participation are to be announced later.',
+        ],
+      },
+    ],
+    relatedCardIds: [],
+    relatedGuideSlugs: [],
+  },
+  {
+    slug: 'lucca-comics-games-2026-event-information',
+    title: 'Lucca Comics & Games Event Information',
+    summary: 'Bandai announced NARUTO CARD GAME Tutorial Sessions at Lucca Comics & Games in Italy.',
+    category: 'Events',
+    publishedAt: '2026-09-04',
+    sourceLabel: 'NARUTO CARD GAME Official Website — Lucca Comics & Games Event Information',
+    sourceUrl: 'https://www.naruto-cardgame.com/en/news/lucca-2026.php',
+    featured: false,
+    confirmedFacts: [
+      'Lucca Comics & Games runs from October 28 to November 1, 2026.',
+      'The event is at Piazza Santa Maria, Lucca, Italy.',
+      'Bandai lists a NARUTO CARD GAME Tutorial Session.',
+    ],
+    sections: [
+      {
+        heading: 'Official announcement',
+        paragraphs: [
+          'Bandai states that NARUTO CARD GAME is coming to Lucca Comics & Games. Details on Tutorial Session participation are to be announced later.',
+        ],
+      },
+    ],
+    relatedCardIds: [],
+    relatedGuideSlugs: [],
+  },
+  {
+    slug: 'bandai-card-games-fest-london-2027',
+    title: 'BANDAI CARD GAMES Fest 26-27 in LONDON has been announced.',
+    summary: 'Bandai announced a London BANDAI CARD GAMES Fest with a NARUTO CARD GAME Tutorial Session.',
+    category: 'Events',
+    publishedAt: '2026-08-28',
+    sourceLabel: 'NARUTO CARD GAME Official Website — BANDAI CARD GAMES Fest 26-27 in LONDON',
+    sourceUrl: 'https://www.naruto-cardgame.com/en/news/bcgfes26-27-london.php',
+    featured: false,
+    confirmedFacts: [
+      'The event dates are January 15 to 17, 2027.',
+      'The venue is ExCeL London.',
+      'Bandai lists a Tutorial Session as a main event.',
+    ],
+    sections: [
+      {
+        heading: 'Official announcement',
+        paragraphs: [
+          'Bandai announced BANDAI CARD GAMES Fest 26-27 in London and lists a NARUTO CARD GAME Tutorial Session among its main events.',
+        ],
+      },
+    ],
+    relatedCardIds: [],
+    relatedGuideSlugs: [],
+  },
+];
+
+export const timelineItems: TimelineItem[] = [
+  ...news.map((article) => ({
+    id: `news-${article.slug}`,
+    title: article.title,
+    summary: article.summary,
+    type: 'Official news' as const,
+    date: article.publishedAt,
+    dateLabel: article.publishedAt,
+    sourceUrl: article.sourceUrl,
+    articleSlug: article.slug,
+  })),
+  {
+    id: 'nycc-2026',
+    title: 'New York Comic Con 2026',
+    summary:
+      'Tutorial Sessions are listed by Bandai; the official roadmap says new information will be revealed here.',
+    type: 'Event',
+    date: '2026-10-08',
+    dateLabel: 'October 8–11, 2026',
+    sourceUrl: 'https://www.naruto-cardgame.com/en/news/nycc-2026.php',
+  },
+  {
+    id: 'pax-aus-2026',
+    title: 'PAX Aus 2026',
+    summary: 'Bandai lists NARUTO CARD GAME Tutorial Sessions at PAX Aus in Melbourne.',
+    type: 'Event',
+    date: '2026-10-09',
+    dateLabel: 'October 9–11, 2026',
+    sourceUrl: 'https://www.naruto-cardgame.com/en/news/paxaus-2026.php',
+  },
+  {
+    id: 'tutorial-sessions',
+    title: 'Tutorial Sessions',
+    summary: 'The official roadmap schedules Tutorial Sessions from October 2026 into early 2027.',
+    type: 'Roadmap',
+    date: '2026-10-01',
+    dateLabel: 'October 2026–early 2027',
+    sourceUrl: 'https://www.naruto-cardgame.com/en/welcome/',
+  },
+  {
+    id: 'spiel-essen-2026',
+    title: 'SPIEL Essen 2026',
+    summary: 'NARUTO CARD GAME Tutorial Sessions at Messe Essen, Germany.',
+    type: 'Event',
+    date: '2026-10-22',
+    dateLabel: 'October 22–25, 2026',
+    sourceUrl: 'https://www.naruto-cardgame.com/en/news/spielessen-2026.php',
+    articleSlug: 'spiel-essen-2026-event-information',
+  },
+  {
+    id: 'paris-games-week-2026',
+    title: 'Paris Games Week 2026',
+    summary: 'NARUTO CARD GAME Tutorial Sessions at Paris Expo Porte de Versailles, France.',
+    type: 'Event',
+    date: '2026-10-22',
+    dateLabel: 'October 22–25, 2026',
+    sourceUrl: 'https://www.naruto-cardgame.com/en/news/parisgamesweek-2026.php',
+    articleSlug: 'paris-games-week-2026-event-information',
+  },
+  {
+    id: 'lucca-2026',
+    title: 'Lucca Comics & Games 2026',
+    summary: 'NARUTO CARD GAME Tutorial Sessions in Lucca, Italy.',
+    type: 'Event',
+    date: '2026-10-28',
+    dateLabel: 'October 28–November 1, 2026',
+    sourceUrl: 'https://www.naruto-cardgame.com/en/news/lucca-2026.php',
+    articleSlug: 'lucca-comics-games-2026-event-information',
+  },
+  {
+    id: 'london-2027',
+    title: 'BANDAI CARD GAMES Fest 26-27 London',
+    summary: 'Bandai lists a NARUTO CARD GAME Tutorial Session at ExCeL London.',
+    type: 'Event',
+    date: '2027-01-15',
+    dateLabel: 'January 15–17, 2027',
+    sourceUrl: 'https://www.naruto-cardgame.com/en/news/bcgfes26-27-london.php',
+    articleSlug: 'bandai-card-games-fest-london-2027',
+  },
+  {
+    id: 'worldwide-release',
+    title: 'Worldwide Release',
+    summary: 'Bandai has confirmed a simultaneous worldwide release; an exact date has not been announced.',
+    type: 'Roadmap',
+    date: '2027-06-21',
+    dateLabel: 'Summer 2027',
+    sourceUrl: 'https://www.naruto-cardgame.com/en/welcome/',
+  },
+];
 export const cards: Card[] = n01Cards;
 export const guides: Guide[] = [
   {
@@ -196,36 +412,57 @@ export const guides: Guide[] = [
         table: {
           headers: ['Cards', 'Confirmed role'],
           rows: [
-            ['1 Leader', 'The card your deck is built around. Its color determines the cards you can use, and it has Life.'],
-            ['50-card main deck', 'The main deck contains the cards you play during the game. Official materials identify Character and EX Character cards as part of the game’s card types.'],
+            [
+              '1 Leader',
+              'The card your deck is built around. Its color determines the cards you can use, and it has Life.',
+            ],
+            [
+              '50-card main deck',
+              'The main deck contains the cards you play during the game. Official materials identify Character and EX Character cards as part of the game’s card types.',
+            ],
             ['5 Chakra cards', 'Used as costs for Support effects such as Ninjutsu.'],
             ['1 Summon card', 'Required to play Character cards onto the battlefield.'],
           ],
         },
+        image: {
+          src: '/assets/visuals/board.png',
+          alt: 'Schematic NARUTO CARD GAME play area showing the Character, Support, Leader, Deck, Trash, Summon, and Chakra areas',
+        },
         links: [
-          { label: 'Browse the Cards List', href: '/cards-list/' },
-          { label: 'Learn how to read cards', href: '/beginner-guides/how-to-read-cards/' },
+          { label: "Click here to view the game's Cards List.", href: '/cards-list/' },
         ],
       },
       {
         id: 'card-types-and-zones',
         heading: 'The card types and main areas',
-        paragraphs: [
-          'NARUTO CARD GAME currently uses five card types.',
+        paragraphs: ['NARUTO CARD GAME currently uses five card types.'],
+        cards: [
+          {
+            text: 'Leader : Your deck is built around this card. Its color determines which cards you can use, and its Life is the target of the game.',
+            image: { src: '/Cards/N01/N01-001.jpg', alt: 'Leader card example' },
+          },
+          {
+            text: 'Characters : Characters form your front line and can battle opposing Characters or a Leader. Some can activate Ninjutsu by paying Chakra.',
+            image: { src: '/Cards/N01/N01-009.jpg', alt: 'Character card example' },
+          },
+          {
+            text: 'EX Character : A powerful Character that can be played after specific play conditions are met.',
+            image: { src: '/Cards/N01/N01-005.jpg', alt: 'EX Character card example' },
+          },
+          {
+            text: 'Chakra : A resource card used to activate Support effects such as Ninjutsu.',
+            image: { src: '/Cards/Chakra cards/C-001.png', alt: 'Chakra card example' },
+          },
+          {
+            text: 'Summon : A card required to play Character cards onto the battlefield.',
+            image: { src: '/Cards/Summon cards/S-001.png', alt: 'Summon card example' },
+          },
         ],
-        table: {
-          headers: ['Card type', 'What is confirmed'],
-          rows: [
-            ['Leader', 'Your deck is built around this card. Its color determines which cards you can use, and its Life is the target of the game.'],
-            ['Character', 'Characters form your front line and can battle opposing Characters or a Leader. Some can activate Ninjutsu by paying Chakra.'],
-            ['EX Character', 'A powerful Character that can be played after specific play conditions are met.'],
-            ['Chakra', 'A resource card used to activate Support effects such as Ninjutsu.'],
-            ['Summon', 'A card required to play Character cards onto the battlefield.'],
-          ],
-        },
         links: [
-          { label: 'See the future card-reading guide', href: '/beginner-guides/how-to-read-cards/' },
-          { label: 'Check the glossary', href: '/beginner-guides/glossary-key-terms/' },
+          {
+            label: 'Master the game’s key terms by visiting the Glossary.',
+            href: '/beginner-guides/glossary-key-terms/',
+          },
         ],
       },
       {
@@ -260,7 +497,7 @@ export const guides: Guide[] = [
             id: 'end-phase',
             heading: 'End phase',
             paragraphs: [
-              'End effects lasting “for the turn” resolve, then you pass the turn to your opponent.',
+              'Once all effects and attacks from the Main phase have been completed, you can pass the turn to your opponent.',
             ],
           },
         ],
@@ -323,8 +560,10 @@ export const guides: Guide[] = [
           },
         ],
         links: [
-          { label: 'How to read cards: Stats, Costs & Effects', href: '/beginner-guides/how-to-read-cards/' },
-          { label: 'Glossary', href: '/beginner-guides/glossary-key-terms/' },
+          {
+            label: 'Visit the Glossary to learn the game’s key terms.',
+            href: '/beginner-guides/glossary-key-terms/',
+          },
         ],
       },
     ],
@@ -335,35 +574,87 @@ export const guides: Guide[] = [
       },
     ],
     relatedCardIds: [],
-    relatedGuideSlugs: ['how-to-read-cards', 'glossary-key-terms'],
+    relatedGuideSlugs: ['glossary-key-terms'],
     order: 1,
   },
   {
-    slug: 'how-to-read-cards',
-    title: 'How to read cards : Stats, Costs & Effects',
-    summary: 'Learn where to find the key information on a card and how to read it at a glance.',
-    category: 'Core Mechanics',
-    difficulty: 'Beginner',
-    readingTime: '4 min read',
-    verifiedAt: '2026-09-25',
-    sections: [],
-    officialResources: [],
-    relatedCardIds: [],
-    relatedGuideSlugs: ['complete-naruto-card-game-rules', 'glossary-key-terms'],
-    order: 2,
-  },
-  {
     slug: 'glossary-key-terms',
-    title: 'Glossary : Key Terms & Keywords Explained',
+    title: 'Glossary : Card Stats, Keywords & Game Vocabulary Explained',
     summary: 'A quick reference for the words and keywords you will encounter while learning the game.',
     category: 'Glossary',
     difficulty: 'Beginner',
     readingTime: '3 min read',
     verifiedAt: '2026-09-25',
-    sections: [],
+    sections: [
+      {
+        id: 'card-stats',
+        heading: 'Card Stats',
+        paragraphs: [
+          'Card stats are the numbers printed on a card that describe its role and strength in the game. Leaders and Characters share DMG and POW values, but their third stat serves a different purpose.',
+        ],
+        statBlocks: [
+          {
+            label: 'For Leader',
+            image: {
+              src: '/Cards/N01/N01-012.jpg',
+              alt: 'Leader card example for explaining DMG, POW, and Life statistics',
+            },
+            stats: [
+              {
+                name: 'DMG (Damage)',
+                description: 'The amount of Life this card removes when it attacks the opposing Leader. Revealed Leaders currently show values from 1 to 3.',
+              },
+              {
+                name: 'POW (Power)',
+                description: 'The amount of HP this card removes when it attacks a rested Character.',
+              },
+              {
+                name: 'LIFE',
+                description: "A Leader's remaining health. Reducing the opposing Leader's Life to 0 wins the game; revealed Leaders start with 15.",
+              },
+            ],
+          },
+          {
+            label: 'For Character',
+            image: {
+              src: '/Cards/N01/N01-006.jpg',
+              alt: 'Character card example for explaining DMG, POW, and HP statistics',
+            },
+            stats: [
+              {
+                name: 'DMG (Damage)',
+                description: 'The amount of Life this card removes when it attacks the opposing Leader. Revealed Leaders currently show values from 1 to 3.',
+              },
+              {
+                name: 'POW (Power)',
+                description: 'The amount of HP this card removes when it attacks a rested Character.',
+              },
+              {
+                name: 'HP (Hit points)',
+                description: "A Character's remaining health. When its HP reaches 0, it goes to the trash.",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'keywords',
+        heading: 'Keywords',
+        paragraphs: [
+          'Keywords are bracketed markers in card text that indicate when an ability can be used and what event or condition triggers it.',
+        ],
+      },
+      {
+        id: 'game-vocabulary',
+        heading: 'Game Vocabulary',
+        paragraphs: [
+          'Game vocabulary covers the wider terminology used for resources, play areas, actions, and concepts found in card text and Bandai’s official descriptions.',
+        ],
+      },
+    ],
     officialResources: [],
     relatedCardIds: [],
-    relatedGuideSlugs: ['complete-naruto-card-game-rules', 'how-to-read-cards'],
+    relatedGuideSlugs: ['complete-naruto-card-game-rules'],
     order: 3,
   },
 ];
