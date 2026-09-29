@@ -93,6 +93,7 @@ type GuideTable = {
   headers: string[];
   rows: string[][];
   images?: Array<Array<{ src: string; alt: string } | undefined>>;
+  examples?: Array<{ label: string; image: { src: string; alt: string } } | undefined>;
 };
 
 export type Guide = {
@@ -382,6 +383,12 @@ export const guides: Guide[] = [
     difficulty: 'Beginner',
     readingTime: '5 min read',
     verifiedAt: '2026-09-25',
+    image: {
+      src: '/assets/visuals/complete-rules-guide-cards.png',
+      alt: 'Chakra, Naruto Leader, and Summon cards arranged in a dark vermilion composition',
+      width: 1664,
+      height: 936,
+    },
     sections: [
       {
         id: 'introduction',
@@ -585,6 +592,12 @@ export const guides: Guide[] = [
     difficulty: 'Beginner',
     readingTime: '3 min read',
     verifiedAt: '2026-09-25',
+    image: {
+      src: '/assets/visuals/glossary-keywords-guide.png',
+      alt: 'Keyword badges arranged in a dark glossary-themed composition',
+      width: 1774,
+      height: 887,
+    },
     sections: [
       {
         id: 'card-stats',
@@ -643,6 +656,46 @@ export const guides: Guide[] = [
         paragraphs: [
           'Keywords are bracketed markers in card text that indicate when an ability can be used and what event or condition triggers it.',
         ],
+        table: {
+          headers: ['KEYWORDS', 'CONFIRMED ROLE'],
+          rows: [
+            [
+              'Activate: Main',
+              'An ability the controller may use during their own Main phase.',
+            ],
+            ['During Your Main', 'A timing marker that limits a Support effect to the controller’s own Main phase.'],
+            ["During Your Opponent's Attack", "A reactive timing window that lets an effect resolve during the opponent's attack."],
+            ['Once Per Turn', 'A restriction that limits a repeatable ability to one use per turn.'],
+            ['On Summon', 'A timing marker for an effect that resolves as the card enters the field.'],
+            ['Quick', 'A Support timing that summons the card as part of resolving its effect.'],
+            ['Recovery', 'A resource-recovery ability that lets a Leader rest to turn all of its Chakra face-up.'],
+            ['Rush', 'An ability that allows this card to attack during the same turn it is played. On revealed cards, this keyword is printed in full.'],
+            ['Summon Requirements', 'A requirement that must be paid before an EX Character can enter play, using your own Characters in the trash. Revealed EX Characters also state that they cannot be summoned normally.'],
+            ['Support Activated', 'A response that triggers when an opponent activates a Support effect and negates that activation.'],
+            ['When Attacking', 'A trigger that resolves when the card declares an attack.'],
+            ['Your Turn', 'A restriction that limits a triggered ability to the controller’s own turn.'],
+          ],
+          images: [
+            [{ src: '/assets/keywords/activate-main.png', alt: 'Activate: Main keyword' }, undefined],
+            [{ src: '/assets/keywords/during-your-main.png', alt: 'During Your Main keyword' }, undefined],
+            [{ src: "/assets/keywords/during-your-opponent's-attack.png", alt: "During Your Opponent's Attack keyword" }, undefined],
+            [{ src: '/assets/keywords/once-per-turn.png', alt: 'Once Per Turn keyword' }, undefined],
+            [{ src: '/assets/keywords/on-summon.png', alt: 'On Summon keyword' }, undefined],
+            [{ src: '/assets/keywords/quick.png', alt: 'Quick keyword' }, undefined],
+            [{ src: '/assets/keywords/recovery.png', alt: 'Recovery keyword' }, undefined],
+            [{ src: '/assets/keywords/rush.png', alt: 'Rush keyword' }, undefined],
+            [{ src: '/assets/keywords/summon-requirements.png', alt: 'Summon Requirements keyword' }, undefined],
+            [{ src: '/assets/keywords/support-activated.png', alt: 'Support Activated keyword' }, undefined],
+            [{ src: '/assets/keywords/when-attacking.png', alt: 'When Attacking keyword' }, undefined],
+            [{ src: '/assets/keywords/your-turn.png', alt: 'Your Turn keyword' }, undefined],
+          ],
+        },
+        links: [
+          {
+            label: 'See these keywords in action on the Cards List.',
+            href: '/cards-list/',
+          },
+        ],
       },
       {
         id: 'game-vocabulary',
@@ -650,6 +703,79 @@ export const guides: Guide[] = [
         paragraphs: [
           'Game vocabulary covers the wider terminology used for resources, play areas, actions, and concepts found in card text and Bandai’s official descriptions.',
         ],
+        table: {
+          headers: ['VOCABULARY', 'CONFIRMED ROLE'],
+          rows: [
+            [
+              'Chakra',
+              "The game's resource pool: exactly five Chakra cards per deck, starting face-up. Paying a cost flips one face-down, and it does not refresh automatically at the start of a turn. A Leader's [[RECOVERY]] ability is the way to restore it, at the cost of that Leader's attack.",
+            ],
+            [
+              'Jutsu',
+              'A technique activated by a Character card by paying a Chakra cost.',
+            ],
+            ['K.O.', 'Removing a Character from the field.'],
+            ['Negate', 'To cancel an effect before it resolves, preventing its instructions from taking effect.'],
+            [
+              'Rested',
+              'A card turned sideways is rested. Attacking rests the attacker, and resting the Leader is how Chakra is restored. Characters can only be attacked while they are already rested.',
+            ],
+            [
+              'Summon this card / Summon up to',
+              'An instruction that puts the named card, or up to the stated number of cards, onto the field when its conditions and costs are met.',
+            ],
+            [
+              'Support [X Chakras]',
+              'A named Jutsu printed on a Character and activated from hand by paying X Chakra at the specified timing.',
+            ],
+            [
+              'Trait',
+              "The type line under a card's name. Traits include elements such as Wind, Fire, Lightning, and Water. Disciplines include elements such as Taijutsu, Illusion, and Special. Affiliations include elements such as Hidden Leaf Village, Uchiha Clan, Akatsuki, Team 7, and The Taka.",
+            ],
+            [
+              'Trash',
+              'The discard pile. EX Character Summon Requirements can place your own Characters there, and some effects can summon cards back from it.',
+            ],
+          ],
+          examples: [
+            {
+              label: 'Chakra card',
+              image: { src: '/Cards/Chakra cards/C-001.png', alt: 'Chakra card example' },
+            },
+            {
+              label: 'Shikamaru Nara N01-008',
+              image: { src: '/Cards/N01/N01-008.jpg', alt: 'Shikamaru Nara N01-008 card example' },
+            },
+            {
+              label: 'Hinata Hyuga N01-018',
+              image: { src: '/Cards/N01/N01-018.jpg', alt: 'Hinata Hyuga N01-018 card example' },
+            },
+            {
+              label: 'Shisui Uchiha N01-016',
+              image: { src: '/Cards/N01/N01-016.jpg', alt: 'Shisui Uchiha N01-016 card example' },
+            },
+            {
+              label: 'Orochimaru N01-017',
+              image: { src: '/Cards/N01/N01-017.jpg', alt: 'Orochimaru N01-017 card example' },
+            },
+            {
+              label: 'Naruto Uzumaki N01-003',
+              image: { src: '/Cards/N01/N01-003.jpg', alt: 'Naruto Uzumaki N01-003 card example' },
+            },
+            {
+              label: 'Naruto Uzumaki N01-004',
+              image: { src: '/Cards/N01/N01-004.jpg', alt: 'Naruto Uzumaki N01-004 card example' },
+            },
+            {
+              label: 'Itachi Uchiha N01-013',
+              image: { src: '/Cards/N01/N01-013.jpg', alt: 'Itachi Uchiha N01-013 card example' },
+            },
+            {
+              label: 'Gamabunta N01-005',
+              image: { src: '/Cards/N01/N01-005.jpg', alt: 'Gamabunta N01-005 card example' },
+            },
+          ],
+        },
       },
     ],
     officialResources: [],
