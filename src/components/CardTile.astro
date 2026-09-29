@@ -2,8 +2,8 @@
 import type { Card } from '../data/content';
 import { formatDate } from '../lib/format';
 
-type Props = { card: Card; eager?: boolean; showDetails?: boolean };
-const { card, eager = false, showDetails = true } = Astro.props;
+type Props = { card: Card; eager?: boolean; showDetails?: boolean; href?: string };
+const { card, eager = false, showDetails = true, href } = Astro.props;
 ---
 
 <article
@@ -13,14 +13,38 @@ const { card, eager = false, showDetails = true } = Astro.props;
   data-id={card.id.toLowerCase()}
   data-set={card.setCode}
 >
-  <button
-    class="card-tile-trigger"
-    type="button"
-    data-card-preview
-    data-image-src={card.image.src}
-    data-image-alt={card.image.alt || `${card.name} card`}
-    aria-label={`Zoom ${card.name} card`}
-  >
+  {href ? (
+    <a class="card-tile-trigger card-tile-link" href={href} aria-label={`View ${card.name} in the Cards List`}>
+      <span class="card-image" style={`--image-ratio: ${card.image.width} / ${card.image.height}`}>
+        <img
+          src={card.image.src}
+          alt={card.image.alt || `${card.name} card`}
+          width={card.image.width}
+          height={card.image.height}
+          loading={eager ? 'eager' : 'lazy'}
+          decoding={eager ? 'sync' : 'async'}
+        />
+      </span>
+      {showDetails && (
+        <span class="card-copy">
+          <strong>{card.name}</strong>
+          <span>{card.id}</span>
+          <span>
+            {card.setCode} · {card.setName}
+          </span>
+          {card.revealedAt && <time datetime={card.revealedAt}>Revealed {formatDate(card.revealedAt)}</time>}
+        </span>
+      )}
+    </a>
+  ) : (
+    <button
+      class="card-tile-trigger"
+      type="button"
+      data-card-preview
+      data-image-src={card.image.src}
+      data-image-alt={card.image.alt || `${card.name} card`}
+      aria-label={`Zoom ${card.name} card`}
+    >
     <span class="card-image" style={`--image-ratio: ${card.image.width} / ${card.image.height}`}>
       <img
         src={card.image.src}
@@ -41,5 +65,6 @@ const { card, eager = false, showDetails = true } = Astro.props;
         {card.revealedAt && <time datetime={card.revealedAt}>Revealed {formatDate(card.revealedAt)}</time>}
       </span>
     )}
-  </button>
+    </button>
+  )}
 </article>

@@ -2,20 +2,22 @@
 import BaseLayout from '../components/BaseLayout.astro';
 import CardTile from '../components/CardTile.astro';
 import EmptyState from '../components/EmptyState.astro';
+import GuideCard from '../components/GuideCard.astro';
 import NewsCard from '../components/NewsCard.astro';
-import { cards, guides, news, releaseMilestones } from '../data/content';
+import { cards, guides, news } from '../data/content';
 
 const featuredNews = news.find((article) => article.featured) ?? news[0];
 const secondaryNews = news.filter((article) => article.slug !== featuredNews?.slug).slice(0, 3);
+const newlyAddedCard = cards.find((card) => card.id === 'CP-001');
 const latestCards = [...cards]
   .filter((card) => card.revealedAt)
   .sort((a, b) => (b.revealedAt ?? '').localeCompare(a.revealedAt ?? ''))
   .slice(0, 6);
-const beginnerSteps = [
-  { title: 'Understand the Game', category: 'Start Here' },
-  { title: 'Learn a Turn', category: 'Core Mechanics' },
-  { title: 'Build Your First Deck', category: 'First Deck' },
-].map((step) => ({ ...step, guide: guides.find((guide) => guide.category === step.category) }));
+const homeCards = [
+  ...(newlyAddedCard ? [newlyAddedCard] : []),
+  ...latestCards,
+].filter((card, index, allCards) => allCards.findIndex((item) => item.id === card.id) === index);
+const beginnerGuides = [...guides].sort((a, b) => a.order - b.order).slice(0, 2);
 ---
 
 <BaseLayout
@@ -34,9 +36,10 @@ const beginnerSteps = [
   <section class="home-hero">
     <div class="shell hero-grid">
       <div class="hero-copy">
-        <p class="eyebrow">Independent game archive · Pre-launch</p>
+        <p class="eyebrow card-list-eyebrow">Independent Naruto Card Game Hub</p>
         <h1>
-          Official reveals, card data, and guides <span>for the Naruto Card Game.</span>
+          Naruto Card Game<br />
+          <span>official reveals, cards data and guide</span>
         </h1>
         <p>
           A focused reference built from confirmed information ready to grow with the game, one verified
@@ -54,10 +57,6 @@ const beginnerSteps = [
           </a>
         </div>
       </div>
-      <div class="hero-mark" aria-hidden="true">
-        <span class="hero-year">27</span>
-        <span class="hero-mark-label">Summer release window</span>
-      </div>
     </div>
   </section>
 
@@ -69,7 +68,7 @@ const beginnerSteps = [
         <p>Official announcements and careful context, without rumor or filler.</p>
       </div>
       {news.length > 0 && (
-        <a class="text-link" href="/news/">
+        <a class="text-link home-section-link" href="/news/">
           All news
         </a>
       )}
@@ -96,21 +95,24 @@ const beginnerSteps = [
   <section class="section shell" aria-labelledby="latest-cards-title">
     <div class="section-heading">
       <div>
-        <p class="eyebrow">Source-backed card data</p>
+        <p class="eyebrow">New card added</p>
         <h2 id="latest-cards-title">Latest Card Reveals</h2>
-        <p>Images, identifiers, set details, and reveal dates will appear only after they are confirmed.</p>
+        <p>
+          <strong class="new-card-label">New:</strong> CP-001 is now available in the card archive. Click the card
+          to browse the Cards List.
+        </p>
       </div>
       {cards.length > 0 && (
-        <a class="text-link" href="/cards-list/">
+        <a class="text-link home-section-link" href="/cards-list/">
           Full card list
         </a>
       )}
     </div>
 
-    {latestCards.length > 0 ? (
+    {homeCards.length > 0 ? (
       <div class="card-grid">
-        {latestCards.map((card, index) => (
-          <CardTile card={card} eager={index < 4} />
+        {homeCards.map((card, index) => (
+          <CardTile card={card} eager={index < 4} href="/cards-list/" />
         ))}
       </div>
     ) : (
@@ -126,45 +128,31 @@ const beginnerSteps = [
     <div class="section-heading">
       <div>
         <p class="eyebrow">A clear starting point</p>
-        <h2 id="new-player-title">New to the Game?</h2>
-        <p>Follow three practical steps once official rules and deck-building information are available.</p>
+        <h2 id="new-player-title">New to the Game ?</h2>
+        <p>Learn the rules, understand your cards, and build a strong foundation for your first games.</p>
       </div>
+      <a class="text-link home-section-link" href="/beginner-guides/">Start learning</a>
     </div>
-    <div class="learning-path">
-      {beginnerSteps.map((step, index) => (
-        <article class="learning-step">
-          <span class="step-number">Step {index + 1}</span>
-          <h3>{step.title}</h3>
-          {step.guide ? (
-            <a class="text-link" href={`/beginner-guides/${step.guide.slug}/`}>
-              Read the guide
-            </a>
-          ) : (
-            <span class="pending">Guide pending official information</span>
-          )}
-        </article>
-      ))}
+    <div class="guide-grid">
+      {beginnerGuides.map((guide) => <GuideCard guide={guide} />)}
     </div>
   </section>
 
-  <section class="section shell" aria-labelledby="timeline-title">
-    <div class="section-heading">
-      <div>
-        <p class="eyebrow">Confirmed milestones only</p>
-        <h2 id="timeline-title">Official Timeline</h2>
-        <p>A concise record of dates and release windows that have been confirmed.</p>
-      </div>
-    </div>
-    <ol class="timeline">
-      {releaseMilestones.map((milestone) => (
-        <li>
-          <time>{milestone.period}</time>
-          <div>
-            <h3>{milestone.title}</h3>
-            <p>{milestone.description}</p>
-          </div>
-        </li>
-      ))}
-    </ol>
+  <section class="section shell home-seo" aria-labelledby="about-site-title">
+    <p class="eyebrow">About NarutoCardGuide</p>
+    <h2 id="about-site-title">Your independent Naruto Card Game resource</h2>
+    <p>
+      NarutoCardGuide is a reference hub for new and aspiring NARUTO CARD GAME players who want clear answers
+      about the rules, the cards, and the latest official developments. Every page is built to make the game easier
+      to understand, from practical <a href="/beginner-guides/">beginner guides</a>{' '}and confirmed{' '}
+      <a href="/news/">news</a>{' '}to a searchable <a href="/cards-list/">card list</a>{' '}with the information
+      players need to prepare for their first games.
+    </p>
+    <p>
+      The site is designed to grow with the game as new cards, products, and announcements are released. Expect
+      concise explanations, source-backed updates, and a fast, focused experience that helps you learn the rules,
+      find the right cards, and follow the NARUTO CARD GAME with confidence.
+    </p>
   </section>
+
 </BaseLayout>
