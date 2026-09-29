@@ -7,7 +7,9 @@ const { guide, recommended = false } = Astro.props;
 
 <article class:list={['guide-card', { recommended }]}>
   <a href={`/beginner-guides/${guide.slug}/`}>
-    <span class="guide-card-image" aria-hidden="true"></span>
+    <span class="guide-card-image">
+      {guide.image && <img src={guide.image.src} alt="" loading="lazy" />}
+    </span>
     <span class="guide-card-category">Rules</span>
     <h3>{guide.title}</h3>
     <span class="summary">{guide.summary}</span>

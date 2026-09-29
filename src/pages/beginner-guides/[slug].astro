@@ -107,7 +107,12 @@ const structuredData = [
                 </ol>
               )}
               {section.table && (
-                <div class="article-table-wrap">
+                <div
+                  class:list={[
+                    'article-table-wrap',
+                    (section.id === 'keywords' || section.id === 'game-vocabulary') && 'keyword-table-wrap',
+                  ]}
+                >
                   <table>
                     <thead>
                       <tr>
@@ -119,15 +124,42 @@ const structuredData = [
                         <tr>
                           {row.map((cell, cellIndex) => {
                             const image = section.table?.images?.[rowIndex]?.[cellIndex];
+                            const example = section.table?.examples?.[rowIndex];
                             return (
                               <td>
-                                {image ? (
+                                {image && section.id === 'keywords' ? (
+                                  <button
+                                    class="keyword-trigger"
+                                    type="button"
+                                    data-card-preview
+                                    data-image-src={image.src}
+                                    data-image-alt={image.alt}
+                                    aria-label={`View the ${cell} keyword card image`}
+                                  >
+                                    [{cell}]
+                                  </button>
+                                ) : image ? (
                                   <span class="table-cell-with-image">
-                                    <span>{cell}</span>
+                                    {cell && <span>{cell}</span>}
                                     <img src={image.src} alt={image.alt} />
                                   </span>
                                 ) : (
-                                  cell
+                                  <span set:html={renderGuideText(cell)}></span>
+                                )}
+                                {example && cellIndex === 1 && (
+                                  <>
+                                    <br />
+                                    <button
+                                      class="table-example-link"
+                                      type="button"
+                                      data-card-preview
+                                      data-image-src={example.image.src}
+                                      data-image-alt={example.image.alt}
+                                      aria-label={`View example card ${example.label}`}
+                                    >
+                                      Example: {example.label}
+                                    </button>
+                                  </>
                                 )}
                               </td>
                             );
@@ -230,7 +262,7 @@ const structuredData = [
                                   <td>
                                     {image ? (
                                       <span class="table-cell-with-image">
-                                        <span>{cell}</span>
+                                        {cell && <span>{cell}</span>}
                                         <img src={image.src} alt={image.alt} />
                                       </span>
                                     ) : (

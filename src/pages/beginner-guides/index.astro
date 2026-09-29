@@ -27,7 +27,12 @@ const orderedGuides = [...guides].sort((a, b) => a.order - b.order);
 
   <div class="shell">
     <section class="section beginner-guides-section" aria-labelledby="beginner-guides-list-title">
-      <h2 id="beginner-guides-list-title" class="visually-hidden">Beginner guide articles</h2>
+      <div class="section-heading">
+        <div>
+          <h2 id="beginner-guides-list-title">Start here</h2>
+          <p>Rules references and essential game fundamentals for new players.</p>
+        </div>
+      </div>
       {orderedGuides.length > 0 ? (
         <div class="guide-grid">
           {orderedGuides.map((guide) => <GuideCard guide={guide} />)}
@@ -39,6 +44,31 @@ const orderedGuides = [...guides].sort((a, b) => a.order - b.order);
           message="Beginner guides will be added here as they are prepared."
         />
       )}
+    </section>
+
+    <section class="section beginner-guides-about" aria-labelledby="about-beginner-guides-title">
+      <div class="section-heading">
+        <div>
+          <h2 id="about-beginner-guides-title">About Beginner Guides</h2>
+        </div>
+      </div>
+      <p>
+        New to the NARUTO CARD GAME ? This section gives you a clear path to learn the rules,
+        understand your cards, and build a strong foundation for your first games. Start with the
+        {' '}<a href="/beginner-guides/complete-naruto-card-game-rules/">Complete Naruto Card Game Rules</a>{' '}
+        guide to understand the flow of a match and the role of each card.
+      </p>
+      <p>
+        These guides focus on the fundamentals that remain useful as the game develops, from
+        managing Chakra and reading card effects to understanding attacks, Leaders, Characters,
+        and the vocabulary used across the game.
+      </p>
+      <p>
+        The guides are written for quick reading while keeping the explanations practical. As new
+        cards, products, and official announcements are published, follow the{' '}
+        <a href="/news/">latest NARUTO CARD GAME news</a>{' '}
+        to stay informed about the game’s releases and updates.
+      </p>
     </section>
   </div>
 </BaseLayout>
