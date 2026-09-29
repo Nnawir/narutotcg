@@ -349,7 +349,7 @@ h3 {
 .hero-grid {
   display: grid;
   min-height: 29rem;
-  grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
+  grid-template-columns: 1fr;
   align-items: center;
   gap: clamp(2rem, 6vw, 6rem);
   padding-block: clamp(4.5rem, 9vw, 7.5rem);
@@ -357,7 +357,19 @@ h3 {
 .hero-copy {
   position: relative;
   z-index: 2;
-  max-width: 47rem;
+  max-width: 52rem;
+  margin-inline: auto;
+  text-align: center;
+}
+.home-hero .card-list-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgb(224 139 131 / 0.28);
+  border-radius: 999px;
+  padding: 0.7rem 1.1rem;
+  background: linear-gradient(135deg, rgb(199 71 61 / 0.16), rgb(224 139 131 / 0.25));
+  color: var(--accent);
+  letter-spacing: 0.03em;
 }
 .eyebrow {
   margin-bottom: 1rem;
@@ -369,23 +381,24 @@ h3 {
 }
 .home-hero h1 {
   max-width: 45rem;
-  margin-bottom: 1.3rem;
-  font-size: clamp(2.55rem, 5.6vw, 5.15rem);
+  margin: 0 auto 1.3rem;
+  font-size: clamp(2.2rem, 4.5vw, 4.25rem);
   font-weight: 740;
   letter-spacing: -0.055em;
 }
 .home-hero h1 span {
-  color: var(--text-secondary);
+  color: var(--text-primary);
 }
 .hero-copy > p:not(.eyebrow) {
   max-width: 39rem;
-  margin-bottom: 0;
+  margin: 0 auto;
   color: var(--text-secondary);
   font-size: clamp(1rem, 1.5vw, 1.16rem);
 }
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 0.75rem;
   margin-top: 2rem;
 }
@@ -1130,54 +1143,6 @@ h3 {
   font-weight: 650;
 }
 
-.hero-mark {
-  position: relative;
-  min-height: 20rem;
-  border-left: 1px solid var(--border);
-}
-.hero-mark::before,
-.hero-mark::after {
-  position: absolute;
-  content: '';
-}
-.hero-mark::before {
-  inset: 8% 7% 8% 20%;
-  border: 1px solid var(--border-strong);
-  border-radius: 48% 52% 48% 52%;
-  transform: rotate(-11deg);
-}
-.hero-mark::after {
-  top: 50%;
-  right: -20vw;
-  left: 4%;
-  height: 1px;
-  background: linear-gradient(90deg, var(--accent), transparent 75%);
-  transform: rotate(-11deg);
-}
-.hero-year {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  color: #202128;
-  font-size: clamp(9rem, 22vw, 17rem);
-  font-weight: 800;
-  line-height: 0.75;
-  letter-spacing: -0.12em;
-  transform: translate(-50%, -50%);
-  user-select: none;
-}
-.hero-mark-label {
-  position: absolute;
-  right: 0;
-  bottom: 8%;
-  color: var(--text-dim);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  writing-mode: vertical-rl;
-}
-
 .section {
   position: relative;
   padding-block: clamp(4rem, 8vw, 7rem);
@@ -1207,7 +1172,7 @@ h3 {
 .section-heading h2 {
   position: relative;
   margin-bottom: 0.65rem;
-  font-size: clamp(2rem, 4vw, 3.35rem);
+  font-size: clamp(1.8rem, 3.2vw, 2.75rem);
 }
 .section-heading h2::after {
   display: block;
@@ -1234,7 +1199,42 @@ h3 {
 .text-link::after {
   content: '\2192';
 }
-
+.home-section-link {
+  color: var(--accent);
+}
+.home-section-link:hover {
+  color: var(--accent-hover);
+}
+.new-card-label {
+  color: var(--accent);
+}
+.card-tile-link {
+  cursor: pointer;
+}
+.home-seo {
+  max-width: none;
+}
+.home-seo h2 {
+  max-width: 45rem;
+  margin-bottom: 1.25rem;
+  font-size: clamp(1.8rem, 3.2vw, 2.75rem);
+}
+.home-seo > p:not(.eyebrow) {
+  max-width: 56rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+}
+.home-seo > p + p {
+  margin-top: 1.2rem;
+}
+.home-seo a {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+.home-seo a:hover {
+  color: var(--accent-hover);
+}
 .empty-state {
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -1893,8 +1893,8 @@ h3 {
 }
 
 .guide-card > a {
-  display: grid;
-  align-content: start;
+  display: flex;
+  flex-direction: column;
   gap: 0.85rem;
   min-height: 100%;
   padding: 0;
@@ -1933,6 +1933,7 @@ h3 {
   font-size: 1.4rem;
 }
 .guide-card .summary { margin-bottom: 0.25rem; }
+.guide-card .card-action { margin-top: auto; }
 .guide-card .card-action { margin-bottom: 1.35rem; }
 .guide-card.recommended > a {
   border-top: 3px solid var(--accent);
@@ -2624,9 +2625,6 @@ h3 {
     min-height: auto;
     grid-template-columns: 1fr;
     padding-block: 4.25rem;
-  }
-  .hero-mark {
-    display: none;
   }
   .section-heading {
     display: block;

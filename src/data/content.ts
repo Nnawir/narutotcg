@@ -373,7 +373,70 @@ export const timelineItems: TimelineItem[] = [
     sourceUrl: 'https://www.naruto-cardgame.com/en/welcome/',
   },
 ];
-export const cards: Card[] = n01Cards;
+const specialCards: Card[] = [
+  {
+    id: 'C-001',
+    slug: 'c-001',
+    name: 'C-001',
+    setCode: 'CHAKRA',
+    setName: 'Chakra Cards',
+    image: {
+      src: '/Cards/Chakra cards/C-001.jpg',
+      alt: 'C-001 card',
+      width: 640,
+      height: 894,
+    },
+    confirmedFields: [],
+    updatedAt: '2026-09-29',
+    sourceLabel: 'NarutoCardGuide card archive',
+    sourceUrl: '/cards-list/',
+    printings: [],
+    relatedNewsSlugs: [],
+    relatedGuideSlugs: [],
+  },
+  {
+    id: 'CP-001',
+    slug: 'cp-001',
+    name: 'CP-001',
+    setCode: 'CHAKRA',
+    setName: 'Chakra Cards',
+    image: {
+      src: '/Cards/Chakra cards/CP-001.jpg',
+      alt: 'CP-001 card',
+      width: 600,
+      height: 833,
+    },
+    confirmedFields: [],
+    updatedAt: '2026-09-29',
+    sourceLabel: 'NarutoCardGuide card archive',
+    sourceUrl: '/cards-list/',
+    printings: [],
+    relatedNewsSlugs: [],
+    relatedGuideSlugs: [],
+  },
+  {
+    id: 'S-001',
+    slug: 's-001',
+    name: 'S-001',
+    setCode: 'SUMMON',
+    setName: 'Summon Cards',
+    image: {
+      src: '/Cards/Summon cards/S-001.jpg',
+      alt: 'S-001 card',
+      width: 640,
+      height: 894,
+    },
+    confirmedFields: [],
+    updatedAt: '2026-09-29',
+    sourceLabel: 'NarutoCardGuide card archive',
+    sourceUrl: '/cards-list/',
+    printings: [],
+    relatedNewsSlugs: [],
+    relatedGuideSlugs: [],
+  },
+];
+
+export const cards: Card[] = [...n01Cards, ...specialCards];
 export const guides: Guide[] = [
   {
     slug: 'complete-naruto-card-game-rules',
@@ -435,9 +498,7 @@ export const guides: Guide[] = [
           src: '/assets/visuals/board.png',
           alt: 'Schematic NARUTO CARD GAME play area showing the Character, Support, Leader, Deck, Trash, Summon, and Chakra areas',
         },
-        links: [
-          { label: "Click here to view the game's Cards List.", href: '/cards-list/' },
-        ],
+        links: [{ label: "Click here to view the game's Cards List.", href: '/cards-list/' }],
       },
       {
         id: 'card-types-and-zones',
@@ -615,7 +676,8 @@ export const guides: Guide[] = [
             stats: [
               {
                 name: 'DMG (Damage)',
-                description: 'The amount of Life this card removes when it attacks the opposing Leader. Revealed Leaders currently show values from 1 to 3.',
+                description:
+                  'The amount of Life this card removes when it attacks the opposing Leader. Revealed Leaders currently show values from 1 to 3.',
               },
               {
                 name: 'POW (Power)',
@@ -623,7 +685,8 @@ export const guides: Guide[] = [
               },
               {
                 name: 'LIFE',
-                description: "A Leader's remaining health. Reducing the opposing Leader's Life to 0 wins the game; revealed Leaders start with 15.",
+                description:
+                  "A Leader's remaining health. Reducing the opposing Leader's Life to 0 wins the game; revealed Leaders start with 15.",
               },
             ],
           },
@@ -636,7 +699,8 @@ export const guides: Guide[] = [
             stats: [
               {
                 name: 'DMG (Damage)',
-                description: 'The amount of Life this card removes when it attacks the opposing Leader. Revealed Leaders currently show values from 1 to 3.',
+                description:
+                  'The amount of Life this card removes when it attacks the opposing Leader. Revealed Leaders currently show values from 1 to 3.',
               },
               {
                 name: 'POW (Power)',
@@ -659,32 +723,56 @@ export const guides: Guide[] = [
         table: {
           headers: ['KEYWORDS', 'CONFIRMED ROLE'],
           rows: [
+            ['Activate: Main', 'An ability the controller may use during their own Main phase.'],
             [
-              'Activate: Main',
-              'An ability the controller may use during their own Main phase.',
+              'During Your Main',
+              'A timing marker that limits a Support effect to the controller’s own Main phase.',
             ],
-            ['During Your Main', 'A timing marker that limits a Support effect to the controller’s own Main phase.'],
-            ["During Your Opponent's Attack", "A reactive timing window that lets an effect resolve during the opponent's attack."],
+            [
+              "During Your Opponent's Attack",
+              "A reactive timing window that lets an effect resolve during the opponent's attack.",
+            ],
             ['Once Per Turn', 'A restriction that limits a repeatable ability to one use per turn.'],
             ['On Summon', 'A timing marker for an effect that resolves as the card enters the field.'],
             ['Quick', 'A Support timing that summons the card as part of resolving its effect.'],
-            ['Recovery', 'A resource-recovery ability that lets a Leader rest to turn all of its Chakra face-up.'],
-            ['Rush', 'An ability that allows this card to attack during the same turn it is played. On revealed cards, this keyword is printed in full.'],
-            ['Summon Requirements', 'A requirement that must be paid before an EX Character can enter play, using your own Characters in the trash. Revealed EX Characters also state that they cannot be summoned normally.'],
-            ['Support Activated', 'A response that triggers when an opponent activates a Support effect and negates that activation.'],
+            [
+              'Recovery',
+              'A resource-recovery ability that lets a Leader rest to turn all of its Chakra face-up.',
+            ],
+            [
+              'Rush',
+              'An ability that allows this card to attack during the same turn it is played. On revealed cards, this keyword is printed in full.',
+            ],
+            [
+              'Summon Requirements',
+              'A requirement that must be paid before an EX Character can enter play, using your own Characters in the trash. Revealed EX Characters also state that they cannot be summoned normally.',
+            ],
+            [
+              'Support Activated',
+              'A response that triggers when an opponent activates a Support effect and negates that activation.',
+            ],
             ['When Attacking', 'A trigger that resolves when the card declares an attack.'],
             ['Your Turn', 'A restriction that limits a triggered ability to the controller’s own turn.'],
           ],
           images: [
             [{ src: '/assets/keywords/activate-main.png', alt: 'Activate: Main keyword' }, undefined],
             [{ src: '/assets/keywords/during-your-main.png', alt: 'During Your Main keyword' }, undefined],
-            [{ src: "/assets/keywords/during-your-opponent's-attack.png", alt: "During Your Opponent's Attack keyword" }, undefined],
+            [
+              {
+                src: "/assets/keywords/during-your-opponent's-attack.png",
+                alt: "During Your Opponent's Attack keyword",
+              },
+              undefined,
+            ],
             [{ src: '/assets/keywords/once-per-turn.png', alt: 'Once Per Turn keyword' }, undefined],
             [{ src: '/assets/keywords/on-summon.png', alt: 'On Summon keyword' }, undefined],
             [{ src: '/assets/keywords/quick.png', alt: 'Quick keyword' }, undefined],
             [{ src: '/assets/keywords/recovery.png', alt: 'Recovery keyword' }, undefined],
             [{ src: '/assets/keywords/rush.png', alt: 'Rush keyword' }, undefined],
-            [{ src: '/assets/keywords/summon-requirements.png', alt: 'Summon Requirements keyword' }, undefined],
+            [
+              { src: '/assets/keywords/summon-requirements.png', alt: 'Summon Requirements keyword' },
+              undefined,
+            ],
             [{ src: '/assets/keywords/support-activated.png', alt: 'Support Activated keyword' }, undefined],
             [{ src: '/assets/keywords/when-attacking.png', alt: 'When Attacking keyword' }, undefined],
             [{ src: '/assets/keywords/your-turn.png', alt: 'Your Turn keyword' }, undefined],
@@ -710,12 +798,12 @@ export const guides: Guide[] = [
               'Chakra',
               "The game's resource pool: exactly five Chakra cards per deck, starting face-up. Paying a cost flips one face-down, and it does not refresh automatically at the start of a turn. A Leader's [[RECOVERY]] ability is the way to restore it, at the cost of that Leader's attack.",
             ],
-            [
-              'Jutsu',
-              'A technique activated by a Character card by paying a Chakra cost.',
-            ],
+            ['Jutsu', 'A technique activated by a Character card by paying a Chakra cost.'],
             ['K.O.', 'Removing a Character from the field.'],
-            ['Negate', 'To cancel an effect before it resolves, preventing its instructions from taking effect.'],
+            [
+              'Negate',
+              'To cancel an effect before it resolves, preventing its instructions from taking effect.',
+            ],
             [
               'Rested',
               'A card turned sideways is rested. Attacking rests the attacker, and resting the Leader is how Chakra is restored. Characters can only be attacked while they are already rested.',
