@@ -66,6 +66,14 @@ const isActive = (href: string) => pathname === href || pathname.startsWith(href
 
 <script>
   const menu = document.querySelector('.mobile-menu');
+  const searchForm = document.querySelector('.global-search form');
+  const searchInput = document.querySelector('#global-search');
+  searchForm?.addEventListener('submit', (event) => {
+    if (!(searchInput instanceof HTMLInputElement)) return;
+    if (searchInput.value.trim().toLowerCase() !== 'jevotelepen') return;
+    event.preventDefault();
+    window.location.assign('/simulator/');
+  });
   menu?.addEventListener('keydown', (event) => {
     if (!(event instanceof KeyboardEvent)) return;
     if (event.key === 'Escape' && menu instanceof HTMLDetailsElement) {

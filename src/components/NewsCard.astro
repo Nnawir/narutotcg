@@ -27,7 +27,7 @@ const { article, featured = false } = Astro.props;
     <span class="news-copy">
       <span class="meta-row">
         <span>{article.category}</span>
-        <time datetime={article.publishedAt}>{formatDate(article.publishedAt)}</time>
+        {article.publishedAt && <time datetime={article.publishedAt}>{formatDate(article.publishedAt)}</time>}
       </span>
       <h3>{article.title}</h3>
       <span class="summary">{article.summary}</span>

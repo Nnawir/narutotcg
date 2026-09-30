@@ -4,7 +4,7 @@ import NewsCard from '../../components/NewsCard.astro';
 import NewsTimeline from '../../components/NewsTimeline.astro';
 import { news, timelineItems } from '../../data/content';
 
-const sortedNews = [...news].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+const sortedNews = [...news].sort((a, b) => (b.publishedAt ?? '').localeCompare(a.publishedAt ?? ''));
 ---
 
 <BaseLayout
