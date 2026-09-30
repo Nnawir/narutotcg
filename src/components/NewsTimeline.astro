@@ -52,9 +52,13 @@ const { items } = Astro.props;
               )}
             </h3>
             <p>{item.summary}</p>
-            <a class="timeline-source" href={item.sourceUrl} target="_blank" rel="noopener noreferrer">
-              Official source ↗
-            </a>
+            {item.articleSlug ? (
+              <a class="timeline-source" href={`/news/${item.articleSlug}/`}>Read article →</a>
+            ) : (
+              <a class="timeline-source" href={item.sourceUrl} target="_blank" rel="noopener noreferrer">
+                Official source ↗
+              </a>
+            )}
           </div>
         </article>
       ))}
@@ -84,9 +88,13 @@ const { items } = Astro.props;
           )}
         </h3>
         <p>{item.summary}</p>
-        <a class="timeline-source" href={item.sourceUrl} target="_blank" rel="noopener noreferrer">
-          Official source ↗
-        </a>
+        {item.articleSlug ? (
+          <a class="timeline-source" href={`/news/${item.articleSlug}/`}>Read article →</a>
+        ) : (
+          <a class="timeline-source" href={item.sourceUrl} target="_blank" rel="noopener noreferrer">
+            Official source ↗
+          </a>
+        )}
       </li>
     ))}
   </ol>

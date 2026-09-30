@@ -14,7 +14,7 @@ export type NewsArticle = {
   title: string;
   summary: string;
   category: NewsCategory;
-  publishedAt: string;
+  publishedAt?: string;
   updatedAt?: string;
   sourceLabel: string;
   sourceUrl: string;
@@ -198,9 +198,24 @@ export const news: NewsArticle[] = [
     ],
     sections: [
       {
-        heading: 'Official announcement',
+        heading: 'What is happening',
         paragraphs: [
-          'Bandai states that NARUTO CARD GAME is coming to SPIEL Essen. Details on Tutorial Session participation are to be announced later.',
+          'NARUTO CARD GAME is scheduled to appear at SPIEL Essen, taking place from October 22 to 25, 2026. Bandai lists the event at Messe Essen in Essen, Germany.',
+          'The announced activity is a Tutorial Session, giving visitors an opportunity to learn how to play. Participation is free, but admission to SPIEL Essen is required.',
+        ],
+      },
+      {
+        heading: 'Tutorial Session',
+        paragraphs: [
+          'Bandai has not yet published the procedure for taking part in the SPIEL Essen Tutorial Sessions. Demo decks will not be available to take home.',
+          'Each person may participate in one Tutorial Session during SPIEL Essen. Participants registered to the NARUTO TCG UPDATES CHANNEL on BANDAI TCG+ and who complete the event survey may receive the listed participation gift.',
+        ],
+      },
+      {
+        heading: 'Gifts and merchandise',
+        paragraphs: [
+          'Bandai lists the CP-001 Chakra Card for Tutorial Session participants and a Logo Sticker giveaway for people who follow an official social channel or register to the NARUTO TCG UPDATES CHANNEL.',
+          'The NARUTO CARD GAME Official Playmat, marked as arriving in 2027, is also listed at a $35 MSRP plus tax. Purchase details will be announced later, and quantities are limited each day.',
         ],
       },
     ],
@@ -223,9 +238,24 @@ export const news: NewsArticle[] = [
     ],
     sections: [
       {
-        heading: 'Official announcement',
+        heading: 'What is happening',
         paragraphs: [
-          'Bandai states that NARUTO CARD GAME is coming to Paris Games Week. Details on Tutorial Session participation are to be announced later.',
+          'NARUTO CARD GAME is scheduled to appear at Paris Games Week from October 22 to 25, 2026, at Paris Expo Porte de Versailles in Paris, France.',
+          'Bandai has announced free Tutorial Sessions at the show. Visitors will still need Paris Games Week admission to access the activities.',
+        ],
+      },
+      {
+        heading: 'Tutorial Session',
+        paragraphs: [
+          'Information on how to participate in the Tutorial Sessions has not yet been announced by Bandai. Demo decks will not be available to take home.',
+          'One Tutorial Session is permitted per person during Paris Games Week. The CP-001 Chakra Card is listed for eligible participants registered to the NARUTO TCG UPDATES CHANNEL on BANDAI TCG+ who complete the event survey.',
+        ],
+      },
+      {
+        heading: 'What else is listed',
+        paragraphs: [
+          'A Logo Sticker is listed for people who follow an official NARUTO CARD GAME social channel or register to the NARUTO TCG UPDATES CHANNEL.',
+          'Bandai also lists the NARUTO CARD GAME Official Playmat, arriving in 2027, at a $35 MSRP plus tax. It is limited to one per person and available in limited daily quantities; purchase information is still to come.',
         ],
       },
     ],
@@ -248,9 +278,24 @@ export const news: NewsArticle[] = [
     ],
     sections: [
       {
-        heading: 'Official announcement',
+        heading: 'What is happening',
         paragraphs: [
-          'Bandai states that NARUTO CARD GAME is coming to Lucca Comics & Games. Details on Tutorial Session participation are to be announced later.',
+          'NARUTO CARD GAME is scheduled to appear at Lucca Comics & Games from October 28 to November 1, 2026. The Bandai announcement names Piazza Santa Maria in Lucca, Italy as the location.',
+          'The event will include free Tutorial Sessions. Entry to Lucca Comics & Games is required to join the activities.',
+        ],
+      },
+      {
+        heading: 'Tutorial Session',
+        paragraphs: [
+          'Bandai has not yet announced participation details for the Lucca Tutorial Sessions, and demo decks will not be available to take home.',
+          'A visitor may participate in one Tutorial Session during the event. Eligible participants registered to the NARUTO TCG UPDATES CHANNEL on BANDAI TCG+ who complete the event survey are listed to receive the CP-001 Chakra Card.',
+        ],
+      },
+      {
+        heading: 'Merchandise',
+        paragraphs: [
+          'The official announcement lists the NARUTO CARD GAME Official Playmat as arriving in 2027, with a $35 MSRP plus tax. Bandai says purchase information will be announced later.',
+          'The Playmat is limited to one item per person and is available in limited quantities each day. Bandai notes that event contents may change without notice.',
         ],
       },
     ],
@@ -273,9 +318,144 @@ export const news: NewsArticle[] = [
     ],
     sections: [
       {
-        heading: 'Official announcement',
+        heading: 'Event details',
         paragraphs: [
-          'Bandai announced BANDAI CARD GAMES Fest 26-27 in London and lists a NARUTO CARD GAME Tutorial Session among its main events.',
+          'BANDAI CARD GAMES Fest 26-27 in London is scheduled for January 15 to 17, 2027 at ExCeL London, Hall 1–11. The venue address is Royal Victoria Dock, 1 Western Gateway, London E16 1XL.',
+          'Bandai lists a pre-registration tournament ticket as required for admission. The event page also cautions that details may be changed or cancelled without notice.',
+        ],
+      },
+      {
+        heading: 'NARUTO CARD GAME activity',
+        paragraphs: [
+          'The official event information lists a Tutorial Session among the main events. It is the NARUTO CARD GAME activity currently confirmed for the London Fest.',
+          'Additional event commemorative items are marked as coming soon; no further NARUTO CARD GAME event format or participation details are published on the announcement page at this time.',
+        ],
+      },
+      {
+        heading: 'Before attending',
+        paragraphs: [
+          'Bandai directs attendees to read the BANDAI CARD GAMES Official Events Disclaimer before joining. The official Fest site remains the reference for later updates and registration information.',
+        ],
+      },
+    ],
+    relatedCardIds: [],
+    relatedGuideSlugs: [],
+  },
+  {
+    slug: 'new-york-comic-con-2026-event-information',
+    title: 'New York Comic Con 2026 Event Information',
+    summary: 'NARUTO CARD GAME Tutorial Sessions, merchandise information and a NARUTO panel are announced for New York Comic Con.',
+    category: 'Events',
+    publishedAt: '2026-08-07',
+    sourceLabel: 'NARUTO CARD GAME Official Website — New York Comic Con 2026 Event Information',
+    sourceUrl: 'https://www.naruto-cardgame.com/en/news/nycc-2026.php',
+    featured: false,
+    confirmedFacts: [
+      'New York Comic Con runs from October 8 to 11, 2026.',
+      'The NARUTO CARD GAME booth is #2705 at the Javits Center.',
+      'Bandai lists Tutorial Sessions and the NARUTO: What’s Next? panel on October 10.',
+    ],
+    sections: [
+      {
+        heading: 'Event details',
+        paragraphs: [
+          'NARUTO CARD GAME is scheduled to appear at New York Comic Con from October 8 to 11, 2026. Bandai lists Booth #2705 at the Javits Center, 429 11th Avenue, New York, NY.',
+          'New York Comic Con admission is required for the activities. The NARUTO CARD GAME Tutorial Sessions are free, but a session ticket is required.',
+        ],
+      },
+      {
+        heading: 'Tutorial Sessions',
+        paragraphs: [
+          'Tutorial Session tickets will be distributed each morning on a first-come, first-served basis at the BANDAI Namco Naruto Booth #3001. Bandai notes that the Tutorial Sessions themselves take place at the separate BANDAI CARD GAMES Booth #2705.',
+          'Demo decks will not be available to take home. One Tutorial Session is allowed per person during the event. Eligible participants registered to the NARUTO TCG UPDATES CHANNEL on BANDAI TCG+ who complete the survey are listed to receive a CP-001 Chakra Card and a Logo Sticker.',
+        ],
+      },
+      {
+        heading: 'Merchandise and panel',
+        paragraphs: [
+          'A retail ticket is required for the NARUTO CARD GAME Official Playmat, marked as arriving in 2027 with a $35 MSRP plus tax. Retail tickets are scheduled to be distributed each morning at Booth #2705, subject to limited daily quantities.',
+          'Bandai also lists the NARUTO: What’s Next? panel for Saturday, October 10 at the Empire Stage on North-Level 5. The panel is announced to include updates on NARUTO, the NARUTO CARD GAME and other projects.',
+        ],
+      },
+    ],
+    relatedCardIds: [],
+    relatedGuideSlugs: [],
+  },
+  {
+    slug: 'pax-aus-2026-event-information',
+    title: 'PAX Aus 2026 Event Information',
+    summary: 'Bandai announced NARUTO CARD GAME Tutorial Sessions at PAX Aus in Melbourne.',
+    category: 'Events',
+    publishedAt: '2026-08-07',
+    sourceLabel: 'NARUTO CARD GAME Official Website — PAX Aus 2026 Event Information',
+    sourceUrl: 'https://www.naruto-cardgame.com/en/news/paxaus-2026.php',
+    featured: false,
+    confirmedFacts: [
+      'PAX Aus runs from October 9 to 11, 2026.',
+      'The event takes place at the Melbourne Convention and Exhibition Centre.',
+      'Tutorial Session registration is announced through TCG+ on a first-come, first-served basis.',
+    ],
+    sections: [
+      {
+        heading: 'Event details',
+        paragraphs: [
+          'NARUTO CARD GAME is scheduled to appear at PAX Aus from October 9 to 11, 2026 at the Melbourne Convention and Exhibition Centre in South Wharf, Victoria.',
+          'PAX Aus admission is required for the activities. Bandai lists the NARUTO CARD GAME Tutorial Sessions as free.',
+        ],
+      },
+      {
+        heading: 'Tutorial Session registration',
+        paragraphs: [
+          'Bandai says registration takes place through TCG+ and opens on a first-come, first-served basis at 11:00 AM AEST on Sunday, September 20. Players may register for a maximum of one event.',
+          'Demo decks will not be available to take home. The page warns that attempts to bypass the one-event limit may result in exclusion from the demo events.',
+        ],
+      },
+      {
+        heading: 'Gifts and Playmat raffle',
+        paragraphs: [
+          'Tutorial Session participants are listed to receive a CP-001 Chakra Card and a Logo Sticker, subject to the stated TCG+ registration and survey conditions. All participants are also entered into a raffle for a chance to purchase a Playmat.',
+          'Bandai says the raffle takes place after the final Tutorial Session each day. The NARUTO CARD GAME Official Playmat is marked as arriving in 2027 with a $35 MSRP plus tax, and is limited to one per person in limited daily quantities.',
+        ],
+      },
+    ],
+    relatedCardIds: [],
+    relatedGuideSlugs: [],
+  },
+];
+
+export const roadmapArticles: NewsArticle[] = [
+  {
+    slug: 'tutorial-sessions-roadmap',
+    title: 'Tutorial Sessions: October 2026 to early 2027',
+    summary: 'Bandai’s official roadmap confirms Tutorial Sessions at events around the world from October 2026 into early 2027.',
+    category: 'Official News',
+    sourceLabel: 'NARUTO CARD GAME Official Website — Roadmap',
+    sourceUrl: 'https://www.naruto-cardgame.com/en/welcome/',
+    featured: false,
+    confirmedFacts: [
+      'The roadmap schedules Tutorial Sessions from October 2026 into early 2027.',
+      'Bandai says Tutorial Sessions will be held at events around the world.',
+      'The roadmap does not give one shared registration process or a final complete event list.',
+    ],
+    sections: [
+      {
+        heading: 'What the roadmap confirms',
+        paragraphs: [
+          'Bandai’s NARUTO CARD GAME roadmap lists Tutorial Sessions from October 2026 into early 2027. It says these sessions will be held at events around the world.',
+          'The roadmap identifies New York Comic Con, PAX Aus, SPIEL Essen, Paris Games Week and Lucca Comics & Games among its upcoming event schedule. Individual event announcements provide the currently available local details.',
+        ],
+      },
+      {
+        heading: 'What is not announced yet',
+        paragraphs: [
+          'Bandai has not published a single global registration process, a complete worldwide list of Tutorial Sessions, or the full early-2027 schedule on the roadmap page.',
+          'Participation requirements can differ by event. Check the corresponding NarutoCardGuide event article for the details currently confirmed for that location.',
+        ],
+      },
+      {
+        heading: 'Next roadmap information',
+        paragraphs: [
+          'Bandai states that more new information will be revealed at New York Comic Con. Further event announcements are also expected.',
         ],
       },
     ],
@@ -285,7 +465,9 @@ export const news: NewsArticle[] = [
 ];
 
 export const timelineItems: TimelineItem[] = [
-  ...news.map((article) => ({
+  ...news
+    .filter((article): article is NewsArticle & { publishedAt: string } => Boolean(article.publishedAt))
+    .map((article) => ({
     id: `news-${article.slug}`,
     title: article.title,
     summary: article.summary,
@@ -304,6 +486,7 @@ export const timelineItems: TimelineItem[] = [
     date: '2026-10-08',
     dateLabel: 'October 8–11, 2026',
     sourceUrl: 'https://www.naruto-cardgame.com/en/news/nycc-2026.php',
+    articleSlug: 'new-york-comic-con-2026-event-information',
   },
   {
     id: 'pax-aus-2026',
@@ -313,6 +496,7 @@ export const timelineItems: TimelineItem[] = [
     date: '2026-10-09',
     dateLabel: 'October 9–11, 2026',
     sourceUrl: 'https://www.naruto-cardgame.com/en/news/paxaus-2026.php',
+    articleSlug: 'pax-aus-2026-event-information',
   },
   {
     id: 'tutorial-sessions',
@@ -322,6 +506,7 @@ export const timelineItems: TimelineItem[] = [
     date: '2026-10-01',
     dateLabel: 'October 2026–early 2027',
     sourceUrl: 'https://www.naruto-cardgame.com/en/welcome/',
+    articleSlug: 'tutorial-sessions-roadmap',
   },
   {
     id: 'spiel-essen-2026',
@@ -893,7 +1078,6 @@ export const releaseMilestones = [
 ] as const;
 
 export const navigation = [
-  { label: 'Simulator', href: '/simulator/' },
   { label: 'News', href: '/news/' },
   { label: 'Cards List', href: '/cards-list/' },
   { label: 'Beginner Guides', href: '/beginner-guides/' },

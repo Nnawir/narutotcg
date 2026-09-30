@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /search/
+Disallow: /simulator/
 Disallow: /tournaments-decklists/
 Disallow: /meta-analysis/
 Disallow: /deck-guides/
