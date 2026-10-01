@@ -1179,7 +1179,7 @@ h3 {
 .section-heading h2 {
   position: relative;
   margin-bottom: 0.65rem;
-  font-size: clamp(1.8rem, 3.2vw, 2.75rem);
+  font-size: clamp(1.75rem, 3vw, 2.6rem);
 }
 .section-heading h2::after {
   display: block;
@@ -1228,7 +1228,7 @@ h3 {
 .home-seo h2 {
   max-width: 45rem;
   margin-bottom: 1.25rem;
-  font-size: clamp(1.8rem, 3.2vw, 2.75rem);
+  font-size: clamp(1.75rem, 3vw, 2.6rem);
 }
 .home-seo > p:not(.eyebrow) {
   max-width: 56rem;
@@ -1638,13 +1638,60 @@ h3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
 }
+.deck-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+.deck-guide-card > a {
+  display: grid;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding-top: 1rem;
+  background: var(--surface);
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+.deck-guide-card > a:hover {
+  border-color: var(--accent);
+  background: var(--surface-elevated);
+  transform: translateY(-5px);
+}
+.deck-guide-image {
+  display: block;
+  width: 7.5rem;
+  aspect-ratio: 1;
+  margin: 1rem auto 0;
+  border: 1px solid rgb(210 195 170 / 0.16);
+  border-radius: 0.8rem;
+  overflow: hidden;
+  background: var(--surface-elevated);
+}
+.deck-guide-image img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.deck-guide-copy { display: grid; grid-template-rows: auto 1fr auto; align-content: start; gap: .65rem; padding: 1rem 1.15rem 1.15rem; }
+.deck-guide-label { margin-inline: 1.15rem; color: var(--accent); font-size: .68rem; font-weight: 750; letter-spacing: .07em; text-transform: uppercase; }
+.deck-guide-copy h3 { margin: 0; font-size: 1.2rem; }
+.deck-guide-copy .summary { font-size: .88rem; }
+.deck-guide-copy .card-action { margin-top: auto; }
+.deck-guides-about { max-width: 57rem; }
+.deck-guides-about p { color: var(--text-secondary); }
+.deck-guides-about a, .deck-guide-article a { color: var(--accent); }
+.deck-guides-about a { text-decoration: none; }
+.deck-guide-article { max-width: 55rem; padding-bottom: 5rem; }
+.deck-guide-article .guide-content-section { padding-block: 1rem; }
+.deck-guide-article h2 { margin-top: 2rem; }
+.deck-guide-article li { margin-top: .55rem; color: var(--text-secondary); }
+.guide-back-link { margin-top: 2rem; }
 .news-index-feature {
   margin-bottom: clamp(2.5rem, 6vw, 5rem);
 }
 .news-hero { padding-bottom: clamp(2.25rem, 5vw, 4rem); }
 .news-timeline { margin-bottom: clamp(4rem, 9vw, 7rem); border: 1px solid var(--border); border-radius: var(--radius); padding: clamp(1.25rem, 3vw, 2.25rem); overflow: hidden; background: linear-gradient(90deg, rgb(20 20 25 / 0.91), rgb(20 20 25 / 0.76)), url('/assets/visuals/chakra-ink-news.png') center / cover, radial-gradient(circle at 50% 50%, rgb(199 71 61 / 0.09), transparent 39rem), var(--surface); }
 .timeline-heading { display: flex; align-items: end; justify-content: space-between; gap: 2rem; }
-.timeline-heading h2 { margin: 0; font-size: clamp(1.65rem, 3.2vw, 2.35rem); }
+.timeline-heading h2 { margin: 0; font-size: clamp(1.6rem, 3vw, 2.2rem); }
 .timeline-heading p:last-child { max-width: 31rem; margin: 0; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; }
 .timeline-legend { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1.4rem 0 0; color: var(--text-secondary); font-size: 0.72rem; font-weight: 750; letter-spacing: 0.08em; text-transform: uppercase; }
 .timeline-legend span::before { display: inline-block; width: 0.55rem; height: 0.55rem; margin-right: 0.4rem; border-radius: 50%; content: ''; }
@@ -2020,7 +2067,7 @@ h3 {
 }
 .article-body h2 {
   margin: 3rem 0 1rem;
-  font-size: clamp(1.65rem, 3vw, 2.25rem);
+  font-size: clamp(1.6rem, 2.8vw, 2.15rem);
 }
 .article-body h3 {
   margin: 2rem 0 0.75rem;
@@ -2638,7 +2685,8 @@ h3 {
     gap: 2rem;
   }
   .news-grid,
-  .guide-grid {
+  .guide-grid,
+  .deck-guide-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .article-layout {
@@ -2710,7 +2758,8 @@ h3 {
     margin-top: 1rem;
   }
   .news-grid,
-  .guide-grid {
+  .guide-grid,
+  .deck-guide-grid {
     grid-template-columns: 1fr;
   }
   .timeline-heading { display: block; }

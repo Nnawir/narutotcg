@@ -1079,6 +1079,7 @@ export const releaseMilestones = [
 
 export const navigation = [
   { label: 'News', href: '/news/' },
+  { label: 'Deck Guides', href: '/deck-guides/' },
   { label: 'Cards List', href: '/cards-list/' },
   { label: 'Beginner Guides', href: '/beginner-guides/' },
 ] as const;

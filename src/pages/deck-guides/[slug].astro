@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../../components/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { deckGuides } from '../../data/deck-guides';
+
+export function getStaticPaths() {
+  return deckGuides.map((guide) => ({ params: { slug: guide.slug }, props: { guide } }));
+}
+
+const { guide } = Astro.props;
+---
+
+<BaseLayout title={guide.title} description={guide.summary} canonicalPath={`/deck-guides/${guide.slug}/`}>
+  <div class="shell">
+    <Breadcrumbs items={[{ label: 'Deck Guides', href: '/deck-guides/' }, { label: guide.title }]} />
+  </div>
+  <header class="guide-article-header shell">
+    <p class="eyebrow card-list-eyebrow">Deck Guide</p>
+    <h1>{guide.title}</h1>
+    <p>{guide.intro}</p>
+    <div class="meta-row"><span>{guide.leader}</span><span>·</span><span>{guide.difficulty}</span><span>·</span><span>{guide.readingTime}</span></div>
+  </header>
+  <article class="shell guide-article deck-guide-article">
+    {guide.sections.map((section) => (
+      <section class="guide-content-section">
+        <h2>{section.heading}</h2>
+        {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+        {section.bullets && <ul>{section.bullets.map((bullet) => <li>{bullet}</li>)}</ul>}
+      </section>
+    ))}
+    <p class="guide-back-link"><a class="text-link" href="/deck-guides/">← Back to Deck Guides</a></p>
+  </article>
+</BaseLayout>
