@@ -1,0 +1,63 @@
+---
+import BaseLayout from '../../components/BaseLayout.astro';
+import { deckGuides } from '../../data/deck-guides';
+---
+
+<BaseLayout
+  title="Deck Guides"
+  description="Build and pilot NARUTO CARD GAME decks with practical leader guides, mulligan plans, core packages, and upgrade paths."
+  canonicalPath="/deck-guides/"
+>
+  <header class="page-hero shell cards-list-hero deck-guides-hero">
+    <p class="eyebrow card-list-eyebrow">Deck Guides</p>
+    <h1 class="card-list-title">Deck Guides for Naruto Card Game</h1>
+    <p>
+      Build with purpose, understand your leader, and find a clear game plan for every turn.
+    </p>
+  </header>
+
+  <div class="shell">
+    <section class="section deck-guides-section" aria-labelledby="featured-guides-title">
+      <div class="section-heading">
+        <div>
+          <h2 id="featured-guides-title">Featured Guides</h2>
+          <p>Start with practical deck plans for learning the format and sharpening your next list.</p>
+        </div>
+      </div>
+      <div class="deck-guide-grid">
+        {deckGuides.map((guide) => (
+          <article class="deck-guide-card">
+            <a href={`/deck-guides/${guide.slug}/`}>
+              <span class="deck-guide-label">{guide.label}</span>
+              <span class="deck-guide-image">
+                <img src={guide.image.src} alt={guide.image.alt} loading="lazy" />
+              </span>
+              <span class="deck-guide-copy">
+                <h3>{guide.title}</h3>
+                <span class="summary">{guide.summary}</span>
+                <span class="card-action">Read deck guide <span aria-hidden="true">→</span></span>
+              </span>
+            </a>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="section deck-guides-about" aria-labelledby="about-deck-guides-title">
+      <div class="section-heading">
+        <div>
+          <h2 id="about-deck-guides-title">About These Deck Guides</h2>
+        </div>
+      </div>
+      <p>
+        Build better lists and pilot them with purpose. These <a href="/deck-guides/">deck guides</a> break down leader identities, core packages, and the key turns that define each archetype. Whether you’re pushing for a top cut finish or learning a new leader, the goal is the same: simplify the plan so your decisions are clear and repeatable.
+      </p>
+      <p>
+        Each guide focuses on three pillars. First, your opening plan: mulligan priorities, early tempo lines, and when to protect life versus race. Second, your mid-game: resource loops, attack sequencing, and how to pivot based on opposing leaders. Third, your upgrade path: the most impactful changes as your collection grows, while staying aware of format shifts in <a href="/news/">meta analysis and game news</a>. If you are still learning fundamentals, the <a href="/beginner-guides/">beginner guides</a> will get you up to speed fast.
+      </p>
+      <p>
+        Guides are structured to be quick to scan on mobile while still offering depth. Expect realistic list snapshots, tech options for common threats, and an explanation of why each card matters. Bookmark your favorite leaders and return as new sets drop or the banlist changes.
+      </p>
+    </section>
+  </div>
+</BaseLayout>

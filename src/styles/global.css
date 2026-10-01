@@ -1025,6 +1025,13 @@ h3 {
 .game-card { min-height: 5.2rem; padding: .3rem; }
 .game-card:has(.game-card-image) { aspect-ratio: .7; }
 #naruto-ai-game .game-card-copy { display: none; }
+#naruto-ai-game .game-card:not(:has(.game-card-image)) .game-card-copy,
+#naruto-ai-game .game-card.image-missing .game-card-copy {
+  display: grid;
+  align-content: end;
+  height: 100%;
+  color: var(--text-primary);
+}
 .game-card strong { font-size: clamp(.58rem, .8vw, .75rem); }
 .game-card > span { font-size: .5rem; }
 .game-card.is-usable { border-color: #d2a36b; box-shadow: 0 0 0 1px rgb(210 163 107 / .25), 0 0 1rem rgb(210 163 107 / .12); cursor: pointer; }
@@ -1172,7 +1179,7 @@ h3 {
 .section-heading h2 {
   position: relative;
   margin-bottom: 0.65rem;
-  font-size: clamp(1.8rem, 3.2vw, 2.75rem);
+  font-size: clamp(1.75rem, 3vw, 2.6rem);
 }
 .section-heading h2::after {
   display: block;
@@ -1193,8 +1200,12 @@ h3 {
   flex: 0 0 auto;
   align-items: center;
   gap: 0.45rem;
+  color: var(--accent);
   font-weight: 700;
   text-decoration: none;
+}
+.text-link:hover {
+  color: var(--accent-hover);
 }
 .text-link::after {
   content: '\2192';
@@ -1217,7 +1228,7 @@ h3 {
 .home-seo h2 {
   max-width: 45rem;
   margin-bottom: 1.25rem;
-  font-size: clamp(1.8rem, 3.2vw, 2.75rem);
+  font-size: clamp(1.75rem, 3vw, 2.6rem);
 }
 .home-seo > p:not(.eyebrow) {
   max-width: 56rem;
@@ -1627,13 +1638,60 @@ h3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
 }
+.deck-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+.deck-guide-card > a {
+  display: grid;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding-top: 1rem;
+  background: var(--surface);
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+.deck-guide-card > a:hover {
+  border-color: var(--accent);
+  background: var(--surface-elevated);
+  transform: translateY(-5px);
+}
+.deck-guide-image {
+  display: block;
+  width: 7.5rem;
+  aspect-ratio: 1;
+  margin: 1rem auto 0;
+  border: 1px solid rgb(210 195 170 / 0.16);
+  border-radius: 0.8rem;
+  overflow: hidden;
+  background: var(--surface-elevated);
+}
+.deck-guide-image img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.deck-guide-copy { display: grid; grid-template-rows: auto 1fr auto; align-content: start; gap: .65rem; padding: 1rem 1.15rem 1.15rem; }
+.deck-guide-label { margin-inline: 1.15rem; color: var(--accent); font-size: .68rem; font-weight: 750; letter-spacing: .07em; text-transform: uppercase; }
+.deck-guide-copy h3 { margin: 0; font-size: 1.2rem; }
+.deck-guide-copy .summary { font-size: .88rem; }
+.deck-guide-copy .card-action { margin-top: auto; }
+.deck-guides-about { max-width: 57rem; }
+.deck-guides-about p { color: var(--text-secondary); }
+.deck-guides-about a, .deck-guide-article a { color: var(--accent); }
+.deck-guides-about a { text-decoration: none; }
+.deck-guide-article { max-width: 55rem; padding-bottom: 5rem; }
+.deck-guide-article .guide-content-section { padding-block: 1rem; }
+.deck-guide-article h2 { margin-top: 2rem; }
+.deck-guide-article li { margin-top: .55rem; color: var(--text-secondary); }
+.guide-back-link { margin-top: 2rem; }
 .news-index-feature {
   margin-bottom: clamp(2.5rem, 6vw, 5rem);
 }
 .news-hero { padding-bottom: clamp(2.25rem, 5vw, 4rem); }
 .news-timeline { margin-bottom: clamp(4rem, 9vw, 7rem); border: 1px solid var(--border); border-radius: var(--radius); padding: clamp(1.25rem, 3vw, 2.25rem); overflow: hidden; background: linear-gradient(90deg, rgb(20 20 25 / 0.91), rgb(20 20 25 / 0.76)), url('/assets/visuals/chakra-ink-news.png') center / cover, radial-gradient(circle at 50% 50%, rgb(199 71 61 / 0.09), transparent 39rem), var(--surface); }
 .timeline-heading { display: flex; align-items: end; justify-content: space-between; gap: 2rem; }
-.timeline-heading h2 { margin: 0; font-size: clamp(1.65rem, 3.2vw, 2.35rem); }
+.timeline-heading h2 { margin: 0; font-size: clamp(1.6rem, 3vw, 2.2rem); }
 .timeline-heading p:last-child { max-width: 31rem; margin: 0; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; }
 .timeline-legend { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1.4rem 0 0; color: var(--text-secondary); font-size: 0.72rem; font-weight: 750; letter-spacing: 0.08em; text-transform: uppercase; }
 .timeline-legend span::before { display: inline-block; width: 0.55rem; height: 0.55rem; margin-right: 0.4rem; border-radius: 50%; content: ''; }
@@ -1946,6 +2004,36 @@ h3 {
   max-width: 54rem;
   padding-block: clamp(2.5rem, 6vw, 5rem) 2.5rem;
 }
+.news-article-header {
+  max-width: none;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 24rem);
+  align-items: center;
+  gap: clamp(2rem, 6vw, 6rem);
+}
+.article-header-image {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgb(210 195 170 / 0.16);
+  border-radius: 3px;
+  background: transparent;
+  opacity: 0.82;
+}
+.article-header-image::before {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(90deg, var(--canvas), transparent 38%), linear-gradient(180deg, rgb(10 10 13 / 0.05), rgb(10 10 13 / 0.44));
+  content: '';
+  pointer-events: none;
+}
+.article-header-image img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  filter: saturate(0.8) contrast(0.94);
+}
 .article-header h1 {
   margin-bottom: 1.2rem;
   font-size: clamp(2.4rem, 6vw, 4.9rem);
@@ -1979,7 +2067,7 @@ h3 {
 }
 .article-body h2 {
   margin: 3rem 0 1rem;
-  font-size: clamp(1.65rem, 3vw, 2.25rem);
+  font-size: clamp(1.6rem, 2.8vw, 2.15rem);
 }
 .article-body h3 {
   margin: 2rem 0 0.75rem;
@@ -2597,11 +2685,19 @@ h3 {
     gap: 2rem;
   }
   .news-grid,
-  .guide-grid {
+  .guide-grid,
+  .deck-guide-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .article-layout {
     grid-template-columns: 1fr;
+  }
+  .news-article-header {
+    max-width: 54rem;
+    grid-template-columns: 1fr;
+  }
+  .article-header-image {
+    max-width: 40rem;
   }
   .article-aside {
     display: none;
@@ -2662,7 +2758,8 @@ h3 {
     margin-top: 1rem;
   }
   .news-grid,
-  .guide-grid {
+  .guide-grid,
+  .deck-guide-grid {
     grid-template-columns: 1fr;
   }
   .timeline-heading { display: block; }
@@ -2805,5 +2902,307 @@ h3 {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+}
+
+/* Naruto simulator: a shared field layout for AI and authoritative PvP. */
+.player-board:has(.naruto-field-grid) {
+  position: relative;
+  overflow: hidden;
+  height: auto;
+  min-height: 16rem;
+  padding: 0.55rem;
+  background:
+    radial-gradient(ellipse at 48% 58%, rgba(42, 63, 87, 0.48), transparent 52%),
+    linear-gradient(135deg, #101c2a 0%, #070d16 52%, #111d2b 100%);
+  border: 1px solid #31475e;
+  box-shadow: inset 0 0 0 2px rgba(8, 13, 21, 0.92), inset 0 0 2.5rem rgba(0, 0, 0, 0.58), 0 0.65rem 1.5rem rgba(0, 0, 0, 0.25);
+}
+
+.player-board:has(.naruto-field-grid)::after {
+  position: absolute;
+  inset: 0.25rem;
+  z-index: 0;
+  pointer-events: none;
+  content: '';
+  border: 1px solid rgba(115, 143, 166, 0.36);
+  border-radius: 0.3rem;
+}
+
+.player-board:has(.naruto-field-grid) > * { position: relative; z-index: 1; }
+
+.naruto-field-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(3.5rem, 1fr)) minmax(4.4rem, 0.86fr) minmax(3.9rem, 0.72fr);
+  grid-template-areas:
+    'characters characters characters characters characters leader piles'
+    'supports supports supports supports supports leader piles'
+    'chakra chakra chakra chakra chakra summon piles';
+  gap: 0.42rem 0.5rem;
+  align-items: stretch;
+  min-height: 12.2rem;
+  padding: 0.1rem 0.2rem;
+}
+
+.naruto-field-grid .character-zone { grid-area: characters; }
+.naruto-field-grid .support-zone { grid-area: supports; }
+.naruto-field-grid .chakra-zone { grid-area: chakra; }
+.naruto-field-grid .summon-zone { grid-area: summon; }
+.naruto-field-grid .leader-zone { grid-area: leader; }
+.naruto-field-grid .pile-zone { grid-area: piles; }
+
+.naruto-field-grid .board-zone,
+.naruto-field-grid .resource-zone,
+.naruto-field-grid .leader-zone,
+.naruto-field-grid .summon-zone {
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.field-zone-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.42rem;
+  height: 1rem;
+  margin: 0 0 0.15rem;
+  color: #eef2f6;
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.field-zone-heading::before,
+.field-zone-heading::after { content: ''; height: 1px; background: linear-gradient(90deg, transparent, #c74939); flex: 1; }
+.field-zone-heading::after { background: linear-gradient(90deg, #c74939, transparent); }
+
+.naruto-field-grid .slots,
+.naruto-field-grid .chakra-row {
+  display: grid;
+  grid-template-columns: repeat(5, 4.25rem);
+  justify-content: center;
+  gap: 0.38rem;
+  min-width: 0;
+  overflow: visible;
+}
+
+.naruto-field-grid .game-slot,
+.naruto-field-grid .chakra-card,
+.naruto-field-grid .summon-card,
+.naruto-field-grid .leader-zone .game-card {
+  width: 4.25rem;
+  height: auto;
+  min-width: 0;
+  min-height: 0;
+  aspect-ratio: 0.71;
+}
+
+.naruto-field-grid .game-slot { display: block; }
+.naruto-field-grid .game-slot .game-card,
+.naruto-field-grid .chakra-card,
+.naruto-field-grid .summon-card,
+.naruto-field-grid .leader-zone .game-card {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid #b94234;
+  border-radius: 0.23rem;
+  background: #121924;
+  box-shadow: inset 0 0 0 1px rgba(255, 92, 73, 0.22), 0 0.18rem 0.45rem rgba(0, 0, 0, 0.38);
+}
+
+.naruto-field-grid .game-card img,
+.naruto-field-grid .chakra-card img,
+.naruto-field-grid .summon-card img { width: 100%; height: 100%; object-fit: cover; }
+.naruto-field-grid .game-slot small,
+.naruto-field-grid .game-card-copy { display: none; }
+
+.naruto-field-grid .empty-slot {
+  display: grid;
+  place-items: center;
+  border: 1px solid #b94234;
+  border-radius: 0.23rem;
+  background: radial-gradient(circle at 50% 48%, rgba(80, 100, 125, 0.25), transparent 24%), linear-gradient(135deg, #172130, #0c121b);
+  box-shadow: inset 0 0 0 1px rgba(255, 91, 70, 0.2);
+  color: transparent;
+}
+.naruto-field-grid .empty-slot::after { content: '◉'; color: rgba(142, 157, 178, 0.48); font-size: 1.25rem; }
+
+.naruto-field-grid .leader-zone {
+  display: grid;
+  align-self: center;
+  grid-template-columns: 1fr;
+  gap: 0.16rem;
+}
+.naruto-field-grid .leader-zone > .zone-label,
+.naruto-field-grid .summon-zone > small {
+  color: #e8edf5;
+  font-size: 0.55rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-transform: uppercase;
+}
+.naruto-field-grid .leader-zone > b {
+  justify-self: center;
+  color: #f8fbff;
+  font-size: 1rem;
+  line-height: 1;
+  text-align: center;
+}
+.naruto-field-grid .leader-zone > b small { display: block; margin-top: 0.12rem; color: #ed5b4d; font-size: 0.45rem; letter-spacing: 0.08em; text-transform: uppercase; }
+
+.naruto-field-grid .chakra-card { border-color: #d6a348; background: #f1e7cb; }
+.naruto-field-grid .chakra-card.spent,
+.naruto-field-grid .summon-card.spent { filter: saturate(0.56) brightness(0.74); }
+.naruto-field-grid .summon-zone { display: grid; align-content: end; gap: 0.16rem; }
+.naruto-field-grid .summon-card { border-color: #9aa8ba; background: #1d2734; }
+
+.naruto-field-grid .pile-zone { display: grid; grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; gap: 0.42rem; }
+.naruto-field-grid .pile {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  padding: 0.18rem;
+  border: 1px solid #bd4439;
+  border-radius: 0.25rem;
+  background: linear-gradient(145deg, #171f2c, #0b1018);
+  color: #f4f5f6;
+  text-align: center;
+}
+.naruto-field-grid .pile .zone-label { font-size: 0.48rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+.naruto-field-grid .pile strong { color: #f0c6bd; font-size: 0.68rem; }
+.naruto-field-grid .pile-stack { width: 55%; height: 50%; border: 1px solid rgba(215, 83, 68, 0.75); background: repeating-linear-gradient(135deg, #233246 0 0.14rem, #111925 0.14rem 0.28rem); box-shadow: 0.13rem -0.13rem 0 rgba(145, 49, 43, 0.75), 0.26rem -0.26rem 0 rgba(74, 34, 39, 0.84); }
+.naruto-field-grid .trash-pile { border-color: #6b7788; }
+.naruto-field-grid .trash-pile .pile-stack { border-color: rgba(141, 155, 171, 0.7); background: linear-gradient(135deg, #1e2936, #080d13); }
+
+@media (max-width: 48rem) {
+  .player-board:has(.naruto-field-grid) { min-height: 0; }
+  .naruto-field-grid {
+    grid-template-columns: repeat(5, minmax(3.25rem, 1fr));
+    grid-template-areas:
+      'characters characters characters characters characters'
+      'supports supports supports supports supports'
+      'chakra chakra chakra chakra chakra'
+      'leader leader summon piles piles';
+  }
+  .naruto-field-grid .character-zone,
+  .naruto-field-grid .support-zone,
+  .naruto-field-grid .chakra-zone {
+    display: grid;
+    grid-template-rows: 1rem 4.55rem;
+  }
+  .naruto-field-grid .slots,
+  .naruto-field-grid .chakra-row {
+    grid-template-columns: repeat(5, 3.25rem);
+    justify-content: start;
+    height: 4.55rem;
+    overflow-x: auto;
+  }
+  .naruto-field-grid .game-slot,
+  .naruto-field-grid .chakra-card {
+    width: 3.25rem;
+    height: 4.55rem;
+    aspect-ratio: auto;
+  }
+  .naruto-field-grid .leader-zone { grid-template-columns: minmax(3.5rem, 4.2rem); justify-content: center; }
+  .naruto-field-grid .pile-zone { grid-template-columns: repeat(2, minmax(3.4rem, 1fr)); grid-template-rows: 1fr; }
+  .naruto-field-grid .pile { min-height: 4.5rem; }
+}
+
+@media (min-width: 71rem) {
+  .player-board:has(.naruto-field-grid) { flex: 0 0 auto; min-height: 21.5rem; }
+  .naruto-field-grid {
+    grid-template-columns: minmax(24rem, 1fr) 4.55rem 4.15rem;
+    grid-template-rows: repeat(3, 6.45rem);
+    min-height: 19.35rem;
+  }
+}
+
+/* Keep the playmat zones card-sized.  The surrounding field may grow, cards may not. */
+@media (min-width: 49rem) {
+  .naruto-field-grid .character-zone,
+  .naruto-field-grid .support-zone,
+  .naruto-field-grid .chakra-zone {
+    display: grid;
+    grid-template-rows: 1rem 5.3rem;
+    align-content: start;
+  }
+
+  .naruto-field-grid .slots,
+  .naruto-field-grid .chakra-row {
+    grid-template-columns: repeat(5, 3.8rem);
+    height: 5.3rem;
+    align-items: stretch;
+  }
+
+  .naruto-field-grid .game-slot,
+  .naruto-field-grid .chakra-card {
+    width: 3.8rem;
+    height: 5.3rem;
+    aspect-ratio: auto;
+  }
+
+  .naruto-field-grid .leader-zone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: center;
+    justify-self: center;
+    width: 4rem;
+  }
+
+  .naruto-field-grid .leader-zone .game-card,
+  .naruto-field-grid .summon-card {
+    width: 3.8rem;
+    height: 5.3rem;
+    min-height: 5.3rem;
+    aspect-ratio: auto;
+  }
+
+  .naruto-field-grid .summon-zone {
+    align-content: center;
+    justify-items: center;
+  }
+}
+
+/* A full playmat needs page scrolling: do not crop the hand or the activity log
+   to the browser viewport. */
+@media (min-width: 71rem) {
+  .simulator-game-page { height: auto; min-height: 100dvh; overflow: visible; }
+  .game-shell { display: block; height: auto; min-height: 100dvh; }
+  .game-layout,
+  .game-layout > .battlefield { height: auto; min-height: 0; }
+  .battlefield { display: flex; overflow: visible; }
+  .game-sidebar { height: auto; align-self: start; }
+  .game-sidebar .game-log { max-height: 20rem; overflow: auto; }
+  .hand-zone { max-height: none; }
+}
+
+.player-summary > .opponent-hand { display: flex; align-items: center; gap: 0.18rem; width: auto; height: 1.8rem; min-width: 0; margin-left: auto; overflow: hidden; }
+.opponent-hand .hand-back {
+  display: block;
+  flex: 0 0 1.35rem;
+  height: 1.8rem;
+  border: 1px solid #b94234;
+  border-radius: 0.14rem;
+  background: radial-gradient(circle at 50% 48%, rgba(157, 174, 195, 0.35) 0 14%, transparent 15%), repeating-linear-gradient(135deg, #223249 0 0.16rem, #111924 0.16rem 0.32rem);
+  box-shadow: 0.08rem 0.08rem 0 #070c12;
+}
+
+@media (min-width: 49rem) {
+  .player-summary .opponent-hand {
+    position: absolute;
+    top: 0.22rem;
+    left: 50%;
+    z-index: 3;
+    margin: 0;
+    transform: translateX(-50%);
   }
 }

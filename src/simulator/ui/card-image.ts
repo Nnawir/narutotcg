@@ -11,8 +11,8 @@ export function resolveCardImage(cardId: string): string | null {
   const previewCard = /^N-(\d+)$/i.exec(cardId);
   if (previewCard) return `/Cards/N01/N01-${previewCard[1]}.jpg`;
 
-  if (/^C-\d+$/i.test(cardId)) return `/Cards/Chakra cards/${cardId}.png`;
-  if (/^S-\d+$/i.test(cardId)) return `/Cards/Summon cards/${cardId}.png`;
+  if (/^CP?-\d+$/i.test(cardId)) return `/Cards/Chakra cards/${cardId}.jpg`;
+  if (/^S-\d+$/i.test(cardId)) return `/Cards/Summon cards/${cardId}.jpg`;
   return null;
 }
 

@@ -4,17 +4,19 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import CardTile from '../../components/CardTile.astro';
 import GuideCard from '../../components/GuideCard.astro';
 import type { NewsArticle } from '../../data/content';
-import { cards, guides, news } from '../../data/content';
+import { cards, guides, news, roadmapArticles } from '../../data/content';
 import { formatDate } from '../../lib/format';
 
 export function getStaticPaths() {
-  return news.map((article) => ({ params: { slug: article.slug }, props: { article } }));
+  return [...news, ...roadmapArticles].map((article) => ({ params: { slug: article.slug }, props: { article } }));
 }
 
 const { article } = Astro.props as { article: NewsArticle };
 const relatedCards = cards.filter((card) => article.relatedCardIds.includes(card.id));
 const relatedGuides = guides.filter((guide) => article.relatedGuideSlugs.includes(guide.slug));
-const orderedNews = [...news].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+const orderedNews = [...news, ...roadmapArticles].sort((a, b) =>
+  (b.publishedAt ?? '').localeCompare(a.publishedAt ?? '')
+);
 const articleIndex = orderedNews.findIndex((item) => item.slug === article.slug);
 const previousArticle = orderedNews[articleIndex + 1];
 const nextArticle = orderedNews[articleIndex - 1];
@@ -26,8 +28,9 @@ const structuredData = [
     '@type': 'NewsArticle',
     headline: article.title,
     description: article.summary,
-    datePublished: article.publishedAt,
-    dateModified: article.updatedAt ?? article.publishedAt,
+    ...(article.publishedAt
+      ? { datePublished: article.publishedAt, dateModified: article.updatedAt ?? article.publishedAt }
+      : {}),
     mainEntityOfPage: absoluteUrl(`/news/${article.slug}/`),
     ...(article.image ? { image: absoluteUrl(article.image.src) } : {}),
   },
@@ -59,20 +62,29 @@ const structuredData = [
       items={[{ label: 'Home', href: '/' }, { label: 'News', href: '/news/' }, { label: article.title }]}
     />
     <article>
-      <header class="article-header">
-        <p class="eyebrow">{article.category}</p>
-        <h1>{article.title}</h1>
-        <p class="article-standfirst">{article.summary}</p>
-        <div class="article-meta">
-          <span>
-            Published <time datetime={article.publishedAt}>{formatDate(article.publishedAt)}</time>
-          </span>
-          {article.updatedAt && (
-            <span>
-              Updated <time datetime={article.updatedAt}>{formatDate(article.updatedAt)}</time>
-            </span>
-          )}
+      <header class:list={['article-header', { 'news-article-header': Boolean(article.image) }]}>
+        <div class="article-heading-copy">
+          <p class="eyebrow">{article.category}</p>
+          <h1>{article.title}</h1>
+          <p class="article-standfirst">{article.summary}</p>
+          <div class="article-meta">
+            {article.publishedAt && (
+              <span>
+                Published <time datetime={article.publishedAt}>{formatDate(article.publishedAt)}</time>
+              </span>
+            )}
+            {article.updatedAt && (
+              <span>
+                Updated <time datetime={article.updatedAt}>{formatDate(article.updatedAt)}</time>
+              </span>
+            )}
+          </div>
         </div>
+        {article.image && (
+          <figure class="article-header-image">
+            <img src={article.image.src} alt={article.image.alt} width={article.image.width} height={article.image.height} />
+          </figure>
+        )}
       </header>
 
       <div class="article-layout">
@@ -97,13 +109,6 @@ const structuredData = [
             </section>
           ))}
 
-          <div class="source-panel">
-            <p class="eyebrow">Official source</p>
-            <a class="external-link" href={article.sourceUrl} target="_blank" rel="noopener noreferrer">
-              {article.sourceLabel}
-              <span class="visually-hidden"> (opens in a new tab)</span>
-            </a>
-          </div>
         </div>
 
         {article.sections.length >= 3 && (

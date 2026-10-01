@@ -1,0 +1,223 @@
+---
+const cardPool = [
+  '/Cards/N01/N01-001.jpg',
+  '/Cards/N01/N01-002.jpg',
+  '/Cards/N01/N01-003.jpg',
+  '/Cards/N01/N01-004.jpg',
+  '/Cards/N01/N01-005.jpg',
+  '/Cards/N01/N01-006.jpg',
+  '/Cards/N01/N01-007.jpg',
+  '/Cards/N01/N01-008.jpg',
+  '/Cards/N01/N01-009.jpg',
+  '/Cards/N01/N01-010.jpg',
+  '/Cards/N01/N01-011.jpg',
+  '/Cards/N01/N01-012.jpg',
+  '/Cards/N01/N01-013.jpg',
+  '/Cards/N01/N01-014.jpg',
+  '/Cards/N01/N01-015.jpg',
+  '/Cards/N01/N01-016.jpg',
+  '/Cards/N01/N01-017.jpg',
+  '/Cards/N01/N01-018.jpg',
+  '/Cards/N01/N01-019.jpg',
+  '/Cards/N01/N01-020.jpg',
+  '/Cards/N01/N01-021.jpg',
+  '/Cards/N01/N01-022.jpg',
+];
+---
+
+<div class="hero-floating-cards" data-hero-floating-cards aria-hidden="true"></div>
+
+<script define:vars={{ cardPool }}>
+  const layer = document.querySelector('[data-hero-floating-cards]');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const compactViewport = window.matchMedia('(max-width: 640px)');
+
+  if (layer && !reducedMotion.matches) {
+    const activeCards = new Set();
+    const randomFrom = (items) => items[Math.floor(Math.random() * items.length)];
+    const maxCards = () => (compactViewport.matches ? 2 : 4);
+
+    const getUniqueCard = () => {
+      const usedSources = new Set(Array.from(activeCards).map((node) => node.getAttribute('data-card-src')));
+      const availableCards = cardPool.filter((source) => !usedSources.has(source));
+      return randomFrom(availableCards.length ? availableCards : cardPool);
+    };
+
+    const createFloatingCard = () => {
+      if (activeCards.size >= maxCards()) return;
+
+      const card = document.createElement('div');
+      const image = document.createElement('img');
+      const source = getUniqueCard();
+      const side = Math.random() > 0.5 ? 'right' : 'left';
+      const direction = side === 'left' ? 1 : -1;
+      const duration = 7600 + Math.round(Math.random() * 1800);
+      const delay = Math.round(Math.random() * 280);
+
+      card.className = 'hero-floating-card';
+      card.setAttribute('data-card-src', source);
+      card.style.setProperty('--card-side', side);
+      card.style.setProperty('--card-width', `${106 + Math.round(Math.random() * 34)}px`);
+      card.style.setProperty(
+        '--card-start-x',
+        `${side === 'left' ? 2 + Math.random() * 11 : 78 + Math.random() * 9}%`,
+      );
+      card.style.setProperty('--card-start-y', `${70 + Math.random() * 10}%`);
+      card.style.setProperty('--card-drift-x', `${direction * (34 + Math.random() * 30)}px`);
+      card.style.setProperty('--card-drift-y', `-${350 + Math.round(Math.random() * 120)}px`);
+      card.style.setProperty('--card-rotate-start', `${direction * (12 + Math.random() * 15)}deg`);
+      card.style.setProperty('--card-rotate-middle', `${direction * (-4 + Math.random() * 16)}deg`);
+      card.style.setProperty('--card-rotate-end', `${direction * (-16 + Math.random() * 22)}deg`);
+      card.style.setProperty('--card-tilt-x', `${-12 + Math.random() * 24}deg`);
+      card.style.setProperty('--card-tilt-y', `${direction * (10 + Math.random() * 17)}deg`);
+      card.style.setProperty('--card-duration', `${duration}ms`);
+      card.style.setProperty('--card-delay', `${delay}ms`);
+
+      image.className = 'hero-floating-card__image';
+      image.src = source;
+      image.alt = '';
+      image.loading = 'lazy';
+      image.decoding = 'async';
+      image.fetchPriority = 'low';
+
+      card.appendChild(image);
+      layer.appendChild(card);
+      activeCards.add(card);
+
+      window.setTimeout(
+        () => {
+          activeCards.delete(card);
+          card.remove();
+        },
+        duration + delay + 180,
+      );
+    };
+
+    createFloatingCard();
+    window.setTimeout(createFloatingCard, 1200);
+
+    window.setInterval(() => {
+      createFloatingCard();
+    }, 1900);
+  }
+</script>
+
+<style is:global>
+  .home-hero .hero-floating-cards {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+    pointer-events: none;
+    perspective: 1400px;
+    perspective-origin: 50% 50%;
+  }
+
+  .home-hero .hero-floating-card {
+    position: absolute;
+    top: var(--card-start-y);
+    left: var(--card-start-x);
+    width: var(--card-width);
+    opacity: 0;
+    transform-origin: center;
+    transform-style: preserve-3d;
+    will-change: transform, opacity;
+    animation: narutoHeroCardFlight var(--card-duration) linear var(--card-delay) forwards;
+  }
+
+  .home-hero .hero-floating-card::after {
+    position: absolute;
+    top: 17%;
+    left: 14%;
+    width: 68%;
+    height: 62%;
+    border-radius: 50%;
+    background: rgb(194 55 44 / 0.2);
+    content: '';
+    filter: blur(16px);
+    opacity: 0;
+    animation: narutoHeroCardTrail var(--card-duration) linear var(--card-delay) forwards;
+  }
+
+  .home-hero .hero-floating-card__image {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 0.716;
+    border: 1px solid rgb(255 255 255 / 0.13);
+    border-radius: 10px;
+    box-shadow: 0 16px 34px rgb(0 0 0 / 0.42);
+    filter: saturate(1.04) contrast(1.03);
+    transform: translateZ(2px);
+  }
+
+  .home-hero ins.adsbygoogle,
+  .home-hero .adsbygoogle {
+    position: relative !important;
+    z-index: 3 !important;
+  }
+
+  @keyframes narutoHeroCardFlight {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 24px, 0) rotate(var(--card-rotate-start)) rotateX(var(--card-tilt-x))
+        rotateY(var(--card-tilt-y)) scale(0.88);
+    }
+
+    16% {
+      opacity: 0.7;
+      transform: translate3d(calc(var(--card-drift-x) * 0.2), calc(var(--card-drift-y) * 0.16), 24px)
+        rotate(var(--card-rotate-middle)) rotateX(calc(var(--card-tilt-x) * 0.7))
+        rotateY(calc(var(--card-tilt-y) * 0.85)) scale(0.96);
+    }
+
+    54% {
+      opacity: 0.64;
+      transform: translate3d(calc(var(--card-drift-x) * 0.56), calc(var(--card-drift-y) * 0.54), 12px)
+        rotate(calc(var(--card-rotate-middle) + 5deg)) rotateX(calc(var(--card-tilt-x) * -0.35))
+        rotateY(calc(var(--card-tilt-y) * 0.52)) scale(1);
+    }
+
+    82% {
+      opacity: 0.4;
+      transform: translate3d(calc(var(--card-drift-x) * 0.82), calc(var(--card-drift-y) * 0.82), 2px)
+        rotate(var(--card-rotate-end)) rotateX(calc(var(--card-tilt-x) * 0.46))
+        rotateY(calc(var(--card-tilt-y) * -0.25)) scale(1.03);
+    }
+
+    100% {
+      opacity: 0;
+      transform: translate3d(var(--card-drift-x), var(--card-drift-y), 0) rotate(var(--card-rotate-end))
+        rotateX(var(--card-tilt-x)) rotateY(calc(var(--card-tilt-y) * -0.4)) scale(1.05);
+    }
+  }
+
+  @keyframes narutoHeroCardTrail {
+    0%,
+    14% {
+      opacity: 0;
+    }
+    42% {
+      opacity: 0.28;
+    }
+    75% {
+      opacity: 0.12;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .home-hero .hero-floating-card {
+      width: max(66px, calc(var(--card-width) * 0.67));
+      opacity: 0.8;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-hero .hero-floating-cards {
+      display: none;
+    }
+  }
+</style>
