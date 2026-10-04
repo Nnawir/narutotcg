@@ -21,7 +21,13 @@ export type NewsArticle = {
   featured: boolean;
   image?: ImageAsset;
   confirmedFacts: string[];
-  sections: Array<{ heading: string; paragraphs: string[] }>;
+  sections: Array<{
+    heading: string;
+    paragraphs: string[];
+    rewards?: Array<{ name: string; description: string; image: ImageAsset }>;
+    eventLinks?: Array<{ title: string; date: string; href: string }>;
+    links?: Array<{ label: string; href: string }>;
+  }>;
   relatedCardIds: string[];
   relatedGuideSlugs: string[];
 };
@@ -208,13 +214,48 @@ export const news: NewsArticle[] = [
         heading: 'Tutorial Session',
         paragraphs: [
           'Bandai has not yet published the procedure for taking part in the SPIEL Essen Tutorial Sessions. Demo decks will not be available to take home.',
-          'Each person may participate in one Tutorial Session during SPIEL Essen. Participants registered to the NARUTO TCG UPDATES CHANNEL on BANDAI TCG+ and who complete the event survey may receive the listed participation gift.',
+          'Each person may participate in one Tutorial Session during SPIEL Essen. See the Participation Rewards section below for the conditions and reward listed for eligible participants.',
+        ],
+      },
+      {
+        heading: 'Participation Rewards',
+        paragraphs: [
+          'Eligible Tutorial Session participants who are registered to the NARUTO TCG UPDATES CHANNEL on BANDAI TCG+ and complete the questionnaire after their session may receive one CP-001 Chakra Card. The participation gift is limited to one per person and is not automatically given to every SPIEL Essen visitor.',
+        ],
+        rewards: [
+          {
+            name: 'CP-001 Chakra Card',
+            description: 'The Tutorial Session participation gift, limited to one card per person when the stated conditions are met.',
+            image: {
+              src: '/Cards/Chakra cards/CP-001.jpg',
+              alt: 'CP-001 Chakra Card',
+              width: 600,
+              height: 833,
+            },
+          },
+        ],
+      },
+      {
+        heading: 'Logo Sticker Giveaway',
+        paragraphs: [
+          'The NARUTO CARD GAME Logo Sticker is a separate giveaway, not part of the CP-001 Tutorial Session participation gift. Bandai describes it for visitors who meet the event conditions, such as following an official social channel or registering to the NARUTO TCG UPDATES CHANNEL on BANDAI TCG+.',
+        ],
+        rewards: [
+          {
+            name: 'NARUTO CARD GAME Logo Sticker',
+            description: 'A separate event giveaway for visitors who meet the stated social-channel or BANDAI TCG+ conditions.',
+            image: {
+              src: '/assets/visuals/Logo sticker Ny CC 26.png',
+              alt: 'NARUTO CARD GAME Logo Sticker',
+              width: 448,
+              height: 145,
+            },
+          },
         ],
       },
       {
         heading: 'Gifts and merchandise',
         paragraphs: [
-          'Bandai lists the CP-001 Chakra Card for Tutorial Session participants and a Logo Sticker giveaway for people who follow an official social channel or register to the NARUTO TCG UPDATES CHANNEL.',
           'The NARUTO CARD GAME Official Playmat, marked as arriving in 2027, is also listed at a $35 MSRP plus tax. Purchase details will be announced later, and quantities are limited each day.',
         ],
       },
@@ -248,13 +289,48 @@ export const news: NewsArticle[] = [
         heading: 'Tutorial Session',
         paragraphs: [
           'Information on how to participate in the Tutorial Sessions has not yet been announced by Bandai. Demo decks will not be available to take home.',
-          'One Tutorial Session is permitted per person during Paris Games Week. The CP-001 Chakra Card is listed for eligible participants registered to the NARUTO TCG UPDATES CHANNEL on BANDAI TCG+ who complete the event survey.',
+          'One Tutorial Session is permitted per person during Paris Games Week. See Participation Rewards below for the conditions and reward listed for eligible participants.',
+        ],
+      },
+      {
+        heading: 'Participation Rewards',
+        paragraphs: [
+          'Eligible Tutorial Session participants who are registered to the NARUTO TCG UPDATES CHANNEL on BANDAI TCG+ and complete the questionnaire after their session may receive one CP-001 Chakra Card. The participation gift is limited to one per person and is not automatically given to every Paris Games Week visitor.',
+        ],
+        rewards: [
+          {
+            name: 'CP-001 Chakra Card',
+            description: 'The Tutorial Session participation gift, limited to one card per person when the stated conditions are met.',
+            image: {
+              src: '/Cards/Chakra cards/CP-001.jpg',
+              alt: 'CP-001 Chakra Card',
+              width: 600,
+              height: 833,
+            },
+          },
+        ],
+      },
+      {
+        heading: 'Logo Sticker Giveaway',
+        paragraphs: [
+          'The NARUTO CARD GAME Logo Sticker is a separate giveaway, not part of the CP-001 Tutorial Session participation gift. It is listed for visitors who follow an official NARUTO CARD GAME social channel or register to the NARUTO TCG UPDATES CHANNEL on BANDAI TCG+.',
+        ],
+        rewards: [
+          {
+            name: 'NARUTO CARD GAME Logo Sticker',
+            description: 'A separate event giveaway for visitors who meet the stated social-channel or BANDAI TCG+ conditions.',
+            image: {
+              src: '/assets/visuals/Logo sticker Ny CC 26.png',
+              alt: 'NARUTO CARD GAME Logo Sticker',
+              width: 448,
+              height: 145,
+            },
+          },
         ],
       },
       {
         heading: 'What else is listed',
         paragraphs: [
-          'A Logo Sticker is listed for people who follow an official NARUTO CARD GAME social channel or register to the NARUTO TCG UPDATES CHANNEL.',
           'Bandai also lists the NARUTO CARD GAME Official Playmat, arriving in 2027, at a $35 MSRP plus tax. It is limited to one per person and available in limited daily quantities; purchase information is still to come.',
         ],
       },
@@ -288,7 +364,25 @@ export const news: NewsArticle[] = [
         heading: 'Tutorial Session',
         paragraphs: [
           'Bandai has not yet announced participation details for the Lucca Tutorial Sessions, and demo decks will not be available to take home.',
-          'A visitor may participate in one Tutorial Session during the event. Eligible participants registered to the NARUTO TCG UPDATES CHANNEL on BANDAI TCG+ who complete the event survey are listed to receive the CP-001 Chakra Card.',
+          'A visitor may participate in one Tutorial Session during the event. See Participation Rewards below for the conditions and reward listed for eligible participants.',
+        ],
+      },
+      {
+        heading: 'Participation Rewards',
+        paragraphs: [
+          'Eligible Tutorial Session participants who are registered to the NARUTO TCG UPDATES CHANNEL on BANDAI TCG+ and complete the questionnaire after their session may receive one CP-001 Chakra Card. The participation gift is limited to one per person and is not automatically given to every Lucca Comics & Games visitor.',
+        ],
+        rewards: [
+          {
+            name: 'CP-001 Chakra Card',
+            description: 'The Tutorial Session participation gift, limited to one card per person when the stated conditions are met.',
+            image: {
+              src: '/Cards/Chakra cards/CP-001.jpg',
+              alt: 'CP-001 Chakra Card',
+              width: 600,
+              height: 833,
+            },
+          },
         ],
       },
       {
@@ -367,7 +461,35 @@ export const news: NewsArticle[] = [
         heading: 'Tutorial Sessions',
         paragraphs: [
           'Tutorial Session tickets will be distributed each morning on a first-come, first-served basis at the BANDAI Namco Naruto Booth #3001. Bandai notes that the Tutorial Sessions themselves take place at the separate BANDAI CARD GAMES Booth #2705.',
-          'Demo decks will not be available to take home. One Tutorial Session is allowed per person during the event. Eligible participants registered to the NARUTO TCG UPDATES CHANNEL on BANDAI TCG+ who complete the survey are listed to receive a CP-001 Chakra Card and a Logo Sticker.',
+          'Demo decks will not be available to take home. One Tutorial Session is allowed per person during the event. See Participation Rewards below for the conditions and items listed for eligible participants.',
+        ],
+      },
+      {
+        heading: 'Participation Rewards',
+        paragraphs: [
+          'According to Bandai, participants eligible for the Tutorial Sessions may receive these participation rewards if they are registered to the NARUTO TCG UPDATES CHANNEL on BANDAI TCG+ and complete the questionnaire after the session. These conditions apply; the rewards are not automatically given to every visitor.',
+        ],
+        rewards: [
+          {
+            name: 'CP-001 Chakra Card',
+            description: 'A promotional Chakra card listed as a Tutorial Session participation reward.',
+            image: {
+              src: '/Cards/Chakra cards/CP-001.jpg',
+              alt: 'CP-001 Chakra Card',
+              width: 600,
+              height: 833,
+            },
+          },
+          {
+            name: 'NARUTO CARD GAME Logo Sticker',
+            description: 'A NARUTO CARD GAME logo sticker listed as a Tutorial Session participation reward.',
+            image: {
+              src: '/assets/visuals/Logo sticker Ny CC 26.png',
+              alt: 'NARUTO CARD GAME Logo Sticker',
+              width: 448,
+              height: 145,
+            },
+          },
         ],
       },
       {
@@ -411,10 +533,38 @@ export const news: NewsArticle[] = [
         ],
       },
       {
-        heading: 'Gifts and Playmat raffle',
+        heading: 'Participation Rewards',
         paragraphs: [
-          'Tutorial Session participants are listed to receive a CP-001 Chakra Card and a Logo Sticker, subject to the stated TCG+ registration and survey conditions. All participants are also entered into a raffle for a chance to purchase a Playmat.',
-          'Bandai says the raffle takes place after the final Tutorial Session each day. The NARUTO CARD GAME Official Playmat is marked as arriving in 2027 with a $35 MSRP plus tax, and is limited to one per person in limited daily quantities.',
+          'According to Bandai, participants eligible for the Tutorial Sessions may receive these participation rewards if they are registered to the NARUTO TCG UPDATES CHANNEL on BANDAI TCG+ and complete the questionnaire after their session. These conditions apply; the rewards are not automatically given to every PAX Aus visitor.',
+        ],
+        rewards: [
+          {
+            name: 'CP-001 Chakra Card',
+            description: 'A promotional Chakra card listed as a Tutorial Session participation reward.',
+            image: {
+              src: '/Cards/Chakra cards/CP-001.jpg',
+              alt: 'CP-001 Chakra Card',
+              width: 600,
+              height: 833,
+            },
+          },
+          {
+            name: 'NARUTO CARD GAME Logo Sticker',
+            description: 'A NARUTO CARD GAME logo sticker listed as a Tutorial Session participation reward.',
+            image: {
+              src: '/assets/visuals/Logo sticker Ny CC 26.png',
+              alt: 'NARUTO CARD GAME Logo Sticker',
+              width: 448,
+              height: 145,
+            },
+          },
+        ],
+      },
+      {
+        heading: 'Playmat raffle',
+        paragraphs: [
+          'Tutorial Session participants can also enter a raffle for a chance to purchase the NARUTO CARD GAME Official Playmat. The raffle gives an opportunity to buy the playmat; it is not a free participation reward.',
+          'Bandai says the raffle takes place after the final Tutorial Session each day. The playmat is marked as arriving in 2027 with a $35 MSRP plus tax, and is limited to one per person in limited daily quantities.',
         ],
       },
     ],
@@ -439,23 +589,93 @@ export const roadmapArticles: NewsArticle[] = [
     ],
     sections: [
       {
-        heading: 'What the roadmap confirms',
+        heading: 'Tutorial Sessions Explained',
         paragraphs: [
-          'Bandai’s NARUTO CARD GAME roadmap lists Tutorial Sessions from October 2026 into early 2027. It says these sessions will be held at events around the world.',
-          'The roadmap identifies New York Comic Con, PAX Aus, SPIEL Essen, Paris Games Week and Lucca Comics & Games among its upcoming event schedule. Individual event announcements provide the currently available local details.',
+          'Bandai’s NARUTO CARD GAME roadmap lists Tutorial Sessions from October 2026 into early 2027, before the planned Summer 2027 worldwide release. These sessions are intended to let players discover the NARUTO CARD GAME and learn how it works before launch.',
+          'The roadmap says the sessions will be held at events around the world. Event-specific participation rules and promotional items can differ, so they should not be treated as general Tutorial Session rules.',
         ],
       },
       {
-        heading: 'What is not announced yet',
+        heading: 'Tutorial Session Events',
         paragraphs: [
+          'These event articles collect the Tutorial Session information currently confirmed on NarutoCardGuide. Open an event article for its local schedule, registration details and any rewards or promotions specifically announced for that event.',
+        ],
+        eventLinks: [
+          { title: 'New York Comic Con 2026', date: 'October 8–11, 2026', href: '/news/new-york-comic-con-2026-event-information/' },
+          { title: 'PAX Aus 2026', date: 'October 9–11, 2026', href: '/news/pax-aus-2026-event-information/' },
+          { title: 'SPIEL Essen', date: 'October 22–25, 2026', href: '/news/spiel-essen-2026-event-information/' },
+          { title: 'Paris Games Week', date: 'October 22–25, 2026', href: '/news/paris-games-week-2026-event-information/' },
+          { title: 'Lucca Comics & Games', date: 'October 28–November 1, 2026', href: '/news/lucca-comics-games-2026-event-information/' },
+          { title: 'BANDAI CARD GAMES Fest 26-27 in London', date: 'January 15–17, 2027', href: '/news/bandai-card-games-fest-london-2027/' },
+        ],
+      },
+      {
+        heading: 'Rewards and Event Conditions',
+        paragraphs: [
+          'Rewards and participation conditions may vary by event. Some event announcements list a CP-001 Chakra Card, a Logo Sticker or another promotion, while other events may not list the same items. No single reward is confirmed for every Tutorial Session.',
           'Bandai has not published a single global registration process, a complete worldwide list of Tutorial Sessions, or the full early-2027 schedule on the roadmap page.',
-          'Participation requirements can differ by event. Check the corresponding NarutoCardGuide event article for the details currently confirmed for that location.',
         ],
       },
       {
-        heading: 'Next roadmap information',
+        heading: 'Tutorial Sessions Timeline',
         paragraphs: [
-          'Bandai states that more new information will be revealed at New York Comic Con. Further event announcements are also expected.',
+          'October 2026 → Late 2026 → Early 2027 → Worldwide Release: Summer 2027',
+          'The currently listed events begin in October 2026 and continue through the London event in January 2027. The roadmap provides the broader early-2027 period, but does not give additional exact Tutorial Session dates.',
+        ],
+        links: [
+          { label: 'Read the NARUTO CARD GAME Worldwide Release – Summer 2027 article →', href: '/news/naruto-card-game-worldwide-release-summer-2027/' },
+        ],
+      },
+    ],
+    relatedCardIds: [],
+    relatedGuideSlugs: [],
+  },
+  {
+    slug: 'naruto-card-game-worldwide-release-summer-2027',
+    title: 'NARUTO CARD GAME Worldwide Release – Summer 2027',
+    summary: 'The NARUTO CARD GAME is confirmed for a simultaneous worldwide release in Summer 2027; Bandai has not announced the exact release date yet.',
+    category: 'Official News',
+    sourceLabel: 'NARUTO CARD GAME Official Website — Roadmap',
+    sourceUrl: 'https://www.naruto-cardgame.com/en/welcome/',
+    featured: false,
+    confirmedFacts: [
+      'NARUTO CARD GAME is scheduled for a worldwide release in Summer 2027.',
+      'Bandai has confirmed a simultaneous worldwide release.',
+      'An exact release date has not yet been announced.',
+    ],
+    sections: [
+      {
+        heading: 'Worldwide Release Confirmed',
+        paragraphs: [
+          'Bandai has confirmed that NARUTO CARD GAME will receive a simultaneous worldwide release in Summer 2027. This means the planned launch is global rather than limited to Japan or one specific region.',
+          'A worldwide release is an important milestone because players in different regions are being included in the same announced launch window. The exact launch details are still to be confirmed by Bandai.',
+        ],
+      },
+      {
+        heading: 'Release Window',
+        paragraphs: [
+          'Summer 2027 is the confirmed release window for the NARUTO CARD GAME.',
+          'Bandai has not announced an exact release date or a specific month. This page will be updated when an official date is published.',
+        ],
+      },
+      {
+        heading: 'What We Know So Far',
+        paragraphs: [
+          'The confirmed information is that NARUTO CARD GAME is planned for a simultaneous worldwide release in Summer 2027. No region-specific launch difference has been announced in the roadmap information currently available.',
+          'The current announcement confirms the release window and global launch approach, but does not yet provide a complete launch product or purchasing plan.',
+        ],
+      },
+      {
+        heading: "What Hasn't Been Announced Yet",
+        paragraphs: [
+          'Bandai has not yet announced the exact release date, launch products, prices, card lists, store availability, or pre-order information for the worldwide release. This article will only add those details when they are officially confirmed.',
+        ],
+      },
+      {
+        heading: 'Road to Release',
+        paragraphs: [
+          'Bandai’s roadmap schedules Tutorial Sessions and events from 2026 into early 2027 ahead of the worldwide release. These activities are part of the announced path toward launch, but they do not add an earlier release date.',
+          '2026 / early 2027 → Tutorial Sessions & events → Summer 2027 → Worldwide release',
         ],
       },
     ],
@@ -556,6 +776,7 @@ export const timelineItems: TimelineItem[] = [
     date: '2027-06-21',
     dateLabel: 'Summer 2027',
     sourceUrl: 'https://www.naruto-cardgame.com/en/welcome/',
+    articleSlug: 'naruto-card-game-worldwide-release-summer-2027',
   },
 ];
 const specialCards: Card[] = [
