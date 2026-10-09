@@ -133,38 +133,38 @@ type N01CardAsset = [id: string, filename: string, width: number, height: number
 
 const n01Cards: Card[] = (
   [
-    ['N01-001', 'N01-001.jpg', 600, 831],
-    ['N01-002', 'N01-002.jpg', 600, 806],
-    ['N01-003', 'N01-003.jpg', 600, 807],
-    ['N01-004', 'N01-004.jpg', 600, 838],
-    ['N01-005', 'N01-005.jpg', 600, 884],
-    ['N01-006', 'N01-006.jpg', 600, 857],
-    ['N01-007', 'N01-007.jpg', 600, 838],
-    ['N01-008', 'N01-008.jpg', 600, 838],
-    ['N01-009', 'N01-009.jpg', 600, 831],
-    ['N01-010', 'N01-010.jpg', 600, 853],
-    ['N01-011', 'N01-011.jpg', 600, 838],
-    ['N01-012', 'N01-012.jpg', 600, 826],
-    ['N01-013', 'N01-013.jpg', 600, 838],
-    ['N01-014', 'N01-014.jpg', 600, 835],
-    ['N01-015', 'N01-015.jpg', 600, 838],
-    ['N01-016', 'N01-016.jpg', 600, 831],
-    ['N01-017', 'N01-017.jpg', 600, 834],
-    ['N01-018', 'N01-018.jpg', 600, 837],
-    ['N01-019', 'N01-019.jpg', 600, 850],
-    ['N01-020', 'N01-020.jpg', 600, 835],
-    ['N01-021', 'N01-021.jpg', 600, 832],
-    ['N01-022', 'N01-022.jpg', 600, 830],
-    ['SAMPLE-1', 'SAMPLE-1.jpg', 600, 838],
-    ['SAMPLE-2', 'SAMPLE-2.jpg', 600, 838],
-    ['SAMPLE-3', 'SAMPLE-3.jpg', 600, 838],
-    ['SAMPLE-4', 'SAMPLE-4.jpg', 600, 838],
-    ['SAMPLE-5', 'SAMPLE-5.jpg', 600, 838],
-    ['SAMPLE-6', 'SAMPLE-6.jpg', 600, 838],
-    ['SAMPLE-7', 'SAMPLE-7.jpg', 600, 838],
-    ['SAMPLE-8', 'SAMPLE-8.jpg', 600, 838],
-    ['SAMPLE-9', 'SAMPLE-9.jpg', 600, 838],
-    ['SAMPLE-10', 'SAMPLE-10.jpg', 600, 838],
+    ['N01-001', 'N01-001.webp', 600, 831],
+    ['N01-002', 'N01-002.webp', 600, 806],
+    ['N01-003', 'N01-003.webp', 600, 807],
+    ['N01-004', 'N01-004.webp', 600, 838],
+    ['N01-005', 'N01-005.webp', 600, 884],
+    ['N01-006', 'N01-006.webp', 600, 857],
+    ['N01-007', 'N01-007.webp', 600, 838],
+    ['N01-008', 'N01-008.webp', 600, 838],
+    ['N01-009', 'N01-009.webp', 600, 831],
+    ['N01-010', 'N01-010.webp', 600, 853],
+    ['N01-011', 'N01-011.webp', 600, 838],
+    ['N01-012', 'N01-012.webp', 600, 826],
+    ['N01-013', 'N01-013.webp', 600, 838],
+    ['N01-014', 'N01-014.webp', 600, 835],
+    ['N01-015', 'N01-015.webp', 600, 838],
+    ['N01-016', 'N01-016.webp', 600, 831],
+    ['N01-017', 'N01-017.webp', 600, 834],
+    ['N01-018', 'N01-018.webp', 600, 837],
+    ['N01-019', 'N01-019.webp', 600, 850],
+    ['N01-020', 'N01-020.webp', 600, 835],
+    ['N01-021', 'N01-021.webp', 600, 832],
+    ['N01-022', 'N01-022.webp', 600, 830],
+    ['SAMPLE-1', 'SAMPLE-1.webp', 600, 838],
+    ['SAMPLE-2', 'SAMPLE-2.webp', 600, 838],
+    ['SAMPLE-3', 'SAMPLE-3.webp', 600, 838],
+    ['SAMPLE-4', 'SAMPLE-4.webp', 600, 838],
+    ['SAMPLE-5', 'SAMPLE-5.webp', 600, 838],
+    ['SAMPLE-6', 'SAMPLE-6.webp', 600, 838],
+    ['SAMPLE-7', 'SAMPLE-7.webp', 600, 838],
+    ['SAMPLE-8', 'SAMPLE-8.webp', 600, 838],
+    ['SAMPLE-9', 'SAMPLE-9.webp', 600, 838],
+    ['SAMPLE-10', 'SAMPLE-10.webp', 600, 838],
   ] satisfies N01CardAsset[]
 ).map(([id, filename, width, height]) => ({
   id,
@@ -227,7 +227,7 @@ export const news: NewsArticle[] = [
             name: 'CP-001 Chakra Card',
             description: 'The Tutorial Session participation gift, limited to one card per person when the stated conditions are met.',
             image: {
-              src: '/Cards/Chakra cards/CP-001.jpg',
+              src: '/Cards/Chakra cards/CP-001.webp',
               alt: 'CP-001 Chakra Card',
               width: 600,
               height: 833,
@@ -245,7 +245,7 @@ export const news: NewsArticle[] = [
             name: 'NARUTO CARD GAME Logo Sticker',
             description: 'A separate event giveaway for visitors who meet the stated social-channel or BANDAI TCG+ conditions.',
             image: {
-              src: '/assets/visuals/Logo sticker Ny CC 26.png',
+              src: '/assets/visuals/Logo sticker Ny CC 26.webp',
               alt: 'NARUTO CARD GAME Logo Sticker',
               width: 448,
               height: 145,
@@ -302,7 +302,7 @@ export const news: NewsArticle[] = [
             name: 'CP-001 Chakra Card',
             description: 'The Tutorial Session participation gift, limited to one card per person when the stated conditions are met.',
             image: {
-              src: '/Cards/Chakra cards/CP-001.jpg',
+              src: '/Cards/Chakra cards/CP-001.webp',
               alt: 'CP-001 Chakra Card',
               width: 600,
               height: 833,
@@ -320,7 +320,7 @@ export const news: NewsArticle[] = [
             name: 'NARUTO CARD GAME Logo Sticker',
             description: 'A separate event giveaway for visitors who meet the stated social-channel or BANDAI TCG+ conditions.',
             image: {
-              src: '/assets/visuals/Logo sticker Ny CC 26.png',
+              src: '/assets/visuals/Logo sticker Ny CC 26.webp',
               alt: 'NARUTO CARD GAME Logo Sticker',
               width: 448,
               height: 145,
@@ -377,7 +377,7 @@ export const news: NewsArticle[] = [
             name: 'CP-001 Chakra Card',
             description: 'The Tutorial Session participation gift, limited to one card per person when the stated conditions are met.',
             image: {
-              src: '/Cards/Chakra cards/CP-001.jpg',
+              src: '/Cards/Chakra cards/CP-001.webp',
               alt: 'CP-001 Chakra Card',
               width: 600,
               height: 833,
@@ -474,7 +474,7 @@ export const news: NewsArticle[] = [
             name: 'CP-001 Chakra Card',
             description: 'A promotional Chakra card listed as a Tutorial Session participation reward.',
             image: {
-              src: '/Cards/Chakra cards/CP-001.jpg',
+              src: '/Cards/Chakra cards/CP-001.webp',
               alt: 'CP-001 Chakra Card',
               width: 600,
               height: 833,
@@ -484,7 +484,7 @@ export const news: NewsArticle[] = [
             name: 'NARUTO CARD GAME Logo Sticker',
             description: 'A NARUTO CARD GAME logo sticker listed as a Tutorial Session participation reward.',
             image: {
-              src: '/assets/visuals/Logo sticker Ny CC 26.png',
+              src: '/assets/visuals/Logo sticker Ny CC 26.webp',
               alt: 'NARUTO CARD GAME Logo Sticker',
               width: 448,
               height: 145,
@@ -542,7 +542,7 @@ export const news: NewsArticle[] = [
             name: 'CP-001 Chakra Card',
             description: 'A promotional Chakra card listed as a Tutorial Session participation reward.',
             image: {
-              src: '/Cards/Chakra cards/CP-001.jpg',
+              src: '/Cards/Chakra cards/CP-001.webp',
               alt: 'CP-001 Chakra Card',
               width: 600,
               height: 833,
@@ -552,7 +552,7 @@ export const news: NewsArticle[] = [
             name: 'NARUTO CARD GAME Logo Sticker',
             description: 'A NARUTO CARD GAME logo sticker listed as a Tutorial Session participation reward.',
             image: {
-              src: '/assets/visuals/Logo sticker Ny CC 26.png',
+              src: '/assets/visuals/Logo sticker Ny CC 26.webp',
               alt: 'NARUTO CARD GAME Logo Sticker',
               width: 448,
               height: 145,
@@ -787,7 +787,7 @@ const specialCards: Card[] = [
     setCode: 'CHAKRA',
     setName: 'Chakra Cards',
     image: {
-      src: '/Cards/Chakra cards/C-001.jpg',
+      src: '/Cards/Chakra cards/C-001.webp',
       alt: 'C-001 card',
       width: 640,
       height: 894,
@@ -807,7 +807,7 @@ const specialCards: Card[] = [
     setCode: 'CHAKRA',
     setName: 'Chakra Cards',
     image: {
-      src: '/Cards/Chakra cards/CP-001.jpg',
+      src: '/Cards/Chakra cards/CP-001.webp',
       alt: 'CP-001 card',
       width: 600,
       height: 833,
@@ -827,7 +827,7 @@ const specialCards: Card[] = [
     setCode: 'SUMMON',
     setName: 'Summon Cards',
     image: {
-      src: '/Cards/Summon cards/S-001.jpg',
+      src: '/Cards/Summon cards/S-001.webp',
       alt: 'S-001 card',
       width: 640,
       height: 894,
@@ -853,7 +853,7 @@ export const guides: Guide[] = [
     readingTime: '5 min read',
     verifiedAt: '2026-09-25',
     image: {
-      src: '/assets/visuals/complete-rules-guide-cards.png',
+      src: '/assets/visuals/complete-rules-guide-cards.webp',
       alt: 'Chakra, Naruto Leader, and Summon cards arranged in a dark vermilion composition',
       width: 1664,
       height: 936,
@@ -901,7 +901,7 @@ export const guides: Guide[] = [
           ],
         },
         image: {
-          src: '/assets/visuals/board.png',
+          src: '/assets/visuals/board.webp',
           alt: 'Schematic NARUTO CARD GAME play area showing the Character, Support, Leader, Deck, Trash, Summon, and Chakra areas',
         },
         links: [{ label: "Click here to view the game's Cards List.", href: '/cards-list/' }],
@@ -913,15 +913,15 @@ export const guides: Guide[] = [
         cards: [
           {
             text: 'Leader : Your deck is built around this card. Its color determines which cards you can use, and its Life is the target of the game.',
-            image: { src: '/Cards/N01/N01-001.jpg', alt: 'Leader card example' },
+            image: { src: '/Cards/N01/N01-001.webp', alt: 'Leader card example' },
           },
           {
             text: 'Characters : Characters form your front line and can battle opposing Characters or a Leader. Some can activate Ninjutsu by paying Chakra.',
-            image: { src: '/Cards/N01/N01-009.jpg', alt: 'Character card example' },
+            image: { src: '/Cards/N01/N01-009.webp', alt: 'Character card example' },
           },
           {
             text: 'EX Character : A powerful Character that can be played after specific play conditions are met.',
-            image: { src: '/Cards/N01/N01-005.jpg', alt: 'EX Character card example' },
+            image: { src: '/Cards/N01/N01-005.webp', alt: 'EX Character card example' },
           },
           {
             text: 'Chakra : A resource card used to activate Support effects such as Ninjutsu.',
@@ -929,7 +929,7 @@ export const guides: Guide[] = [
           },
           {
             text: 'Summon : A card required to play Character cards onto the battlefield.',
-            image: { src: '/Cards/Summon cards/S-001.png', alt: 'Summon card example' },
+          image: { src: '/Cards/Summon cards/S-001.webp', alt: 'Summon card example' },
           },
         ],
         links: [
@@ -1060,7 +1060,7 @@ export const guides: Guide[] = [
     readingTime: '3 min read',
     verifiedAt: '2026-09-25',
     image: {
-      src: '/assets/visuals/glossary-keywords-guide.png',
+      src: '/assets/visuals/glossary-keywords-guide.webp',
       alt: 'Keyword badges arranged in a dark glossary-themed composition',
       width: 1774,
       height: 887,
@@ -1076,7 +1076,7 @@ export const guides: Guide[] = [
           {
             label: 'For Leader',
             image: {
-              src: '/Cards/N01/N01-012.jpg',
+              src: '/Cards/N01/N01-012.webp',
               alt: 'Leader card example for explaining DMG, POW, and Life statistics',
             },
             stats: [
@@ -1099,7 +1099,7 @@ export const guides: Guide[] = [
           {
             label: 'For Character',
             image: {
-              src: '/Cards/N01/N01-006.jpg',
+              src: '/Cards/N01/N01-006.webp',
               alt: 'Character card example for explaining DMG, POW, and HP statistics',
             },
             stats: [
@@ -1161,27 +1161,27 @@ export const guides: Guide[] = [
             ['Your Turn', 'A restriction that limits a triggered ability to the controller’s own turn.'],
           ],
           images: [
-            [{ src: '/assets/keywords/activate-main.png', alt: 'Activate: Main keyword' }, undefined],
-            [{ src: '/assets/keywords/during-your-main.png', alt: 'During Your Main keyword' }, undefined],
+            [{ src: '/assets/keywords/activate-main.webp', alt: 'Activate: Main keyword' }, undefined],
+            [{ src: '/assets/keywords/during-your-main.webp', alt: 'During Your Main keyword' }, undefined],
             [
               {
-                src: "/assets/keywords/during-your-opponent's-attack.png",
+                src: "/assets/keywords/during-your-opponent's-attack.webp",
                 alt: "During Your Opponent's Attack keyword",
               },
               undefined,
             ],
-            [{ src: '/assets/keywords/once-per-turn.png', alt: 'Once Per Turn keyword' }, undefined],
-            [{ src: '/assets/keywords/on-summon.png', alt: 'On Summon keyword' }, undefined],
-            [{ src: '/assets/keywords/quick.png', alt: 'Quick keyword' }, undefined],
-            [{ src: '/assets/keywords/recovery.png', alt: 'Recovery keyword' }, undefined],
-            [{ src: '/assets/keywords/rush.png', alt: 'Rush keyword' }, undefined],
+            [{ src: '/assets/keywords/once-per-turn.webp', alt: 'Once Per Turn keyword' }, undefined],
+            [{ src: '/assets/keywords/on-summon.webp', alt: 'On Summon keyword' }, undefined],
+            [{ src: '/assets/keywords/quick.webp', alt: 'Quick keyword' }, undefined],
+            [{ src: '/assets/keywords/recovery.webp', alt: 'Recovery keyword' }, undefined],
+            [{ src: '/assets/keywords/rush.webp', alt: 'Rush keyword' }, undefined],
             [
-              { src: '/assets/keywords/summon-requirements.png', alt: 'Summon Requirements keyword' },
+              { src: '/assets/keywords/summon-requirements.webp', alt: 'Summon Requirements keyword' },
               undefined,
             ],
-            [{ src: '/assets/keywords/support-activated.png', alt: 'Support Activated keyword' }, undefined],
-            [{ src: '/assets/keywords/when-attacking.png', alt: 'When Attacking keyword' }, undefined],
-            [{ src: '/assets/keywords/your-turn.png', alt: 'Your Turn keyword' }, undefined],
+            [{ src: '/assets/keywords/support-activated.webp', alt: 'Support Activated keyword' }, undefined],
+            [{ src: '/assets/keywords/when-attacking.webp', alt: 'When Attacking keyword' }, undefined],
+            [{ src: '/assets/keywords/your-turn.webp', alt: 'Your Turn keyword' }, undefined],
           ],
         },
         links: [
@@ -1238,35 +1238,35 @@ export const guides: Guide[] = [
             },
             {
               label: 'Shikamaru Nara N01-008',
-              image: { src: '/Cards/N01/N01-008.jpg', alt: 'Shikamaru Nara N01-008 card example' },
+              image: { src: '/Cards/N01/N01-008.webp', alt: 'Shikamaru Nara N01-008 card example' },
             },
             {
               label: 'Hinata Hyuga N01-018',
-              image: { src: '/Cards/N01/N01-018.jpg', alt: 'Hinata Hyuga N01-018 card example' },
+              image: { src: '/Cards/N01/N01-018.webp', alt: 'Hinata Hyuga N01-018 card example' },
             },
             {
               label: 'Shisui Uchiha N01-016',
-              image: { src: '/Cards/N01/N01-016.jpg', alt: 'Shisui Uchiha N01-016 card example' },
+              image: { src: '/Cards/N01/N01-016.webp', alt: 'Shisui Uchiha N01-016 card example' },
             },
             {
               label: 'Orochimaru N01-017',
-              image: { src: '/Cards/N01/N01-017.jpg', alt: 'Orochimaru N01-017 card example' },
+              image: { src: '/Cards/N01/N01-017.webp', alt: 'Orochimaru N01-017 card example' },
             },
             {
               label: 'Naruto Uzumaki N01-003',
-              image: { src: '/Cards/N01/N01-003.jpg', alt: 'Naruto Uzumaki N01-003 card example' },
+              image: { src: '/Cards/N01/N01-003.webp', alt: 'Naruto Uzumaki N01-003 card example' },
             },
             {
               label: 'Naruto Uzumaki N01-004',
-              image: { src: '/Cards/N01/N01-004.jpg', alt: 'Naruto Uzumaki N01-004 card example' },
+              image: { src: '/Cards/N01/N01-004.webp', alt: 'Naruto Uzumaki N01-004 card example' },
             },
             {
               label: 'Itachi Uchiha N01-013',
-              image: { src: '/Cards/N01/N01-013.jpg', alt: 'Itachi Uchiha N01-013 card example' },
+              image: { src: '/Cards/N01/N01-013.webp', alt: 'Itachi Uchiha N01-013 card example' },
             },
             {
               label: 'Gamabunta N01-005',
-              image: { src: '/Cards/N01/N01-005.jpg', alt: 'Gamabunta N01-005 card example' },
+              image: { src: '/Cards/N01/N01-005.webp', alt: 'Gamabunta N01-005 card example' },
             },
           ],
         },
