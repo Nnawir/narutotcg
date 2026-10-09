@@ -344,7 +344,7 @@ h3 {
   border-bottom: 1px solid var(--border);
   background:
     linear-gradient(90deg, rgb(10 10 13 / 0.28), rgb(10 10 13 / 0.72)),
-    url('/assets/visuals/chakra-ink-news.png') center / cover no-repeat;
+    url('/assets/visuals/chakra-ink-news.webp') center / cover no-repeat;
 }
 .hero-grid {
   display: grid;
@@ -1680,16 +1680,143 @@ h3 {
 .deck-guides-about p { color: var(--text-secondary); }
 .deck-guides-about a, .deck-guide-article a { color: var(--accent); }
 .deck-guides-about a { text-decoration: none; }
-.deck-guide-article { max-width: 55rem; padding-bottom: 5rem; }
+.deck-guide-article { max-width: none; padding-bottom: 5rem; }
 .deck-guide-article .guide-content-section { padding-block: 1rem; }
 .deck-guide-article h2 { margin-top: 2rem; }
+.decklist-section h2 { margin-top: 0; font-size: clamp(1.65rem, 3vw, 2.25rem); }
 .deck-guide-article li { margin-top: .55rem; color: var(--text-secondary); }
 .guide-back-link { margin-top: 2rem; }
+.decklist-heading { display: flex; align-items: start; justify-content: space-between; gap: 2rem; }
+.decklist-intro { color: var(--text-secondary); }
+.copy-sim-button {
+  min-height: 44px;
+  flex: 0 0 auto;
+  border: 1px solid rgb(224 139 131 / .28);
+  border-radius: 999px;
+  padding: .55rem 1rem;
+  background: linear-gradient(135deg, rgb(199 71 61 / .16), rgb(224 139 131 / .25));
+  color: var(--accent);
+  cursor: pointer;
+  font: inherit;
+  font-size: .8rem;
+  font-weight: 750;
+  letter-spacing: .03em;
+  transition: transform 160ms ease, filter 160ms ease;
+}
+.copy-sim-button:hover { border-color: var(--accent); background: rgb(199 71 61 / .25); transform: translateY(-2px); }
+.copy-sim-button:focus-visible { outline-offset: 4px; }
+.decklist-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.decklist-card { min-width: 0; }
+.decklist-card-button {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: .55rem;
+  background: var(--surface);
+  color: var(--text-primary);
+  font: inherit;
+  text-align: left;
+  cursor: zoom-in;
+  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+.decklist-card-button:hover {
+  border-color: var(--accent);
+  background: var(--surface-elevated);
+  transform: translateY(-3px);
+}
+.decklist-card-image {
+  display: block;
+  overflow: hidden;
+  border-radius: .45rem;
+  background: var(--surface-elevated);
+}
+.decklist-card-image img { display: block; width: 100%; height: auto; }
+.decklist-card-copy { display: grid; gap: .15rem; padding: .65rem .15rem .1rem; }
+.decklist-card-copy strong { color: var(--accent); font-size: .85rem; }
+.decklist-card-copy span { color: var(--text-secondary); font-size: .78rem; font-weight: 700; }
+@media (max-width: 70rem) {
+  .decklist-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+@media (max-width: 56rem) {
+  .decklist-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 36rem) {
+  .decklist-heading { display: block; }
+  .copy-sim-button { margin-top: .75rem; }
+  .decklist-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .7rem; }
+}
+.deck-guide-detail-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 24rem);
+  align-items: center;
+  gap: clamp(2.5rem, 7vw, 7rem);
+  padding-block: clamp(3rem, 5vw, 4.75rem);
+}
+.deck-guide-detail-copy { min-width: 0; }
+.deck-guide-detail-copy h1 {
+  max-width: 42rem;
+  margin-bottom: 1.25rem;
+  font-size: clamp(2.4rem, 4vw, 3.6rem);
+}
+.deck-guide-detail-copy .article-standfirst {
+  max-width: 43rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+.guide-jump-badge {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: .55rem;
+  border: 1px solid rgb(224 139 131 / .28);
+  border-radius: 999px;
+  padding: .55rem 1rem;
+  background: linear-gradient(135deg, rgb(199 71 61 / .16), rgb(224 139 131 / .25));
+  color: var(--accent) !important;
+  font-size: .82rem;
+  font-weight: 750;
+  text-decoration: none;
+}
+.guide-jump-badge:hover { border-color: var(--accent); background: rgb(199 71 61 / .25); }
+.deck-guide-detail-image {
+  width: 100%;
+  max-width: 24rem;
+  justify-self: end;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgb(210 195 170 / .24);
+  border-radius: 1.15rem;
+  background: var(--surface-elevated);
+  box-shadow: 0 1.5rem 3rem rgb(0 0 0 / .28);
+}
+.deck-guide-detail-image img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: center 24%;
+}
+@media (max-width: 56rem) {
+  .deck-guide-detail-hero {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .deck-guide-detail-image { max-width: 30rem; }
+}
 .news-index-feature {
   margin-bottom: clamp(2.5rem, 6vw, 5rem);
 }
 .news-hero { padding-bottom: clamp(2.25rem, 5vw, 4rem); }
-.news-timeline { margin-bottom: clamp(4rem, 9vw, 7rem); border: 1px solid var(--border); border-radius: var(--radius); padding: clamp(1.25rem, 3vw, 2.25rem); overflow: hidden; background: linear-gradient(90deg, rgb(20 20 25 / 0.91), rgb(20 20 25 / 0.76)), url('/assets/visuals/chakra-ink-news.png') center / cover, radial-gradient(circle at 50% 50%, rgb(199 71 61 / 0.09), transparent 39rem), var(--surface); }
+.news-timeline { margin-bottom: clamp(4rem, 9vw, 7rem); border: 1px solid var(--border); border-radius: var(--radius); padding: clamp(1.25rem, 3vw, 2.25rem); overflow: hidden; background: linear-gradient(90deg, rgb(20 20 25 / 0.91), rgb(20 20 25 / 0.76)), url('/assets/visuals/chakra-ink-news.webp') center / cover, radial-gradient(circle at 50% 50%, rgb(199 71 61 / 0.09), transparent 39rem), var(--surface); }
 .timeline-heading { display: flex; align-items: end; justify-content: space-between; gap: 2rem; }
 .timeline-heading h2 { margin: 0; font-size: clamp(1.6rem, 3vw, 2.2rem); }
 .timeline-heading p:last-child { max-width: 31rem; margin: 0; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; }
@@ -2076,6 +2203,80 @@ h3 {
 }
 .article-body p {
   color: #cfcbc5;
+}
+.participation-rewards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin: 1.75rem 0 2rem;
+}
+.participation-reward {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 1.15rem;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 72%, transparent);
+}
+.participation-reward-image {
+  display: grid;
+  place-items: center;
+  min-height: 12rem;
+  margin: 0 0 1rem;
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.18);
+}
+.participation-reward-preview {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: zoom-in;
+}
+.participation-reward-preview:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 0.2rem;
+}
+.participation-reward-image img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 19rem;
+  object-fit: contain;
+}
+.participation-reward h3 {
+  margin-top: 0;
+}
+.participation-reward p {
+  margin-bottom: 0;
+}
+.event-link-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1.75rem 0 2rem;
+}
+.event-link-card {
+  display: grid;
+  gap: 0.4rem;
+  padding: 1.1rem;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 72%, transparent);
+  color: var(--text-primary);
+  text-decoration: none;
+}
+.event-link-card:hover {
+  border-color: var(--accent);
+}
+.event-link-card span:not(.text-link) {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}
+.article-inline-links {
+  margin: 1.5rem 0 2rem;
 }
 .article-body li {
   color: #cfcbc5;
@@ -2724,6 +2925,12 @@ h3 {
   }
   .section-heading {
     display: block;
+  }
+  .participation-rewards {
+    grid-template-columns: 1fr;
+  }
+  .event-link-grid {
+    grid-template-columns: 1fr;
   }
   .section-heading .text-link {
     margin-top: 1rem;

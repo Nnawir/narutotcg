@@ -21,7 +21,13 @@ export type NewsArticle = {
   featured: boolean;
   image?: ImageAsset;
   confirmedFacts: string[];
-  sections: Array<{ heading: string; paragraphs: string[] }>;
+  sections: Array<{
+    heading: string;
+    paragraphs: string[];
+    rewards?: Array<{ name: string; description: string; image: ImageAsset }>;
+    eventLinks?: Array<{ title: string; date: string; href: string }>;
+    links?: Array<{ label: string; href: string }>;
+  }>;
   relatedCardIds: string[];
   relatedGuideSlugs: string[];
 };
@@ -127,38 +133,38 @@ type N01CardAsset = [id: string, filename: string, width: number, height: number
 
 const n01Cards: Card[] = (
   [
-    ['N01-001', 'N01-001.jpg', 600, 831],
-    ['N01-002', 'N01-002.jpg', 600, 806],
-    ['N01-003', 'N01-003.jpg', 600, 807],
-    ['N01-004', 'N01-004.jpg', 600, 838],
-    ['N01-005', 'N01-005.jpg', 600, 884],
-    ['N01-006', 'N01-006.jpg', 600, 857],
-    ['N01-007', 'N01-007.jpg', 600, 838],
-    ['N01-008', 'N01-008.jpg', 600, 838],
-    ['N01-009', 'N01-009.jpg', 600, 831],
-    ['N01-010', 'N01-010.jpg', 600, 853],
-    ['N01-011', 'N01-011.jpg', 600, 838],
-    ['N01-012', 'N01-012.jpg', 600, 826],
-    ['N01-013', 'N01-013.jpg', 600, 838],
-    ['N01-014', 'N01-014.jpg', 600, 835],
-    ['N01-015', 'N01-015.jpg', 600, 838],
-    ['N01-016', 'N01-016.jpg', 600, 831],
-    ['N01-017', 'N01-017.jpg', 600, 834],
-    ['N01-018', 'N01-018.jpg', 600, 837],
-    ['N01-019', 'N01-019.jpg', 600, 850],
-    ['N01-020', 'N01-020.jpg', 600, 835],
-    ['N01-021', 'N01-021.jpg', 600, 832],
-    ['N01-022', 'N01-022.jpg', 600, 830],
-    ['SAMPLE-1', 'SAMPLE-1.jpg', 600, 838],
-    ['SAMPLE-2', 'SAMPLE-2.jpg', 600, 838],
-    ['SAMPLE-3', 'SAMPLE-3.jpg', 600, 838],
-    ['SAMPLE-4', 'SAMPLE-4.jpg', 600, 838],
-    ['SAMPLE-5', 'SAMPLE-5.jpg', 600, 838],
-    ['SAMPLE-6', 'SAMPLE-6.jpg', 600, 838],
-    ['SAMPLE-7', 'SAMPLE-7.jpg', 600, 838],
-    ['SAMPLE-8', 'SAMPLE-8.jpg', 600, 838],
-    ['SAMPLE-9', 'SAMPLE-9.jpg', 600, 838],
-    ['SAMPLE-10', 'SAMPLE-10.jpg', 600, 838],
+    ['N01-001', 'N01-001.webp', 600, 831],
+    ['N01-002', 'N01-002.webp', 600, 806],
+    ['N01-003', 'N01-003.webp', 600, 807],
+    ['N01-004', 'N01-004.webp', 600, 838],
+    ['N01-005', 'N01-005.webp', 600, 884],
+    ['N01-006', 'N01-006.webp', 600, 857],
+    ['N01-007', 'N01-007.webp', 600, 838],
+    ['N01-008', 'N01-008.webp', 600, 838],
+    ['N01-009', 'N01-009.webp', 600, 831],
+    ['N01-010', 'N01-010.webp', 600, 853],
+    ['N01-011', 'N01-011.webp', 600, 838],
+    ['N01-012', 'N01-012.webp', 600, 826],
+    ['N01-013', 'N01-013.webp', 600, 838],
+    ['N01-014', 'N01-014.webp', 600, 835],
+    ['N01-015', 'N01-015.webp', 600, 838],
+    ['N01-016', 'N01-016.webp', 600, 831],
+    ['N01-017', 'N01-017.webp', 600, 834],
+    ['N01-018', 'N01-018.webp', 600, 837],
+    ['N01-019', 'N01-019.webp', 600, 850],
+    ['N01-020', 'N01-020.webp', 600, 835],
+    ['N01-021', 'N01-021.webp', 600, 832],
+    ['N01-022', 'N01-022.webp', 600, 830],
+    ['SAMPLE-1', 'SAMPLE-1.webp', 600, 838],
+    ['SAMPLE-2', 'SAMPLE-2.webp', 600, 838],
+    ['SAMPLE-3', 'SAMPLE-3.webp', 600, 838],
+    ['SAMPLE-4', 'SAMPLE-4.webp', 600, 838],
+    ['SAMPLE-5', 'SAMPLE-5.webp', 600, 838],
+    ['SAMPLE-6', 'SAMPLE-6.webp', 600, 838],
+    ['SAMPLE-7', 'SAMPLE-7.webp', 600, 838],
+    ['SAMPLE-8', 'SAMPLE-8.webp', 600, 838],
+    ['SAMPLE-9', 'SAMPLE-9.webp', 600, 838],
+    ['SAMPLE-10', 'SAMPLE-10.webp', 600, 838],
   ] satisfies N01CardAsset[]
 ).map(([id, filename, width, height]) => ({
   id,
@@ -208,13 +214,48 @@ export const news: NewsArticle[] = [
         heading: 'Tutorial Session',
         paragraphs: [
           'Bandai has not yet published the procedure for taking part in the SPIEL Essen Tutorial Sessions. Demo decks will not be available to take home.',
-          'Each person may participate in one Tutorial Session during SPIEL Essen. Participants registered to the NARUTO TCG UPDATES CHANNEL on BANDAI TCG+ and who complete the event survey may receive the listed participation gift.',
+          'Each person may participate in one Tutorial Session during SPIEL Essen. See the Participation Rewards section below for the conditions and reward listed for eligible participants.',
+        ],
+      },
+      {
+        heading: 'Participation Rewards',
+        paragraphs: [
+          'Eligible Tutorial Session participants who are registered to the NARUTO TCG UPDATES CHANNEL on BANDAI TCG+ and complete the questionnaire after their session may receive one CP-001 Chakra Card. The participation gift is limited to one per person and is not automatically given to every SPIEL Essen visitor.',
+        ],
+        rewards: [
+          {
+            name: 'CP-001 Chakra Card',
+            description: 'The Tutorial Session participation gift, limited to one card per person when the stated conditions are met.',
+            image: {
+              src: '/Cards/Chakra cards/CP-001.webp',
+              alt: 'CP-001 Chakra Card',
+              width: 600,
+              height: 833,
+            },
+          },
+        ],
+      },
+      {
+        heading: 'Logo Sticker Giveaway',
+        paragraphs: [
+          'The NARUTO CARD GAME Logo Sticker is a separate giveaway, not part of the CP-001 Tutorial Session participation gift. Bandai describes it for visitors who meet the event conditions, such as following an official social channel or registering to the NARUTO TCG UPDATES CHANNEL on BANDAI TCG+.',
+        ],
+        rewards: [
+          {
+            name: 'NARUTO CARD GAME Logo Sticker',
+            description: 'A separate event giveaway for visitors who meet the stated social-channel or BANDAI TCG+ conditions.',
+            image: {
+              src: '/assets/visuals/Logo sticker Ny CC 26.webp',
+              alt: 'NARUTO CARD GAME Logo Sticker',
+              width: 448,
+              height: 145,
+            },
+          },
         ],
       },
       {
         heading: 'Gifts and merchandise',
         paragraphs: [
-          'Bandai lists the CP-001 Chakra Card for Tutorial Session participants and a Logo Sticker giveaway for people who follow an official social channel or register to the NARUTO TCG UPDATES CHANNEL.',
           'The NARUTO CARD GAME Official Playmat, marked as arriving in 2027, is also listed at a $35 MSRP plus tax. Purchase details will be announced later, and quantities are limited each day.',
         ],
       },
@@ -248,13 +289,48 @@ export const news: NewsArticle[] = [
         heading: 'Tutorial Session',
         paragraphs: [
           'Information on how to participate in the Tutorial Sessions has not yet been announced by Bandai. Demo decks will not be available to take home.',
-          'One Tutorial Session is permitted per person during Paris Games Week. The CP-001 Chakra Card is listed for eligible participants registered to the NARUTO TCG UPDATES CHANNEL on BANDAI TCG+ who complete the event survey.',
+          'One Tutorial Session is permitted per person during Paris Games Week. See Participation Rewards below for the conditions and reward listed for eligible participants.',
+        ],
+      },
+      {
+        heading: 'Participation Rewards',
+        paragraphs: [
+          'Eligible Tutorial Session participants who are registered to the NARUTO TCG UPDATES CHANNEL on BANDAI TCG+ and complete the questionnaire after their session may receive one CP-001 Chakra Card. The participation gift is limited to one per person and is not automatically given to every Paris Games Week visitor.',
+        ],
+        rewards: [
+          {
+            name: 'CP-001 Chakra Card',
+            description: 'The Tutorial Session participation gift, limited to one card per person when the stated conditions are met.',
+            image: {
+              src: '/Cards/Chakra cards/CP-001.webp',
+              alt: 'CP-001 Chakra Card',
+              width: 600,
+              height: 833,
+            },
+          },
+        ],
+      },
+      {
+        heading: 'Logo Sticker Giveaway',
+        paragraphs: [
+          'The NARUTO CARD GAME Logo Sticker is a separate giveaway, not part of the CP-001 Tutorial Session participation gift. It is listed for visitors who follow an official NARUTO CARD GAME social channel or register to the NARUTO TCG UPDATES CHANNEL on BANDAI TCG+.',
+        ],
+        rewards: [
+          {
+            name: 'NARUTO CARD GAME Logo Sticker',
+            description: 'A separate event giveaway for visitors who meet the stated social-channel or BANDAI TCG+ conditions.',
+            image: {
+              src: '/assets/visuals/Logo sticker Ny CC 26.webp',
+              alt: 'NARUTO CARD GAME Logo Sticker',
+              width: 448,
+              height: 145,
+            },
+          },
         ],
       },
       {
         heading: 'What else is listed',
         paragraphs: [
-          'A Logo Sticker is listed for people who follow an official NARUTO CARD GAME social channel or register to the NARUTO TCG UPDATES CHANNEL.',
           'Bandai also lists the NARUTO CARD GAME Official Playmat, arriving in 2027, at a $35 MSRP plus tax. It is limited to one per person and available in limited daily quantities; purchase information is still to come.',
         ],
       },
@@ -288,7 +364,25 @@ export const news: NewsArticle[] = [
         heading: 'Tutorial Session',
         paragraphs: [
           'Bandai has not yet announced participation details for the Lucca Tutorial Sessions, and demo decks will not be available to take home.',
-          'A visitor may participate in one Tutorial Session during the event. Eligible participants registered to the NARUTO TCG UPDATES CHANNEL on BANDAI TCG+ who complete the event survey are listed to receive the CP-001 Chakra Card.',
+          'A visitor may participate in one Tutorial Session during the event. See Participation Rewards below for the conditions and reward listed for eligible participants.',
+        ],
+      },
+      {
+        heading: 'Participation Rewards',
+        paragraphs: [
+          'Eligible Tutorial Session participants who are registered to the NARUTO TCG UPDATES CHANNEL on BANDAI TCG+ and complete the questionnaire after their session may receive one CP-001 Chakra Card. The participation gift is limited to one per person and is not automatically given to every Lucca Comics & Games visitor.',
+        ],
+        rewards: [
+          {
+            name: 'CP-001 Chakra Card',
+            description: 'The Tutorial Session participation gift, limited to one card per person when the stated conditions are met.',
+            image: {
+              src: '/Cards/Chakra cards/CP-001.webp',
+              alt: 'CP-001 Chakra Card',
+              width: 600,
+              height: 833,
+            },
+          },
         ],
       },
       {
@@ -367,7 +461,35 @@ export const news: NewsArticle[] = [
         heading: 'Tutorial Sessions',
         paragraphs: [
           'Tutorial Session tickets will be distributed each morning on a first-come, first-served basis at the BANDAI Namco Naruto Booth #3001. Bandai notes that the Tutorial Sessions themselves take place at the separate BANDAI CARD GAMES Booth #2705.',
-          'Demo decks will not be available to take home. One Tutorial Session is allowed per person during the event. Eligible participants registered to the NARUTO TCG UPDATES CHANNEL on BANDAI TCG+ who complete the survey are listed to receive a CP-001 Chakra Card and a Logo Sticker.',
+          'Demo decks will not be available to take home. One Tutorial Session is allowed per person during the event. See Participation Rewards below for the conditions and items listed for eligible participants.',
+        ],
+      },
+      {
+        heading: 'Participation Rewards',
+        paragraphs: [
+          'According to Bandai, participants eligible for the Tutorial Sessions may receive these participation rewards if they are registered to the NARUTO TCG UPDATES CHANNEL on BANDAI TCG+ and complete the questionnaire after the session. These conditions apply; the rewards are not automatically given to every visitor.',
+        ],
+        rewards: [
+          {
+            name: 'CP-001 Chakra Card',
+            description: 'A promotional Chakra card listed as a Tutorial Session participation reward.',
+            image: {
+              src: '/Cards/Chakra cards/CP-001.webp',
+              alt: 'CP-001 Chakra Card',
+              width: 600,
+              height: 833,
+            },
+          },
+          {
+            name: 'NARUTO CARD GAME Logo Sticker',
+            description: 'A NARUTO CARD GAME logo sticker listed as a Tutorial Session participation reward.',
+            image: {
+              src: '/assets/visuals/Logo sticker Ny CC 26.webp',
+              alt: 'NARUTO CARD GAME Logo Sticker',
+              width: 448,
+              height: 145,
+            },
+          },
         ],
       },
       {
@@ -411,10 +533,38 @@ export const news: NewsArticle[] = [
         ],
       },
       {
-        heading: 'Gifts and Playmat raffle',
+        heading: 'Participation Rewards',
         paragraphs: [
-          'Tutorial Session participants are listed to receive a CP-001 Chakra Card and a Logo Sticker, subject to the stated TCG+ registration and survey conditions. All participants are also entered into a raffle for a chance to purchase a Playmat.',
-          'Bandai says the raffle takes place after the final Tutorial Session each day. The NARUTO CARD GAME Official Playmat is marked as arriving in 2027 with a $35 MSRP plus tax, and is limited to one per person in limited daily quantities.',
+          'According to Bandai, participants eligible for the Tutorial Sessions may receive these participation rewards if they are registered to the NARUTO TCG UPDATES CHANNEL on BANDAI TCG+ and complete the questionnaire after their session. These conditions apply; the rewards are not automatically given to every PAX Aus visitor.',
+        ],
+        rewards: [
+          {
+            name: 'CP-001 Chakra Card',
+            description: 'A promotional Chakra card listed as a Tutorial Session participation reward.',
+            image: {
+              src: '/Cards/Chakra cards/CP-001.webp',
+              alt: 'CP-001 Chakra Card',
+              width: 600,
+              height: 833,
+            },
+          },
+          {
+            name: 'NARUTO CARD GAME Logo Sticker',
+            description: 'A NARUTO CARD GAME logo sticker listed as a Tutorial Session participation reward.',
+            image: {
+              src: '/assets/visuals/Logo sticker Ny CC 26.webp',
+              alt: 'NARUTO CARD GAME Logo Sticker',
+              width: 448,
+              height: 145,
+            },
+          },
+        ],
+      },
+      {
+        heading: 'Playmat raffle',
+        paragraphs: [
+          'Tutorial Session participants can also enter a raffle for a chance to purchase the NARUTO CARD GAME Official Playmat. The raffle gives an opportunity to buy the playmat; it is not a free participation reward.',
+          'Bandai says the raffle takes place after the final Tutorial Session each day. The playmat is marked as arriving in 2027 with a $35 MSRP plus tax, and is limited to one per person in limited daily quantities.',
         ],
       },
     ],
@@ -439,23 +589,93 @@ export const roadmapArticles: NewsArticle[] = [
     ],
     sections: [
       {
-        heading: 'What the roadmap confirms',
+        heading: 'Tutorial Sessions Explained',
         paragraphs: [
-          'Bandai’s NARUTO CARD GAME roadmap lists Tutorial Sessions from October 2026 into early 2027. It says these sessions will be held at events around the world.',
-          'The roadmap identifies New York Comic Con, PAX Aus, SPIEL Essen, Paris Games Week and Lucca Comics & Games among its upcoming event schedule. Individual event announcements provide the currently available local details.',
+          'Bandai’s NARUTO CARD GAME roadmap lists Tutorial Sessions from October 2026 into early 2027, before the planned Summer 2027 worldwide release. These sessions are intended to let players discover the NARUTO CARD GAME and learn how it works before launch.',
+          'The roadmap says the sessions will be held at events around the world. Event-specific participation rules and promotional items can differ, so they should not be treated as general Tutorial Session rules.',
         ],
       },
       {
-        heading: 'What is not announced yet',
+        heading: 'Tutorial Session Events',
         paragraphs: [
+          'These event articles collect the Tutorial Session information currently confirmed on NarutoCardGuide. Open an event article for its local schedule, registration details and any rewards or promotions specifically announced for that event.',
+        ],
+        eventLinks: [
+          { title: 'New York Comic Con 2026', date: 'October 8–11, 2026', href: '/news/new-york-comic-con-2026-event-information/' },
+          { title: 'PAX Aus 2026', date: 'October 9–11, 2026', href: '/news/pax-aus-2026-event-information/' },
+          { title: 'SPIEL Essen', date: 'October 22–25, 2026', href: '/news/spiel-essen-2026-event-information/' },
+          { title: 'Paris Games Week', date: 'October 22–25, 2026', href: '/news/paris-games-week-2026-event-information/' },
+          { title: 'Lucca Comics & Games', date: 'October 28–November 1, 2026', href: '/news/lucca-comics-games-2026-event-information/' },
+          { title: 'BANDAI CARD GAMES Fest 26-27 in London', date: 'January 15–17, 2027', href: '/news/bandai-card-games-fest-london-2027/' },
+        ],
+      },
+      {
+        heading: 'Rewards and Event Conditions',
+        paragraphs: [
+          'Rewards and participation conditions may vary by event. Some event announcements list a CP-001 Chakra Card, a Logo Sticker or another promotion, while other events may not list the same items. No single reward is confirmed for every Tutorial Session.',
           'Bandai has not published a single global registration process, a complete worldwide list of Tutorial Sessions, or the full early-2027 schedule on the roadmap page.',
-          'Participation requirements can differ by event. Check the corresponding NarutoCardGuide event article for the details currently confirmed for that location.',
         ],
       },
       {
-        heading: 'Next roadmap information',
+        heading: 'Tutorial Sessions Timeline',
         paragraphs: [
-          'Bandai states that more new information will be revealed at New York Comic Con. Further event announcements are also expected.',
+          'October 2026 → Late 2026 → Early 2027 → Worldwide Release: Summer 2027',
+          'The currently listed events begin in October 2026 and continue through the London event in January 2027. The roadmap provides the broader early-2027 period, but does not give additional exact Tutorial Session dates.',
+        ],
+        links: [
+          { label: 'Read the NARUTO CARD GAME Worldwide Release – Summer 2027 article →', href: '/news/naruto-card-game-worldwide-release-summer-2027/' },
+        ],
+      },
+    ],
+    relatedCardIds: [],
+    relatedGuideSlugs: [],
+  },
+  {
+    slug: 'naruto-card-game-worldwide-release-summer-2027',
+    title: 'NARUTO CARD GAME Worldwide Release – Summer 2027',
+    summary: 'The NARUTO CARD GAME is confirmed for a simultaneous worldwide release in Summer 2027; Bandai has not announced the exact release date yet.',
+    category: 'Official News',
+    sourceLabel: 'NARUTO CARD GAME Official Website — Roadmap',
+    sourceUrl: 'https://www.naruto-cardgame.com/en/welcome/',
+    featured: false,
+    confirmedFacts: [
+      'NARUTO CARD GAME is scheduled for a worldwide release in Summer 2027.',
+      'Bandai has confirmed a simultaneous worldwide release.',
+      'An exact release date has not yet been announced.',
+    ],
+    sections: [
+      {
+        heading: 'Worldwide Release Confirmed',
+        paragraphs: [
+          'Bandai has confirmed that NARUTO CARD GAME will receive a simultaneous worldwide release in Summer 2027. This means the planned launch is global rather than limited to Japan or one specific region.',
+          'A worldwide release is an important milestone because players in different regions are being included in the same announced launch window. The exact launch details are still to be confirmed by Bandai.',
+        ],
+      },
+      {
+        heading: 'Release Window',
+        paragraphs: [
+          'Summer 2027 is the confirmed release window for the NARUTO CARD GAME.',
+          'Bandai has not announced an exact release date or a specific month. This page will be updated when an official date is published.',
+        ],
+      },
+      {
+        heading: 'What We Know So Far',
+        paragraphs: [
+          'The confirmed information is that NARUTO CARD GAME is planned for a simultaneous worldwide release in Summer 2027. No region-specific launch difference has been announced in the roadmap information currently available.',
+          'The current announcement confirms the release window and global launch approach, but does not yet provide a complete launch product or purchasing plan.',
+        ],
+      },
+      {
+        heading: "What Hasn't Been Announced Yet",
+        paragraphs: [
+          'Bandai has not yet announced the exact release date, launch products, prices, card lists, store availability, or pre-order information for the worldwide release. This article will only add those details when they are officially confirmed.',
+        ],
+      },
+      {
+        heading: 'Road to Release',
+        paragraphs: [
+          'Bandai’s roadmap schedules Tutorial Sessions and events from 2026 into early 2027 ahead of the worldwide release. These activities are part of the announced path toward launch, but they do not add an earlier release date.',
+          '2026 / early 2027 → Tutorial Sessions & events → Summer 2027 → Worldwide release',
         ],
       },
     ],
@@ -556,6 +776,7 @@ export const timelineItems: TimelineItem[] = [
     date: '2027-06-21',
     dateLabel: 'Summer 2027',
     sourceUrl: 'https://www.naruto-cardgame.com/en/welcome/',
+    articleSlug: 'naruto-card-game-worldwide-release-summer-2027',
   },
 ];
 const specialCards: Card[] = [
@@ -566,7 +787,7 @@ const specialCards: Card[] = [
     setCode: 'CHAKRA',
     setName: 'Chakra Cards',
     image: {
-      src: '/Cards/Chakra cards/C-001.jpg',
+      src: '/Cards/Chakra cards/C-001.webp',
       alt: 'C-001 card',
       width: 640,
       height: 894,
@@ -586,7 +807,7 @@ const specialCards: Card[] = [
     setCode: 'CHAKRA',
     setName: 'Chakra Cards',
     image: {
-      src: '/Cards/Chakra cards/CP-001.jpg',
+      src: '/Cards/Chakra cards/CP-001.webp',
       alt: 'CP-001 card',
       width: 600,
       height: 833,
@@ -606,7 +827,7 @@ const specialCards: Card[] = [
     setCode: 'SUMMON',
     setName: 'Summon Cards',
     image: {
-      src: '/Cards/Summon cards/S-001.jpg',
+      src: '/Cards/Summon cards/S-001.webp',
       alt: 'S-001 card',
       width: 640,
       height: 894,
@@ -632,7 +853,7 @@ export const guides: Guide[] = [
     readingTime: '5 min read',
     verifiedAt: '2026-09-25',
     image: {
-      src: '/assets/visuals/complete-rules-guide-cards.png',
+      src: '/assets/visuals/complete-rules-guide-cards.webp',
       alt: 'Chakra, Naruto Leader, and Summon cards arranged in a dark vermilion composition',
       width: 1664,
       height: 936,
@@ -680,7 +901,7 @@ export const guides: Guide[] = [
           ],
         },
         image: {
-          src: '/assets/visuals/board.png',
+          src: '/assets/visuals/board.webp',
           alt: 'Schematic NARUTO CARD GAME play area showing the Character, Support, Leader, Deck, Trash, Summon, and Chakra areas',
         },
         links: [{ label: "Click here to view the game's Cards List.", href: '/cards-list/' }],
@@ -692,15 +913,15 @@ export const guides: Guide[] = [
         cards: [
           {
             text: 'Leader : Your deck is built around this card. Its color determines which cards you can use, and its Life is the target of the game.',
-            image: { src: '/Cards/N01/N01-001.jpg', alt: 'Leader card example' },
+            image: { src: '/Cards/N01/N01-001.webp', alt: 'Leader card example' },
           },
           {
             text: 'Characters : Characters form your front line and can battle opposing Characters or a Leader. Some can activate Ninjutsu by paying Chakra.',
-            image: { src: '/Cards/N01/N01-009.jpg', alt: 'Character card example' },
+            image: { src: '/Cards/N01/N01-009.webp', alt: 'Character card example' },
           },
           {
             text: 'EX Character : A powerful Character that can be played after specific play conditions are met.',
-            image: { src: '/Cards/N01/N01-005.jpg', alt: 'EX Character card example' },
+            image: { src: '/Cards/N01/N01-005.webp', alt: 'EX Character card example' },
           },
           {
             text: 'Chakra : A resource card used to activate Support effects such as Ninjutsu.',
@@ -708,7 +929,7 @@ export const guides: Guide[] = [
           },
           {
             text: 'Summon : A card required to play Character cards onto the battlefield.',
-            image: { src: '/Cards/Summon cards/S-001.png', alt: 'Summon card example' },
+          image: { src: '/Cards/Summon cards/S-001.webp', alt: 'Summon card example' },
           },
         ],
         links: [
@@ -839,7 +1060,7 @@ export const guides: Guide[] = [
     readingTime: '3 min read',
     verifiedAt: '2026-09-25',
     image: {
-      src: '/assets/visuals/glossary-keywords-guide.png',
+      src: '/assets/visuals/glossary-keywords-guide.webp',
       alt: 'Keyword badges arranged in a dark glossary-themed composition',
       width: 1774,
       height: 887,
@@ -855,7 +1076,7 @@ export const guides: Guide[] = [
           {
             label: 'For Leader',
             image: {
-              src: '/Cards/N01/N01-012.jpg',
+              src: '/Cards/N01/N01-012.webp',
               alt: 'Leader card example for explaining DMG, POW, and Life statistics',
             },
             stats: [
@@ -878,7 +1099,7 @@ export const guides: Guide[] = [
           {
             label: 'For Character',
             image: {
-              src: '/Cards/N01/N01-006.jpg',
+              src: '/Cards/N01/N01-006.webp',
               alt: 'Character card example for explaining DMG, POW, and HP statistics',
             },
             stats: [
@@ -940,27 +1161,27 @@ export const guides: Guide[] = [
             ['Your Turn', 'A restriction that limits a triggered ability to the controller’s own turn.'],
           ],
           images: [
-            [{ src: '/assets/keywords/activate-main.png', alt: 'Activate: Main keyword' }, undefined],
-            [{ src: '/assets/keywords/during-your-main.png', alt: 'During Your Main keyword' }, undefined],
+            [{ src: '/assets/keywords/activate-main.webp', alt: 'Activate: Main keyword' }, undefined],
+            [{ src: '/assets/keywords/during-your-main.webp', alt: 'During Your Main keyword' }, undefined],
             [
               {
-                src: "/assets/keywords/during-your-opponent's-attack.png",
+                src: "/assets/keywords/during-your-opponent's-attack.webp",
                 alt: "During Your Opponent's Attack keyword",
               },
               undefined,
             ],
-            [{ src: '/assets/keywords/once-per-turn.png', alt: 'Once Per Turn keyword' }, undefined],
-            [{ src: '/assets/keywords/on-summon.png', alt: 'On Summon keyword' }, undefined],
-            [{ src: '/assets/keywords/quick.png', alt: 'Quick keyword' }, undefined],
-            [{ src: '/assets/keywords/recovery.png', alt: 'Recovery keyword' }, undefined],
-            [{ src: '/assets/keywords/rush.png', alt: 'Rush keyword' }, undefined],
+            [{ src: '/assets/keywords/once-per-turn.webp', alt: 'Once Per Turn keyword' }, undefined],
+            [{ src: '/assets/keywords/on-summon.webp', alt: 'On Summon keyword' }, undefined],
+            [{ src: '/assets/keywords/quick.webp', alt: 'Quick keyword' }, undefined],
+            [{ src: '/assets/keywords/recovery.webp', alt: 'Recovery keyword' }, undefined],
+            [{ src: '/assets/keywords/rush.webp', alt: 'Rush keyword' }, undefined],
             [
-              { src: '/assets/keywords/summon-requirements.png', alt: 'Summon Requirements keyword' },
+              { src: '/assets/keywords/summon-requirements.webp', alt: 'Summon Requirements keyword' },
               undefined,
             ],
-            [{ src: '/assets/keywords/support-activated.png', alt: 'Support Activated keyword' }, undefined],
-            [{ src: '/assets/keywords/when-attacking.png', alt: 'When Attacking keyword' }, undefined],
-            [{ src: '/assets/keywords/your-turn.png', alt: 'Your Turn keyword' }, undefined],
+            [{ src: '/assets/keywords/support-activated.webp', alt: 'Support Activated keyword' }, undefined],
+            [{ src: '/assets/keywords/when-attacking.webp', alt: 'When Attacking keyword' }, undefined],
+            [{ src: '/assets/keywords/your-turn.webp', alt: 'Your Turn keyword' }, undefined],
           ],
         },
         links: [
@@ -1017,35 +1238,35 @@ export const guides: Guide[] = [
             },
             {
               label: 'Shikamaru Nara N01-008',
-              image: { src: '/Cards/N01/N01-008.jpg', alt: 'Shikamaru Nara N01-008 card example' },
+              image: { src: '/Cards/N01/N01-008.webp', alt: 'Shikamaru Nara N01-008 card example' },
             },
             {
               label: 'Hinata Hyuga N01-018',
-              image: { src: '/Cards/N01/N01-018.jpg', alt: 'Hinata Hyuga N01-018 card example' },
+              image: { src: '/Cards/N01/N01-018.webp', alt: 'Hinata Hyuga N01-018 card example' },
             },
             {
               label: 'Shisui Uchiha N01-016',
-              image: { src: '/Cards/N01/N01-016.jpg', alt: 'Shisui Uchiha N01-016 card example' },
+              image: { src: '/Cards/N01/N01-016.webp', alt: 'Shisui Uchiha N01-016 card example' },
             },
             {
               label: 'Orochimaru N01-017',
-              image: { src: '/Cards/N01/N01-017.jpg', alt: 'Orochimaru N01-017 card example' },
+              image: { src: '/Cards/N01/N01-017.webp', alt: 'Orochimaru N01-017 card example' },
             },
             {
               label: 'Naruto Uzumaki N01-003',
-              image: { src: '/Cards/N01/N01-003.jpg', alt: 'Naruto Uzumaki N01-003 card example' },
+              image: { src: '/Cards/N01/N01-003.webp', alt: 'Naruto Uzumaki N01-003 card example' },
             },
             {
               label: 'Naruto Uzumaki N01-004',
-              image: { src: '/Cards/N01/N01-004.jpg', alt: 'Naruto Uzumaki N01-004 card example' },
+              image: { src: '/Cards/N01/N01-004.webp', alt: 'Naruto Uzumaki N01-004 card example' },
             },
             {
               label: 'Itachi Uchiha N01-013',
-              image: { src: '/Cards/N01/N01-013.jpg', alt: 'Itachi Uchiha N01-013 card example' },
+              image: { src: '/Cards/N01/N01-013.webp', alt: 'Itachi Uchiha N01-013 card example' },
             },
             {
               label: 'Gamabunta N01-005',
-              image: { src: '/Cards/N01/N01-005.jpg', alt: 'Gamabunta N01-005 card example' },
+              image: { src: '/Cards/N01/N01-005.webp', alt: 'Gamabunta N01-005 card example' },
             },
           ],
         },

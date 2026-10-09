@@ -19,13 +19,13 @@ const absoluteUrl = (path: string) => new URL(path, siteOrigin).toString();
 const renderGuideText = (text: string) =>
   text.replace(
     '[[RECOVERY]]',
-    '<span class="inline-keyword inline-keyword-recovery"><img src="/assets/keywords/recovery.png" alt="Recovery" /></span>',
+    '<span class="inline-keyword inline-keyword-recovery"><img src="/assets/keywords/recovery.webp" alt="Recovery" /></span>',
   ).replace(
     '[[RUSH]]',
-    '<span class="inline-keyword inline-keyword-rush"><img src="/assets/keywords/rush.png" alt="Rush" /></span>',
+    '<span class="inline-keyword inline-keyword-rush"><img src="/assets/keywords/rush.webp" alt="Rush" /></span>',
   ).replace(
     '[[DURING_ATTACK]]',
-    '<span class="inline-keyword inline-keyword-during-attack"><img src="/assets/keywords/during-your-opponent\'s-attack.png" alt="During Your Opponent\'s Attack" /></span>',
+    '<span class="inline-keyword inline-keyword-during-attack"><img src="/assets/keywords/during-your-opponent\'s-attack.webp" alt="During Your Opponent\'s Attack" /></span>',
   );
 const structuredData = [
   {

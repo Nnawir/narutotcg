@@ -6,13 +6,13 @@
  */
 export function resolveCardImage(cardId: string): string | null {
   const setCard = /^([A-Z]+\d+)-(\d+)$/i.exec(cardId);
-  if (setCard) return `/Cards/${setCard[1]}/${cardId}.jpg`;
+  if (setCard) return `/Cards/${setCard[1]}/${cardId}.webp`;
 
   const previewCard = /^N-(\d+)$/i.exec(cardId);
-  if (previewCard) return `/Cards/N01/N01-${previewCard[1]}.jpg`;
+  if (previewCard) return `/Cards/N01/N01-${previewCard[1]}.webp`;
 
-  if (/^CP?-\d+$/i.test(cardId)) return `/Cards/Chakra cards/${cardId}.jpg`;
-  if (/^S-\d+$/i.test(cardId)) return `/Cards/Summon cards/${cardId}.jpg`;
+  if (/^CP?-\d+$/i.test(cardId)) return `/Cards/Chakra cards/${cardId}.webp`;
+  if (/^S-\d+$/i.test(cardId)) return `/Cards/Summon cards/${cardId}.webp`;
   return null;
 }
 

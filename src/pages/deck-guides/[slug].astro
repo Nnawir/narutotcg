@@ -2,27 +2,69 @@
 import BaseLayout from '../../components/BaseLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { deckGuides } from '../../data/deck-guides';
+import { cards } from '../../data/content';
 
 export function getStaticPaths() {
   return deckGuides.map((guide) => ({ params: { slug: guide.slug }, props: { guide } }));
 }
 
 const { guide } = Astro.props;
+const deckCards = guide.decklist
+  .map((entry) => ({ ...entry, card: cards.find((card) => card.id === entry.cardId) }))
+  .filter((entry) => entry.card);
 ---
 
 <BaseLayout title={guide.title} description={guide.summary} canonicalPath={`/deck-guides/${guide.slug}/`}>
   <div class="shell">
     <Breadcrumbs items={[{ label: 'Deck Guides', href: '/deck-guides/' }, { label: guide.title }]} />
   </div>
-  <header class="guide-article-header shell">
-    <p class="eyebrow card-list-eyebrow">Deck Guide</p>
-    <h1>{guide.title}</h1>
-    <p>{guide.intro}</p>
-    <div class="meta-row"><span>{guide.leader}</span><span>·</span><span>{guide.difficulty}</span><span>·</span><span>{guide.readingTime}</span></div>
+  <header class="guide-article-header deck-guide-detail-hero shell">
+    <div class="deck-guide-detail-copy">
+      <p class="eyebrow card-list-eyebrow">Deck Guides</p>
+      <h1>{guide.title}</h1>
+      <p class="article-standfirst">
+        Explore the 31-card Naruto Uzumaki demo deck, including the decklist, core combos, and strategies for playing against Sasuke Leader and the Naruto mirror match.
+      </p>
+      <a class="guide-jump-badge" href="#matchup">Matchup <span aria-hidden="true">↓</span></a>
+    </div>
+    <figure class="deck-guide-detail-image">
+      <img src={guide.image.src} alt={guide.image.alt} />
+    </figure>
   </header>
   <article class="shell guide-article deck-guide-article">
+    <section class="guide-content-section decklist-section" id="decklist">
+      <div class="decklist-heading">
+        <div>
+          <h2>Decklist</h2>
+          <p class="decklist-intro">The complete 31-card Naruto Uzumaki Demo Deck.</p>
+        </div>
+        <button class="copy-sim-button" type="button" data-copy-deck>Copy for Sim</button>
+      </div>
+      <div class="decklist-grid">
+        {deckCards.map(({ card, copies }) => (
+          <article class="decklist-card">
+            <button
+              class="decklist-card-button"
+              type="button"
+              data-card-preview
+              data-image-src={card.image.src}
+              data-image-alt={card.image.alt}
+              aria-label={`Zoom ${card.id} card`}
+            >
+              <span class="decklist-card-image">
+                <img src={card.image.src} alt={card.image.alt} width={card.image.width} height={card.image.height} loading="lazy" />
+              </span>
+              <span class="decklist-card-copy">
+                <strong>{copies}x</strong>
+                <span>{card.id}</span>
+              </span>
+            </button>
+          </article>
+        ))}
+      </div>
+    </section>
     {guide.sections.map((section) => (
-      <section class="guide-content-section">
+      <section class="guide-content-section" id={section.heading === 'Matchup' ? 'matchup' : undefined}>
         <h2>{section.heading}</h2>
         {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
         {section.bullets && <ul>{section.bullets.map((bullet) => <li>{bullet}</li>)}</ul>}
@@ -31,3 +73,34 @@ const { guide } = Astro.props;
     <p class="guide-back-link"><a class="text-link" href="/deck-guides/">← Back to Deck Guides</a></p>
   </article>
 </BaseLayout>
+
+<script>
+  const copyDeckButton = document.querySelector('[data-copy-deck]');
+  const decklistText = `1 x N-001
+3 x N-002
+3 x N-004
+3 x N-006
+3 x N-007
+3 x N-008
+3 x N-009
+3 x N-005
+3 x N-003
+3 x N-011
+3 x N-018`;
+
+  copyDeckButton?.addEventListener('click', async () => {
+    if (!(copyDeckButton instanceof HTMLButtonElement)) return;
+    try {
+      await navigator.clipboard.writeText(decklistText);
+      copyDeckButton.textContent = 'Copied!';
+      window.setTimeout(() => {
+        copyDeckButton.textContent = 'Copy for Sim';
+      }, 1800);
+    } catch {
+      copyDeckButton.textContent = 'Copy failed';
+      window.setTimeout(() => {
+        copyDeckButton.textContent = 'Copy for Sim';
+      }, 1800);
+    }
+  });
+</script>
