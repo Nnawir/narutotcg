@@ -70,7 +70,7 @@ const isActive = (href: string) => pathname === href || pathname.startsWith(href
   const searchInput = document.querySelector('#global-search');
   searchForm?.addEventListener('submit', (event) => {
     if (!(searchInput instanceof HTMLInputElement)) return;
-    if (searchInput.value.trim().toLowerCase() !== 'jevotelepen') return;
+    if (searchInput.value.trim().toLowerCase() !== 'testsimu') return;
     event.preventDefault();
     window.location.assign('/simulator/');
   });

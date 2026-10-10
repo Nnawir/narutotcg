@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../../components/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+---
+
+<BaseLayout
+  title="Legal Notice and Privacy"
+  description="Legal notice, contact, and privacy information for NarutoCardGuide."
+  canonicalPath="/mentions-legales/"
+>
+  <div class="shell article-shell">
+    <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Legal Notice' }]} />
+    <article>
+      <header class="article-header">
+        <div class="article-heading-copy">
+          <p class="eyebrow">Legal information</p>
+          <h1>Legal Notice and Privacy</h1>
+          <p class="article-standfirst">Essential information about NarutoCardGuide.</p>
+        </div>
+      </header>
+
+      <div class="article-layout">
+        <div class="article-body">
+          <section aria-labelledby="site-title">
+            <h2 id="site-title">About this site</h2>
+            <p>NarutoCardGuide is an independent resource about the NARUTO CARD GAME. This site is not affiliated with Bandai or the NARUTO rights holders.</p>
+          </section>
+
+          <section aria-labelledby="contact-title">
+            <h2 id="contact-title">Contact</h2>
+            <p>For questions about the site, contact <a href="mailto:narutocardguide@gmail.com">narutocardguide@gmail.com</a>.</p>
+          </section>
+
+          <section aria-labelledby="privacy-title">
+            <h2 id="privacy-title">Privacy</h2>
+            <p>We use Google Analytics 4 (GA4) to measure and understand site traffic and improve the content. Google may process traffic data for this purpose.</p>
+          </section>
+        </div>
+      </div>
+    </article>
+  </div>
+</BaseLayout>
