@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://narutocardguide-resource.chessnnawir.chatgpt.site',
+  site: 'https://narutocardguide.com',
   trailingSlash: 'always',
   redirects: {
     '/actualites/': '/news/',
