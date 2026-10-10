@@ -1691,19 +1691,18 @@ h3 {
 .copy-sim-button {
   min-height: 44px;
   flex: 0 0 auto;
-  border: 1px solid rgb(224 139 131 / .28);
+  border: 1px solid rgb(240 207 137 / .58);
   border-radius: 999px;
   padding: .55rem 1rem;
-  background: linear-gradient(135deg, rgb(199 71 61 / .16), rgb(224 139 131 / .25));
-  color: var(--accent);
+  background: linear-gradient(135deg, rgb(240 207 137 / .16), rgb(240 207 137 / .3));
+  color: #f0cf89;
   cursor: pointer;
   font: inherit;
-  font-size: .8rem;
+  font-size: .82rem;
   font-weight: 750;
-  letter-spacing: .03em;
   transition: transform 160ms ease, filter 160ms ease;
 }
-.copy-sim-button:hover { border-color: var(--accent); background: rgb(199 71 61 / .25); transform: translateY(-2px); }
+.copy-sim-button:hover { border-color: #f0cf89; background: rgb(240 207 137 / .25); transform: translateY(-2px); }
 .copy-sim-button:focus-visible { outline-offset: 4px; }
 .decklist-grid {
   display: grid;
@@ -1713,6 +1712,7 @@ h3 {
 }
 .decklist-card { min-width: 0; }
 .decklist-card-button {
+  position: relative;
   display: grid;
   width: 100%;
   height: 100%;
@@ -1726,6 +1726,18 @@ h3 {
   text-align: left;
   cursor: zoom-in;
   transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+.decklist-card-button::before {
+  position: absolute;
+  top: 0;
+  left: 1rem;
+  width: 2.7rem;
+  height: 3px;
+  border-radius: 0 0 3px 3px;
+  background: linear-gradient(90deg, var(--accent), #f0cf89);
+  box-shadow: 0 0 .75rem rgb(199 71 61 / .32);
+  content: '';
+  pointer-events: none;
 }
 .decklist-card-button:hover {
   border-color: var(--accent);
@@ -1777,16 +1789,16 @@ h3 {
   min-height: 44px;
   align-items: center;
   gap: .55rem;
-  border: 1px solid rgb(224 139 131 / .28);
+  border: 1px solid rgb(240 207 137 / .58);
   border-radius: 999px;
   padding: .55rem 1rem;
-  background: linear-gradient(135deg, rgb(199 71 61 / .16), rgb(224 139 131 / .25));
-  color: var(--accent) !important;
+  background: linear-gradient(135deg, rgb(240 207 137 / .16), rgb(240 207 137 / .3));
+  color: #f0cf89 !important;
   font-size: .82rem;
   font-weight: 750;
   text-decoration: none;
 }
-.guide-jump-badge:hover { border-color: var(--accent); background: rgb(199 71 61 / .25); }
+.guide-jump-badge:hover { border-color: #f0cf89; background: rgb(240 207 137 / .25); }
 .deck-guide-detail-image {
   width: 100%;
   max-width: 24rem;
