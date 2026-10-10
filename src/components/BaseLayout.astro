@@ -45,6 +45,13 @@ const canonicalUrl = new URL(canonicalPath, Astro.site ?? Astro.url.origin).toSt
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={metaTitle} />
     <meta name="twitter:description" content={description} />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7S1FTH4HJ2"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { window.dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-7S1FTH4HJ2');
+    </script>
     {structuredData && <script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>}
   </head>
   <body>
