@@ -19,12 +19,25 @@ export type NewsArticle = {
   sourceLabel: string;
   sourceUrl: string;
   featured: boolean;
+  showContents?: boolean;
+  showStandfirst?: boolean;
   image?: ImageAsset;
   confirmedFacts: string[];
   sections: Array<{
     heading: string;
     paragraphs: string[];
+    image?: ImageAsset;
     rewards?: Array<{ name: string; description: string; image: ImageAsset }>;
+    cardIds?: string[];
+    closingNavigation?: {
+      before: string;
+      firstLabel: string;
+      between: string;
+      secondLabel: string;
+      firstHref: string;
+      secondHref: string;
+      after?: string;
+    };
     eventLinks?: Array<{ title: string; date: string; href: string }>;
     links?: Array<{ label: string; href: string }>;
   }>;
@@ -165,6 +178,13 @@ const n01Cards: Card[] = (
     ['SAMPLE-8', 'SAMPLE-8.webp', 600, 838],
     ['SAMPLE-9', 'SAMPLE-9.webp', 600, 838],
     ['SAMPLE-10', 'SAMPLE-10.webp', 600, 838],
+    ['SAMPLE-19', 'SAMPLE-19.webp', 480, 670],
+    ['SAMPLE-20', 'SAMPLE-20.webp', 480, 670],
+    ['SAMPLE-21', 'SAMPLE-21.webp', 480, 670],
+    ['SAMPLE-22', 'SAMPLE-22.webp', 480, 670],
+    ['SAMPLE-23', 'SAMPLE-23.webp', 480, 670],
+    ['SAMPLE-24', 'SAMPLE-24.webp', 480, 670],
+    ['SAMPLE-25', 'SAMPLE-25.webp', 480, 670],
   ] satisfies N01CardAsset[]
 ).map(([id, filename, width, height]) => ({
   id,
@@ -225,7 +245,8 @@ export const news: NewsArticle[] = [
         rewards: [
           {
             name: 'CP-001 Chakra Card',
-            description: 'The Tutorial Session participation gift, limited to one card per person when the stated conditions are met.',
+            description:
+              'The Tutorial Session participation gift, limited to one card per person when the stated conditions are met.',
             image: {
               src: '/Cards/Chakra cards/CP-001.webp',
               alt: 'CP-001 Chakra Card',
@@ -243,7 +264,8 @@ export const news: NewsArticle[] = [
         rewards: [
           {
             name: 'NARUTO CARD GAME Logo Sticker',
-            description: 'A separate event giveaway for visitors who meet the stated social-channel or BANDAI TCG+ conditions.',
+            description:
+              'A separate event giveaway for visitors who meet the stated social-channel or BANDAI TCG+ conditions.',
             image: {
               src: '/assets/visuals/Logo sticker Ny CC 26.webp',
               alt: 'NARUTO CARD GAME Logo Sticker',
@@ -300,7 +322,8 @@ export const news: NewsArticle[] = [
         rewards: [
           {
             name: 'CP-001 Chakra Card',
-            description: 'The Tutorial Session participation gift, limited to one card per person when the stated conditions are met.',
+            description:
+              'The Tutorial Session participation gift, limited to one card per person when the stated conditions are met.',
             image: {
               src: '/Cards/Chakra cards/CP-001.webp',
               alt: 'CP-001 Chakra Card',
@@ -318,7 +341,8 @@ export const news: NewsArticle[] = [
         rewards: [
           {
             name: 'NARUTO CARD GAME Logo Sticker',
-            description: 'A separate event giveaway for visitors who meet the stated social-channel or BANDAI TCG+ conditions.',
+            description:
+              'A separate event giveaway for visitors who meet the stated social-channel or BANDAI TCG+ conditions.',
             image: {
               src: '/assets/visuals/Logo sticker Ny CC 26.webp',
               alt: 'NARUTO CARD GAME Logo Sticker',
@@ -375,7 +399,8 @@ export const news: NewsArticle[] = [
         rewards: [
           {
             name: 'CP-001 Chakra Card',
-            description: 'The Tutorial Session participation gift, limited to one card per person when the stated conditions are met.',
+            description:
+              'The Tutorial Session participation gift, limited to one card per person when the stated conditions are met.',
             image: {
               src: '/Cards/Chakra cards/CP-001.webp',
               alt: 'CP-001 Chakra Card',
@@ -438,7 +463,8 @@ export const news: NewsArticle[] = [
   {
     slug: 'new-york-comic-con-2026-event-information',
     title: 'New York Comic Con 2026 Event Information',
-    summary: 'NARUTO CARD GAME Tutorial Sessions, merchandise information and a NARUTO panel are announced for New York Comic Con.',
+    summary:
+      'NARUTO CARD GAME Tutorial Sessions, merchandise information and a NARUTO panel are announced for New York Comic Con.',
     category: 'Events',
     publishedAt: '2026-08-07',
     sourceLabel: 'NARUTO CARD GAME Official Website — New York Comic Con 2026 Event Information',
@@ -571,13 +597,141 @@ export const news: NewsArticle[] = [
     relatedCardIds: [],
     relatedGuideSlugs: [],
   },
+  {
+    slug: 'premium-card-collection-vol-00-chakra-set-revealed',
+    title: 'Premium Card Collection Vol.00 and Official Naruto VS Sasuke Playmat Revealed !',
+    summary:
+      'The NARUTO Card Game Premium Card Collection Vol.00 — CHAKRA Set reveals five Chakra cards and a Naruto Summon card.',
+    category: 'Card Reveals',
+    publishedAt: '2026-10-11',
+    sourceLabel: 'NARUTO CARD GAME official product reveal',
+    sourceUrl: 'https://www.naruto-cardgame.com/en/welcome/',
+    featured: true,
+    showContents: false,
+    showStandfirst: false,
+    confirmedFacts: [],
+    sections: [
+      {
+        heading: 'CHAKRA Set',
+        paragraphs: [
+          'New Chakra cards have been revealed for the NARUTO Card Game Premium Card Collection Vol.00 — CHAKRA Set, and the artwork looks incredible.',
+          'This premium collection features five Chakra cards starring Naruto, Sasuke, Sakura, Kakashi and Gaara, plus a Naruto Summon card. The set brings together some of the most recognisable characters from the NARUTO universe in a special first collection.',
+        ],
+      },
+      {
+        heading: 'The revealed cards',
+        paragraphs: [
+          'Here is the revealed artwork from the CHAKRA Set. Click any card to zoom in and explore the illustration.',
+        ],
+        cardIds: ['PCC0-C-002', 'PCC0-C-003', 'PCC0-C-004', 'PCC0-C-005', 'PCC0-S-001'],
+      },
+      {
+        heading: 'Official Naruto VS Sasuke Playmat',
+        paragraphs: [
+          'The same product reveal also showcases the Official Playmat — Naruto vs. Sasuke. The playmat features the two rivals facing off in a dynamic blue-and-orange composition and is listed as arriving in 2027.',
+        ],
+        image: {
+          src: '/assets/news/official-playmat-naruto-sasuke.png',
+          alt: 'Official Naruto VS Sasuke NARUTO CARD GAME playmat artwork',
+          width: 642,
+          height: 360,
+        },
+      },
+      {
+        heading: 'Advance-sale merchandise',
+        paragraphs: [
+          'The playmat is presented alongside the Premium Card Collection Vol.00 as advance-sale merchandise for the NARUTO CARD GAME Advance Trial Events and selected BANDAI CARD GAMES Fest 26-27 venues. Further sales details are expected to be announced through the official website and social media.',
+        ],
+        closingNavigation: {
+          before: 'Want to keep exploring ? Discover the full card collection in',
+          firstLabel: 'Cards List',
+          between: 'and follow the latest announcements in',
+          secondLabel: 'News',
+          firstHref: '/cards-list/',
+          secondHref: '/news/',
+          after: '.',
+        },
+      },
+    ],
+    relatedCardIds: [],
+    relatedGuideSlugs: [],
+  },
+  {
+    slug: 'enter-naruto-uzumaki-first-set-revealed',
+    title: '"Here Comes Naruto Uzumaki!" First Set Revealed !',
+    summary: 'The first NARUTO CARD GAME set has a name: ENTER: NARUTO UZUMAKI.',
+    category: 'Card Reveals',
+    publishedAt: '2026-10-11',
+    sourceLabel: 'NARUTO CARD GAME official product reveal',
+    sourceUrl: 'https://www.naruto-cardgame.com/en/welcome/',
+    featured: true,
+    showContents: false,
+    showStandfirst: false,
+    confirmedFacts: [],
+    sections: [
+      {
+        heading: 'The first set has a name',
+        paragraphs: [
+          'The first NARUTO CARD GAME set has a name: "Here Comes Naruto Uzumaki!" This first edition introduces a new collection of artwork featuring iconic characters from across the NARUTO universe, including Naruto, Deidara and Sasuke.',
+          'The reveal gives us an early look at the visual identity of the set, with new illustrations that bring both familiar heroes and formidable opponents to the game.',
+        ],
+        cardIds: ['SAMPLE-22', 'SAMPLE-23', 'SAMPLE-24', 'SAMPLE-25'],
+        closingNavigation: {
+          before: 'Want to keep exploring ? Read the',
+          firstLabel: 'Three Starter Decks reveal',
+          between: 'and discover the full card collection in',
+          secondLabel: 'Cards List',
+          firstHref: '/news/three-starter-decks-revealed-2027/',
+          secondHref: '/cards-list/',
+          after: '.',
+        },
+      },
+    ],
+    relatedCardIds: [],
+    relatedGuideSlugs: [],
+  },
+  {
+    slug: 'three-starter-decks-revealed-2027',
+    title: 'Three Starter Decks Revealed for 2027',
+    summary:
+      'Naruto, Sasuke or Gaara — the first three NARUTO CARD GAME Starter Decks have been revealed for 2027.',
+    category: 'Card Reveals',
+    publishedAt: '2026-10-11',
+    sourceLabel: 'NARUTO CARD GAME official roadmap and reveal information',
+    sourceUrl: 'https://www.naruto-cardgame.com/en/welcome/',
+    featured: true,
+    showContents: false,
+    confirmedFacts: [],
+    sections: [
+      {
+        heading: 'The first three Starter Decks are revealed',
+        paragraphs: [
+          'The first three NARUTO CARD GAME Starter Decks have been revealed, giving new players three iconic ninja to start with. The announcement is the first look at the products planned for the game’s 2027 launch year.',
+          'Starter Deck 01 puts Naruto Uzumaki at the center. Starter Deck 02 features Sasuke Uchiha. Starter Deck 03 is led by Gaara of the Desert. All three decks are coming in 2027, with more product details to follow as they are officially revealed.',
+        ],
+        cardIds: ['SAMPLE-19', 'SAMPLE-20', 'SAMPLE-21'],
+        closingNavigation: {
+          before: 'Want to keep exploring ? Discover the full card collection in',
+          firstLabel: 'Cards List',
+          between: 'and follow the latest announcements in',
+          secondLabel: 'News',
+          firstHref: '/cards-list/',
+          secondHref: '/news/',
+          after: '.',
+        },
+      },
+    ],
+    relatedCardIds: [],
+    relatedGuideSlugs: [],
+  },
 ];
 
 export const roadmapArticles: NewsArticle[] = [
   {
     slug: 'tutorial-sessions-roadmap',
     title: 'Tutorial Sessions: October 2026 to early 2027',
-    summary: 'Bandai’s official roadmap confirms Tutorial Sessions at events around the world from October 2026 into early 2027.',
+    summary:
+      'Bandai’s official roadmap confirms Tutorial Sessions at events around the world from October 2026 into early 2027.',
     category: 'Official News',
     sourceLabel: 'NARUTO CARD GAME Official Website — Roadmap',
     sourceUrl: 'https://www.naruto-cardgame.com/en/welcome/',
@@ -601,12 +755,36 @@ export const roadmapArticles: NewsArticle[] = [
           'These event articles collect the Tutorial Session information currently confirmed on NarutoCardGuide. Open an event article for its local schedule, registration details and any rewards or promotions specifically announced for that event.',
         ],
         eventLinks: [
-          { title: 'New York Comic Con 2026', date: 'October 8–11, 2026', href: '/news/new-york-comic-con-2026-event-information/' },
-          { title: 'PAX Aus 2026', date: 'October 9–11, 2026', href: '/news/pax-aus-2026-event-information/' },
-          { title: 'SPIEL Essen', date: 'October 22–25, 2026', href: '/news/spiel-essen-2026-event-information/' },
-          { title: 'Paris Games Week', date: 'October 22–25, 2026', href: '/news/paris-games-week-2026-event-information/' },
-          { title: 'Lucca Comics & Games', date: 'October 28–November 1, 2026', href: '/news/lucca-comics-games-2026-event-information/' },
-          { title: 'BANDAI CARD GAMES Fest 26-27 in London', date: 'January 15–17, 2027', href: '/news/bandai-card-games-fest-london-2027/' },
+          {
+            title: 'New York Comic Con 2026',
+            date: 'October 8–11, 2026',
+            href: '/news/new-york-comic-con-2026-event-information/',
+          },
+          {
+            title: 'PAX Aus 2026',
+            date: 'October 9–11, 2026',
+            href: '/news/pax-aus-2026-event-information/',
+          },
+          {
+            title: 'SPIEL Essen',
+            date: 'October 22–25, 2026',
+            href: '/news/spiel-essen-2026-event-information/',
+          },
+          {
+            title: 'Paris Games Week',
+            date: 'October 22–25, 2026',
+            href: '/news/paris-games-week-2026-event-information/',
+          },
+          {
+            title: 'Lucca Comics & Games',
+            date: 'October 28–November 1, 2026',
+            href: '/news/lucca-comics-games-2026-event-information/',
+          },
+          {
+            title: 'BANDAI CARD GAMES Fest 26-27 in London',
+            date: 'January 15–17, 2027',
+            href: '/news/bandai-card-games-fest-london-2027/',
+          },
         ],
       },
       {
@@ -623,7 +801,10 @@ export const roadmapArticles: NewsArticle[] = [
           'The currently listed events begin in October 2026 and continue through the London event in January 2027. The roadmap provides the broader early-2027 period, but does not give additional exact Tutorial Session dates.',
         ],
         links: [
-          { label: 'Read the NARUTO CARD GAME Worldwide Release – Summer 2027 article →', href: '/news/naruto-card-game-worldwide-release-summer-2027/' },
+          {
+            label: 'Read the NARUTO CARD GAME Worldwide Release – Summer 2027 article →',
+            href: '/news/naruto-card-game-worldwide-release-summer-2027/',
+          },
         ],
       },
     ],
@@ -633,7 +814,8 @@ export const roadmapArticles: NewsArticle[] = [
   {
     slug: 'naruto-card-game-worldwide-release-summer-2027',
     title: 'NARUTO CARD GAME Worldwide Release – Summer 2027',
-    summary: 'The NARUTO CARD GAME is confirmed for a simultaneous worldwide release in Summer 2027; Bandai has not announced the exact release date yet.',
+    summary:
+      'The NARUTO CARD GAME is confirmed for a simultaneous worldwide release in Summer 2027; Bandai has not announced the exact release date yet.',
     category: 'Official News',
     sourceLabel: 'NARUTO CARD GAME Official Website — Roadmap',
     sourceUrl: 'https://www.naruto-cardgame.com/en/welcome/',
@@ -688,15 +870,15 @@ export const timelineItems: TimelineItem[] = [
   ...news
     .filter((article): article is NewsArticle & { publishedAt: string } => Boolean(article.publishedAt))
     .map((article) => ({
-    id: `news-${article.slug}`,
-    title: article.title,
-    summary: article.summary,
-    type: 'Official news' as const,
-    date: article.publishedAt,
-    dateLabel: article.publishedAt,
-    sourceUrl: article.sourceUrl,
-    articleSlug: article.slug,
-  })),
+      id: `news-${article.slug}`,
+      title: article.title,
+      summary: article.summary,
+      type: 'Official news' as const,
+      date: article.publishedAt,
+      dateLabel: article.publishedAt,
+      sourceUrl: article.sourceUrl,
+      articleSlug: article.slug,
+    })),
   {
     id: 'nycc-2026',
     title: 'New York Comic Con 2026',
@@ -779,6 +961,35 @@ export const timelineItems: TimelineItem[] = [
     articleSlug: 'naruto-card-game-worldwide-release-summer-2027',
   },
 ];
+const pcc0Cards: Card[] = (
+  [
+    ['PCC0-C-002', 'PCC0-C-002.webp', 'CHAKRA', 'Chakra Cards', '/Cards/Chakra cards/'],
+    ['PCC0-C-003', 'PCC0-C-003.webp', 'CHAKRA', 'Chakra Cards', '/Cards/Chakra cards/'],
+    ['PCC0-C-004', 'PCC0-C-004.webp', 'CHAKRA', 'Chakra Cards', '/Cards/Chakra cards/'],
+    ['PCC0-C-005', 'PCC0-C-005.webp', 'CHAKRA', 'Chakra Cards', '/Cards/Chakra cards/'],
+    ['PCC0-S-001', 'PCC0-S-001.webp', 'SUMMON', 'Summon Cards', '/Cards/Summon cards/'],
+  ] as const
+).map(([id, filename, setCode, setName, directory]) => ({
+  id,
+  slug: id.toLowerCase(),
+  name: id,
+  setCode,
+  setName,
+  image: {
+    src: `${directory}${filename}`,
+    alt: `${id} card`,
+    width: 600,
+    height: 838,
+  },
+  confirmedFields: [],
+  updatedAt: '2026-10-11',
+  sourceLabel: 'NarutoCardGuide card archive',
+  sourceUrl: '/cards-list/',
+  printings: [],
+  relatedNewsSlugs: ['premium-card-collection-vol-00-chakra-set-revealed'],
+  relatedGuideSlugs: [],
+}));
+
 const specialCards: Card[] = [
   {
     id: 'C-001',
@@ -842,7 +1053,7 @@ const specialCards: Card[] = [
   },
 ];
 
-export const cards: Card[] = [...n01Cards, ...specialCards];
+export const cards: Card[] = [...n01Cards, ...specialCards, ...pcc0Cards];
 export const guides: Guide[] = [
   {
     slug: 'complete-naruto-card-game-rules',
@@ -929,7 +1140,7 @@ export const guides: Guide[] = [
           },
           {
             text: 'Summon : A card required to play Character cards onto the battlefield.',
-          image: { src: '/Cards/Summon cards/S-001.webp', alt: 'Summon card example' },
+            image: { src: '/Cards/Summon cards/S-001.webp', alt: 'Summon card example' },
           },
         ],
         links: [

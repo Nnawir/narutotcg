@@ -7,34 +7,41 @@ import HeroFloatingCards from '../components/HeroFloatingCards.astro';
 import NewsCard from '../components/NewsCard.astro';
 import { cards, guides, news } from '../data/content';
 
-const featuredNews = news.find((article) => article.featured) ?? news[0];
-const secondaryNews = news.filter((article) => article.slug !== featuredNews?.slug).slice(0, 3);
-const newlyAddedCard = cards.find((card) => card.id === 'CP-001');
-const latestCards = [...cards]
-  .filter((card) => card.revealedAt)
-  .sort((a, b) => (b.revealedAt ?? '').localeCompare(a.revealedAt ?? ''))
-  .slice(0, 6);
-const homeCards = [
-  ...(newlyAddedCard ? [newlyAddedCard] : []),
-  ...latestCards,
-].filter((card, index, allCards) => allCards.findIndex((item) => item.id === card.id) === index);
+const latestNews = [...news].sort((a, b) =>
+  (b.publishedAt ?? '').localeCompare(a.publishedAt ?? ''),
+);
+const featuredNews = latestNews[0];
+const secondaryNews = latestNews.slice(1, 4);
+const featuredCardIds = ['SAMPLE-19', 'SAMPLE-20', 'SAMPLE-21', 'SAMPLE-22'];
+const homeCards = featuredCardIds.flatMap((id) => {
+  const card = cards.find((item) => item.id === id);
+  return card ? [card] : [];
+});
 const beginnerGuides = [...guides].sort((a, b) => a.order - b.order).slice(0, 2);
 ---
 
 <BaseLayout
   title="NarutoCardGuide — Naruto Card Game Resource"
-  description="Confirmed NARUTO CARD GAME news, revealed cards, and beginner guides for players in the United States. Arriving Summer 2027."
+  description="Confirmed NARUTO CARD GAME news, revealed cards, and beginner guides for players in the United States. Arriving June 2027."
   fullTitle
   canonicalPath="/"
 >
   <section class="announcement" aria-label="Release status">
     <div class="shell">
-      <strong>Arriving Summer 2027</strong>
-      <span>No exact release date has been announced.</span>
+      <strong>Arriving June 2027</strong>
+      <span>The NARUTO CARD GAME is scheduled to launch in June 2027.</span>
     </div>
   </section>
 
   <section class="home-hero">
+    <a class="news-promo" href="/news/three-starter-decks-revealed-2027/">
+      <span class="news-promo-badge">New</span>
+      <span class="news-promo-copy">
+        <strong>Three Starter Decks Revealed for 2027</strong>
+        <span>Latest article</span>
+      </span>
+      <span class="news-promo-arrow" aria-hidden="true">→</span>
+    </a>
     <HeroFloatingCards />
     <div class="shell hero-grid">
       <div class="hero-copy">
@@ -94,12 +101,9 @@ const beginnerGuides = [...guides].sort((a, b) => a.order - b.order).slice(0, 2)
   <section class="section shell" aria-labelledby="latest-cards-title">
     <div class="section-heading">
       <div>
-        <p class="eyebrow">New card added</p>
+        <p class="eyebrow">New card reveals</p>
         <h2 id="latest-cards-title">Latest Card Reveals</h2>
-        <p>
-          <strong class="new-card-label">New:</strong> CP-001 is now available in the card archive. Click the card
-          to browse the Cards List.
-        </p>
+        <p>Explore the latest revealed cards from Naruto Card Game. Click any card to browse the Cards List.</p>
       </div>
       {cards.length > 0 && (
         <a class="text-link home-section-link" href="/cards-list/">
@@ -111,7 +115,7 @@ const beginnerGuides = [...guides].sort((a, b) => a.order - b.order).slice(0, 2)
     {homeCards.length > 0 ? (
       <div class="card-grid">
         {homeCards.map((card, index) => (
-          <CardTile card={card} eager={index < 4} href="/cards-list/" />
+          <CardTile card={card} eager={index < 4} href="/cards-list/" showDetails={false} />
         ))}
       </div>
     ) : (
