@@ -3,6 +3,33 @@ import BaseLayout from '../../components/BaseLayout.astro';
 import CardTile from '../../components/CardTile.astro';
 import EmptyState from '../../components/EmptyState.astro';
 import { cards } from '../../data/content';
+
+const starterDeckIds = new Set(['SAMPLE-19', 'SAMPLE-20', 'SAMPLE-21']);
+const firstSetIds = new Set(['SAMPLE-22', 'SAMPLE-23', 'SAMPLE-24', 'SAMPLE-25']);
+const cardSections = [
+  {
+    title: 'Starter Deck',
+    cards: cards.filter((card) => starterDeckIds.has(card.id)),
+  },
+  {
+    title: 'First Set "Here Comes Naruto Uzumaki!"',
+    cards: cards.filter((card) => firstSetIds.has(card.id)),
+  },
+  {
+    title: 'Demo Cards',
+    cards: cards.filter(
+      (card) => card.setCode === 'N01' && !starterDeckIds.has(card.id) && !firstSetIds.has(card.id),
+    ),
+  },
+  {
+    title: 'Chakra Cards',
+    cards: cards.filter((card) => card.setCode === 'CHAKRA'),
+  },
+  {
+    title: 'Summon Cards',
+    cards: cards.filter((card) => card.setCode === 'SUMMON'),
+  },
+];
 ---
 
 <BaseLayout
@@ -36,11 +63,16 @@ import { cards } from '../../data/content';
 
     {cards.length > 0 ? (
       <>
-        <div class="card-grid cards-list-grid" id="card-results">
-          {cards.map((card) => (
-            <CardTile card={card} eager showDetails={false} />
-          ))}
-        </div>
+        {cardSections.map((section, sectionIndex) => (
+          <section class="cards-list-group" aria-labelledby={`cards-section-${sectionIndex}`}>
+            <h2 id={`cards-section-${sectionIndex}`}>{section.title}</h2>
+            <div class="card-grid cards-list-grid" id={sectionIndex === 0 ? 'card-results' : undefined}>
+              {section.cards.map((card) => (
+                <CardTile card={card} eager showDetails={false} />
+              ))}
+            </div>
+          </section>
+        ))}
         <div id="card-no-results" hidden>
           <EmptyState
             title="No cards match your search"

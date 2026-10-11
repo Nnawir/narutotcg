@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../components/BaseLayout.astro';
-import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import CardTile from '../../components/CardTile.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import GuideCard from '../../components/GuideCard.astro';
 import type { NewsArticle } from '../../data/content';
 import { cards, guides, news, roadmapArticles } from '../../data/content';
@@ -62,11 +62,21 @@ const structuredData = [
       items={[{ label: 'Home', href: '/' }, { label: 'News', href: '/news/' }, { label: article.title }]}
     />
     <article>
-      <header class:list={['article-header', { 'news-article-header': Boolean(article.image) }]}>
+      <header
+        class:list={[
+          'article-header',
+          {
+            'news-article-header': Boolean(article.image),
+            'wide-title-header': article.showContents === false,
+          },
+        ]}
+      >
         <div class="article-heading-copy">
           <p class="eyebrow">{article.category}</p>
-          <h1>{article.title}</h1>
-          <p class="article-standfirst">{article.summary}</p>
+          <h1 class:list={{ 'starter-deck-title': article.showContents === false }}>
+            {article.title}
+          </h1>
+          {article.showStandfirst !== false && <p class="article-standfirst">{article.summary}</p>}
           <div class="article-meta">
             {article.publishedAt && (
               <span>
@@ -87,7 +97,7 @@ const structuredData = [
         )}
       </header>
 
-      <div class="article-layout">
+      <div class:list={['article-layout', { 'article-layout-full': article.showContents === false }]}>
         <div class="article-body">
           {article.confirmedFacts.length > 0 && (
             <aside class="key-facts" aria-labelledby="confirmed-title">
@@ -106,6 +116,17 @@ const structuredData = [
               {section.paragraphs.map((paragraph) => (
                 <p>{paragraph}</p>
               ))}
+              {section.image && (
+                <figure class="article-section-image">
+                  <img
+                    src={section.image.src}
+                    alt={section.image.alt}
+                    width={section.image.width}
+                    height={section.image.height}
+                    loading="lazy"
+                  />
+                </figure>
+              )}
               {section.rewards && (
                 <div class="participation-rewards">
                   {section.rewards.map((reward) => (
@@ -130,6 +151,25 @@ const structuredData = [
                   ))}
                 </div>
               )}
+              {section.cardIds && (
+                <div class="card-grid article-card-grid">
+                  {cards
+                    .filter((card) => section.cardIds?.includes(card.id))
+                    .map((card) => <CardTile card={card} showDetails={false} />)}
+                </div>
+              )}
+              {section.closingNavigation && (
+                <p>
+                  {section.closingNavigation.before}{' '}
+                  <a class="text-link article-navigation-link" href={section.closingNavigation.firstHref}>
+                    {section.closingNavigation.firstLabel}
+                  </a>{' '}
+                  {section.closingNavigation.between}{' '}
+                  <a class="text-link article-navigation-link" href={section.closingNavigation.secondHref}>
+                    {section.closingNavigation.secondLabel}
+                  </a>{section.closingNavigation.after}
+                </p>
+              )}
               {section.eventLinks && (
                 <div class="event-link-grid">
                   {section.eventLinks.map((event) => (
@@ -151,7 +191,7 @@ const structuredData = [
 
         </div>
 
-        {article.sections.length >= 3 && (
+        {article.showContents !== false && article.sections.length >= 3 && (
           <aside class="article-aside">
             <h2>On this page</h2>
             <nav aria-label="Article contents">
