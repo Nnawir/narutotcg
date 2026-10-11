@@ -442,7 +442,7 @@ h3 {
 .home-hero h1 {
   max-width: 45rem;
   margin: 0 auto 1.3rem;
-  font-size: clamp(2.2rem, 4.5vw, 4.25rem);
+  font-size: clamp(2rem, 3.5vw, 3.4rem);
   font-weight: 740;
   letter-spacing: -0.055em;
 }
@@ -1711,7 +1711,7 @@ h3 {
 .section-heading h2 {
   position: relative;
   margin-bottom: 0.65rem;
-  font-size: clamp(1.75rem, 3vw, 2.6rem);
+  font-size: clamp(1.5rem, 2.5vw, 2.2rem);
 }
 .section-heading h2::after {
   display: block;
@@ -1754,7 +1754,7 @@ h3 {
 .home-seo h2 {
   max-width: 45rem;
   margin-bottom: 1.25rem;
-  font-size: clamp(1.75rem, 3vw, 2.6rem);
+  font-size: clamp(1.5rem, 2.5vw, 2.2rem);
 }
 .home-seo > p:not(.eyebrow) {
   max-width: 56rem;
@@ -1797,6 +1797,39 @@ h3 {
   display: grid;
   gap: 1rem;
 }
+.news-home-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  align-items: stretch;
+  margin-inline: auto;
+}
+.news-home-grid .news-card {
+  height: 100%;
+}
+.news-home-grid .news-card > a {
+  grid-template-columns: 1fr;
+  height: 100%;
+  min-height: 0;
+}
+.news-home-grid .news-copy {
+  grid-template-rows: auto auto 1fr auto;
+  min-height: 0;
+  gap: 0.65rem;
+  padding: 1.25rem 1.5rem 1.4rem;
+}
+.news-home-grid .news-copy h3 {
+  font-size: clamp(1.15rem, 1.6vw, 1.5rem);
+}
+.news-home-grid .news-copy .card-action {
+  align-self: end;
+  margin-top: 0.75rem;
+}
+.news-view-more-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
 .card-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1811,6 +1844,10 @@ h3 {
 }
 .cards-list-grid .card-image img {
   object-fit: contain;
+}
+.home-card-grid {
+  width: 80%;
+  margin-inline: auto;
 }
 .cards-list-group + .cards-list-group {
   margin-top: clamp(2.5rem, 5vw, 4.5rem);
@@ -1938,14 +1975,26 @@ h3 {
   padding-top: clamp(2.5rem, 5vw, 5rem);
   padding-bottom: clamp(1.375rem, 2.5vw, 2.25rem);
 }
+.deck-guides-hero {
+  padding-bottom: clamp(1rem, 2vw, 1.75rem);
+}
+.deck-guides-section {
+  padding-top: clamp(2rem, 4vw, 3.5rem);
+}
 .cards-list-section {
   padding-top: clamp(2rem, 4vw, 3.5rem);
 }
 .page-hero h1 {
   max-width: 52rem;
   margin-bottom: 1rem;
-  font-size: clamp(2.55rem, 6vw, 5rem);
+  font-size: clamp(1.8rem, 3.8vw, 3.1rem);
   text-shadow: 0.08em 0.08em 0 rgb(199 71 61 / 0.16);
+}
+.news-hero h1 {
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+}
+.news-hero + .official-news {
+  padding-top: clamp(2.25rem, 4vw, 3.5rem);
 }
 .roadmap-jump {
   display: inline-flex;
@@ -1970,7 +2019,7 @@ h3 {
   scroll-margin-top: 1.5rem;
 }
 .page-hero .card-list-title {
-  font-size: clamp(2.4rem, 4vw, 3.6rem);
+  font-size: clamp(1.8rem, 3.1vw, 2.6rem);
 }
 .page-hero .card-list-eyebrow,
 .guide-article-header .card-list-eyebrow {
@@ -2151,15 +2200,15 @@ h3 {
 
 .news-card > a {
   display: grid;
-  grid-template-columns: clamp(14rem, 22vw, 18rem) minmax(0, 1fr);
-  min-height: clamp(14rem, 22vw, 18rem);
+  grid-template-columns: clamp(14rem, 19vw, 20rem) minmax(0, 1fr);
+  min-height: clamp(14rem, 19vw, 20rem);
   overflow: hidden;
 }
 .news-image {
   position: relative;
   display: block;
-  width: clamp(14rem, 22vw, 18rem);
-  height: clamp(14rem, 22vw, 18rem);
+  width: clamp(14rem, 19vw, 20rem);
+  height: clamp(14rem, 19vw, 20rem);
   overflow: hidden;
   border-right: 1px solid var(--border);
   background: var(--surface-elevated);
@@ -2202,34 +2251,42 @@ h3 {
   align-content: start;
   gap: 0.9rem;
   min-width: 0;
-  min-height: clamp(14rem, 22vw, 18rem);
-  padding: clamp(1.3rem, 3vw, 2.2rem);
+  min-height: clamp(14rem, 19vw, 20rem);
+  padding: clamp(1.15rem, 2.2vw, 2.2rem);
 }
 .news-copy h3 {
   margin: 0;
-  font-size: clamp(1.35rem, 2vw, 2rem);
+  font-size: clamp(1.25rem, 2vw, 2.1rem);
 }
 .news-copy .card-action {
   align-self: end;
 }
 .news-card.featured.has-image > a {
-  grid-template-columns: clamp(14rem, 22vw, 18rem) minmax(0, 1fr);
+  grid-template-columns: clamp(14rem, 19vw, 20rem) minmax(0, 1fr);
 }
 .news-card.featured .news-image {
   border-right: 1px solid var(--border);
 }
 .news-card.featured .news-copy {
-  padding: clamp(1.3rem, 3vw, 2.2rem);
+  padding: clamp(1.15rem, 2.2vw, 2.2rem);
 }
 .news-card.featured h3 {
-  font-size: clamp(1.35rem, 2vw, 2rem);
+  font-size: clamp(1.25rem, 2vw, 2.1rem);
 }
 
-.news-grid,
-.guide-grid {
+.news-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 1rem;
+}
+.guide-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+.home-guide-grid {
+  width: 80%;
+  margin-inline: auto;
 }
 .news-load-more-wrap {
   display: flex;
@@ -2477,7 +2534,7 @@ h3 {
 .deck-guide-detail-copy h1 {
   max-width: 42rem;
   margin-bottom: 1.25rem;
-  font-size: clamp(2.4rem, 4vw, 3.6rem);
+  font-size: clamp(1.8rem, 3.1vw, 2.6rem);
 }
 .deck-guide-detail-copy .article-standfirst {
   max-width: 43rem;
@@ -3160,13 +3217,13 @@ h3 {
 }
 .article-header h1 {
   margin-bottom: 1.2rem;
-  font-size: clamp(2.4rem, 6vw, 4.9rem);
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
 }
 .article-header h1.starter-deck-title {
-  font-size: clamp(2.4rem, 4vw, 3.6rem);
+  font-size: clamp(1.8rem, 3.1vw, 2.5rem);
 }
 .guide-article-header h1.card-list-title {
-  font-size: clamp(2.4rem, 4vw, 3.6rem);
+  font-size: clamp(1.8rem, 3.1vw, 2.5rem);
 }
 .article-standfirst {
   color: var(--text-secondary);
@@ -3225,6 +3282,22 @@ h3 {
   display: block;
   width: 100%;
   height: auto;
+}
+
+/* Keep News article typography and card collections compact and easy to scan. */
+.news-article-shell .article-header h1 {
+  font-size: clamp(1.8rem, 3.1vw, 2.8rem);
+}
+.news-article-shell .article-body h2 {
+  font-size: clamp(1.35rem, 2.2vw, 1.8rem);
+}
+.news-article-shell .article-card-grid {
+  width: min(100%, 36rem);
+  gap: clamp(0.7rem, 1.8vw, 1.1rem);
+}
+.news-article-shell .news-first-set-card-grid {
+  width: min(100%, 46rem);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 .participation-rewards {
   display: grid;
@@ -3673,6 +3746,9 @@ h3 {
 .beginner-guides-about {
   max-width: 62rem;
 }
+.beginner-guides-section .guide-grid {
+  max-width: 60rem;
+}
 .beginner-guides-about > p {
   max-width: 56rem;
   color: var(--text-secondary);
@@ -3913,7 +3989,6 @@ h3 {
   .site-footer nav {
     justify-content: flex-start;
   }
-  .news-grid,
   .guide-grid,
   .deck-guide-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -3950,6 +4025,9 @@ h3 {
     width: 100%;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0.7rem;
+  }
+  .news-article-shell .news-first-set-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .header-row {
     padding-inline: 0.5rem;
@@ -3993,24 +4071,27 @@ h3 {
   .card-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+  .home-card-grid {
+    width: 100%;
+  }
   .footer-bottom {
     display: grid;
   }
   .news-card > a,
   .news-card.featured.has-image > a {
     grid-template-columns: 1fr;
+    min-height: 0;
   }
   .news-image,
   .news-card.featured .news-image {
-    width: 100%;
-    height: auto;
-    border-right: 0;
-    border-bottom: 1px solid var(--border);
-    aspect-ratio: 1 / 1;
+    display: none;
   }
   .news-card > a,
   .news-copy {
     min-height: 0;
+  }
+  .news-copy {
+    padding: 1rem;
   }
   .filter-toolbar {
     display: block;
@@ -4019,9 +4100,13 @@ h3 {
     margin-top: 1rem;
   }
   .news-grid,
+  .news-home-grid,
   .guide-grid,
   .deck-guide-grid {
     grid-template-columns: 1fr;
+  }
+  .home-guide-grid {
+    width: 100%;
   }
   .timeline-heading {
     display: block;

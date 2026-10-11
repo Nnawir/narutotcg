@@ -2,8 +2,8 @@
 import type { NewsArticle } from '../data/content';
 import { formatDate } from '../lib/format';
 
-type Props = { article: NewsArticle; featured?: boolean };
-const { article, featured = false } = Astro.props;
+type Props = { article: NewsArticle; featured?: boolean; showImage?: boolean };
+const { article, featured = false, showImage = true } = Astro.props;
 const cardImage = article.image ?? {
   src: '/assets/visuals/chakra-ink-news.webp',
   alt: 'NARUTO CARD GAME news artwork',
@@ -13,27 +13,29 @@ const cardImage = article.image ?? {
 ---
 
 <article
-  class:list={['news-card', { featured, 'has-image': true }]}
+  class:list={['news-card', { featured, 'has-image': showImage }]}
   data-news-card
   data-category={article.category}
 >
   <a href={`/news/${article.slug}/`}>
-    <span
-      class:list={['news-image', { 'news-image-overlay': Boolean(article.imageOverlayText) }]}
-      style={`--image-ratio: ${cardImage.width} / ${cardImage.height}`}
-    >
-      <img
-        class:list={{ 'news-image-background': Boolean(article.imageOverlayText) }}
-        src={cardImage.src}
-        alt={article.imageOverlayText ? '' : cardImage.alt}
-        aria-hidden={article.imageOverlayText ? 'true' : undefined}
-        width={cardImage.width}
-        height={cardImage.height}
-        loading={featured ? 'eager' : 'lazy'}
-        decoding="async"
-      />
-      {article.imageOverlayText && <span class="news-image-overlay-text">{article.imageOverlayText}</span>}
-    </span>
+    {showImage && (
+      <span
+        class:list={['news-image', { 'news-image-overlay': Boolean(article.imageOverlayText) }]}
+        style={`--image-ratio: ${cardImage.width} / ${cardImage.height}`}
+      >
+        <img
+          class:list={{ 'news-image-background': Boolean(article.imageOverlayText) }}
+          src={cardImage.src}
+          alt={article.imageOverlayText ? '' : cardImage.alt}
+          aria-hidden={article.imageOverlayText ? 'true' : undefined}
+          width={cardImage.width}
+          height={cardImage.height}
+          loading={featured ? 'eager' : 'lazy'}
+          decoding="async"
+        />
+        {article.imageOverlayText && <span class="news-image-overlay-text">{article.imageOverlayText}</span>}
+      </span>
+    )}
     <span class="news-copy">
       <span class="meta-row">
         <span>{article.category}</span>

@@ -9,9 +9,7 @@ import { cards, guides, news } from '../data/content';
 
 const latestNews = [...news].sort((a, b) =>
   (b.publishedAt ?? '').localeCompare(a.publishedAt ?? ''),
-);
-const featuredNews = latestNews[0];
-const secondaryNews = latestNews.slice(1, 4);
+).slice(0, 2);
 const featuredCardIds = ['SAMPLE-19', 'SAMPLE-20', 'SAMPLE-21', 'SAMPLE-22'];
 const homeCards = featuredCardIds.flatMap((id) => {
   const card = cards.find((item) => item.id === id);
@@ -80,15 +78,17 @@ const beginnerGuides = [...guides].sort((a, b) => a.order - b.order).slice(0, 2)
       )}
     </div>
 
-    {featuredNews ? (
-      <div class="news-layout">
-        <NewsCard article={featuredNews} featured />
-        <div class="news-secondary">
-          {secondaryNews.map((article) => (
-            <NewsCard article={article} />
+    {latestNews.length > 0 ? (
+      <>
+        <div class="news-home-grid">
+          {latestNews.map((article) => (
+            <NewsCard article={article} showImage={false} />
           ))}
         </div>
-      </div>
+        <div class="news-view-more-wrap">
+          <a class="button secondary" href="/news/">View More</a>
+        </div>
+      </>
     ) : (
       <EmptyState
         eyebrow="Newsroom ready"
@@ -113,7 +113,7 @@ const beginnerGuides = [...guides].sort((a, b) => a.order - b.order).slice(0, 2)
     </div>
 
     {homeCards.length > 0 ? (
-      <div class="card-grid">
+      <div class="card-grid home-card-grid">
         {homeCards.map((card, index) => (
           <CardTile card={card} eager={index < 4} href="/cards-list/" showDetails={false} />
         ))}
@@ -136,7 +136,7 @@ const beginnerGuides = [...guides].sort((a, b) => a.order - b.order).slice(0, 2)
       </div>
       <a class="text-link home-section-link" href="/beginner-guides/">Start learning</a>
     </div>
-    <div class="guide-grid">
+    <div class="guide-grid home-guide-grid">
       {beginnerGuides.map((guide) => <GuideCard guide={guide} />)}
     </div>
   </section>
