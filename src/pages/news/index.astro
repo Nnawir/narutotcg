@@ -14,15 +14,12 @@ const sortedNews = [...news].sort((a, b) => (b.publishedAt ?? '').localeCompare(
 >
   <header class="page-hero shell news-hero">
     <p class="eyebrow">Verified reporting</p>
-    <h1>News &amp; roadmap</h1>
+    <h1>News &amp; Roadmap</h1>
+    <a class="roadmap-jump" href="#roadmap">Roadmap <span aria-hidden="true">↓</span></a>
     <p>
       Follow the official NARUTO CARD GAME calendar. Every item links back to Bandai’s official information.
     </p>
   </header>
-
-  <div class="shell">
-    <NewsTimeline items={timelineItems} />
-  </div>
 
   <section class="section shell official-news" aria-labelledby="official-news-title">
     <div class="section-heading">
@@ -32,10 +29,67 @@ const sortedNews = [...news].sort((a, b) => (b.publishedAt ?? '').localeCompare(
       </div>
       <p>Publication dates are distinct from the event dates shown above.</p>
     </div>
-    <div class="news-grid">
+    <div class="news-grid" id="official-news-grid">
       {sortedNews.map((article) => (
         <NewsCard article={article} />
       ))}
     </div>
+    {sortedNews.length > 4 && (
+      <div class="news-load-more-wrap">
+        <button class="button secondary news-load-more" type="button" data-news-load-more aria-controls="official-news-grid">
+          More
+        </button>
+      </div>
+    )}
+  </section>
+
+  <div class="shell roadmap-section" id="roadmap">
+    <NewsTimeline items={timelineItems} />
+  </div>
+
+  <section class="section shell news-about" aria-labelledby="about-news-title">
+    <div class="section-heading">
+      <div>
+        <h2 id="about-news-title">About News</h2>
+      </div>
+    </div>
+    <p>
+      This page brings together the latest official NARUTO CARD GAME announcements, card reveals,
+      product updates, and event information in one place. Follow each article to see what has been
+      confirmed and how the game is taking shape.
+    </p>
+    <p>
+      When a new card is revealed, continue exploring the full collection in the{' '}
+      <a href="/cards-list/">Cards List</a>, then visit the{' '}
+      <a href="/deck-guides/">Deck Guides</a> to see how the cards can come together in play.
+    </p>
+    <p>
+      If you are discovering the game for the first time, the{' '}
+      <a href="/beginner-guides/">Beginner Guides</a> offer a clear path through the rules and
+      essential terminology before you start building your own deck.
+    </p>
   </section>
 </BaseLayout>
+
+<script>
+  const newsGrid = document.querySelector<HTMLElement>('.official-news .news-grid');
+  const loadMoreButton = document.querySelector<HTMLButtonElement>('[data-news-load-more]');
+  const newsCards = newsGrid ? [...newsGrid.querySelectorAll<HTMLElement>('[data-news-card]')] : [];
+  const batchSize = 4;
+  let visibleCount = batchSize;
+
+  const updateNewsVisibility = () => {
+    newsCards.forEach((card, index) => {
+      card.hidden = index >= visibleCount;
+    });
+    if (loadMoreButton) {
+      loadMoreButton.hidden = visibleCount >= newsCards.length;
+    }
+  };
+
+  updateNewsVisibility();
+  loadMoreButton?.addEventListener('click', () => {
+    visibleCount += batchSize;
+    updateNewsVisibility();
+  });
+</script>

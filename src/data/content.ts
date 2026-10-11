@@ -22,6 +22,7 @@ export type NewsArticle = {
   showContents?: boolean;
   showStandfirst?: boolean;
   image?: ImageAsset;
+  imageOverlayText?: string;
   confirmedFacts: string[];
   sections: Array<{
     heading: string;
@@ -207,6 +208,13 @@ const n01Cards: Card[] = (
   relatedGuideSlugs: [],
 }));
 
+const bandaiEventsImage: ImageAsset = {
+  src: '/assets/visuals/naruto-tcg-bandai-events.webp',
+  alt: 'Naruto and Sasuke featured in NARUTO CARD GAME event artwork',
+  width: 500,
+  height: 500,
+};
+
 export const news: NewsArticle[] = [
   {
     slug: 'spiel-essen-2026-event-information',
@@ -217,6 +225,7 @@ export const news: NewsArticle[] = [
     sourceLabel: 'NARUTO CARD GAME Official Website — SPIEL Essen Event Information',
     sourceUrl: 'https://www.naruto-cardgame.com/en/news/spielessen-2026.php',
     featured: true,
+    image: bandaiEventsImage,
     confirmedFacts: [
       'SPIEL Essen runs from October 22 to 25, 2026.',
       'The event is at Messe Essen, Germany.',
@@ -294,6 +303,7 @@ export const news: NewsArticle[] = [
     sourceLabel: 'NARUTO CARD GAME Official Website — Paris Games Week Event Information',
     sourceUrl: 'https://www.naruto-cardgame.com/en/news/parisgamesweek-2026.php',
     featured: false,
+    image: bandaiEventsImage,
     confirmedFacts: [
       'Paris Games Week runs from October 22 to 25, 2026.',
       'The event is at Paris Expo Porte de Versailles, France.',
@@ -371,6 +381,7 @@ export const news: NewsArticle[] = [
     sourceLabel: 'NARUTO CARD GAME Official Website — Lucca Comics & Games Event Information',
     sourceUrl: 'https://www.naruto-cardgame.com/en/news/lucca-2026.php',
     featured: false,
+    image: bandaiEventsImage,
     confirmedFacts: [
       'Lucca Comics & Games runs from October 28 to November 1, 2026.',
       'The event is at Piazza Santa Maria, Lucca, Italy.',
@@ -430,6 +441,7 @@ export const news: NewsArticle[] = [
     sourceLabel: 'NARUTO CARD GAME Official Website — BANDAI CARD GAMES Fest 26-27 in LONDON',
     sourceUrl: 'https://www.naruto-cardgame.com/en/news/bcgfes26-27-london.php',
     featured: false,
+    image: bandaiEventsImage,
     confirmedFacts: [
       'The event dates are January 15 to 17, 2027.',
       'The venue is ExCeL London.',
@@ -470,6 +482,7 @@ export const news: NewsArticle[] = [
     sourceLabel: 'NARUTO CARD GAME Official Website — New York Comic Con 2026 Event Information',
     sourceUrl: 'https://www.naruto-cardgame.com/en/news/nycc-2026.php',
     featured: false,
+    image: bandaiEventsImage,
     confirmedFacts: [
       'New York Comic Con runs from October 8 to 11, 2026.',
       'The NARUTO CARD GAME booth is #2705 at the Javits Center.',
@@ -538,6 +551,7 @@ export const news: NewsArticle[] = [
     sourceLabel: 'NARUTO CARD GAME Official Website — PAX Aus 2026 Event Information',
     sourceUrl: 'https://www.naruto-cardgame.com/en/news/paxaus-2026.php',
     featured: false,
+    image: bandaiEventsImage,
     confirmedFacts: [
       'PAX Aus runs from October 9 to 11, 2026.',
       'The event takes place at the Melbourne Convention and Exhibition Centre.',
@@ -607,6 +621,13 @@ export const news: NewsArticle[] = [
     sourceLabel: 'NARUTO CARD GAME official product reveal',
     sourceUrl: 'https://www.naruto-cardgame.com/en/welcome/',
     featured: true,
+    image: {
+      src: '/Cards/Summon cards/PCC0-S-001.webp',
+      alt: 'PCC0-S-001 NARUTO CARD GAME Summon card artwork',
+      width: 600,
+      height: 838,
+    },
+    imageOverlayText: 'Premium Cards Revealed!',
     showContents: false,
     showStandfirst: false,
     confirmedFacts: [],
@@ -665,6 +686,13 @@ export const news: NewsArticle[] = [
     sourceLabel: 'NARUTO CARD GAME official product reveal',
     sourceUrl: 'https://www.naruto-cardgame.com/en/welcome/',
     featured: true,
+    image: {
+      src: '/Cards/N01/SAMPLE-23.webp',
+      alt: 'SAMPLE-23 Naruto Card Game artwork',
+      width: 480,
+      height: 670,
+    },
+    imageOverlayText: 'First Set Revealed!',
     showContents: false,
     showStandfirst: false,
     confirmedFacts: [],
@@ -700,6 +728,13 @@ export const news: NewsArticle[] = [
     sourceLabel: 'NARUTO CARD GAME official roadmap and reveal information',
     sourceUrl: 'https://www.naruto-cardgame.com/en/welcome/',
     featured: true,
+    image: {
+      src: '/Cards/N01/SAMPLE-19.webp',
+      alt: 'SAMPLE-19 Naruto Starter Deck card artwork',
+      width: 480,
+      height: 670,
+    },
+    imageOverlayText: 'New Starter Decks!',
     showContents: false,
     confirmedFacts: [],
     sections: [

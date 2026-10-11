@@ -4,26 +4,36 @@ import { formatDate } from '../lib/format';
 
 type Props = { article: NewsArticle; featured?: boolean };
 const { article, featured = false } = Astro.props;
+const cardImage = article.image ?? {
+  src: '/assets/visuals/chakra-ink-news.webp',
+  alt: 'NARUTO CARD GAME news artwork',
+  width: 1664,
+  height: 936,
+};
 ---
 
 <article
-  class:list={['news-card', { featured, 'has-image': Boolean(article.image) }]}
+  class:list={['news-card', { featured, 'has-image': true }]}
   data-news-card
   data-category={article.category}
 >
   <a href={`/news/${article.slug}/`}>
-    {article.image && (
-      <span class="news-image" style={`--image-ratio: ${article.image.width} / ${article.image.height}`}>
-        <img
-          src={article.image.src}
-          alt={article.image.alt}
-          width={article.image.width}
-          height={article.image.height}
-          loading={featured ? 'eager' : 'lazy'}
-          decoding="async"
-        />
-      </span>
-    )}
+    <span
+      class:list={['news-image', { 'news-image-overlay': Boolean(article.imageOverlayText) }]}
+      style={`--image-ratio: ${cardImage.width} / ${cardImage.height}`}
+    >
+      <img
+        class:list={{ 'news-image-background': Boolean(article.imageOverlayText) }}
+        src={cardImage.src}
+        alt={article.imageOverlayText ? '' : cardImage.alt}
+        aria-hidden={article.imageOverlayText ? 'true' : undefined}
+        width={cardImage.width}
+        height={cardImage.height}
+        loading={featured ? 'eager' : 'lazy'}
+        decoding="async"
+      />
+      {article.imageOverlayText && <span class="news-image-overlay-text">{article.imageOverlayText}</span>}
+    </span>
     <span class="news-copy">
       <span class="meta-row">
         <span>{article.category}</span>
