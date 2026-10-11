@@ -1947,6 +1947,28 @@ h3 {
   font-size: clamp(2.55rem, 6vw, 5rem);
   text-shadow: 0.08em 0.08em 0 rgb(199 71 61 / 0.16);
 }
+.roadmap-jump {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 1.35rem;
+  border: 1px solid rgb(210 195 170 / 0.62);
+  border-radius: 999px;
+  padding: 0.65rem 1.05rem;
+  background: rgb(210 195 170 / 0.12);
+  color: var(--beige);
+  font-size: 0.88rem;
+  font-weight: 750;
+  text-decoration: none;
+}
+.roadmap-jump:hover {
+  border-color: var(--beige);
+  background: rgb(210 195 170 / 0.2);
+  color: var(--text-primary);
+}
+.roadmap-section {
+  scroll-margin-top: 1.5rem;
+}
 .page-hero .card-list-title {
   font-size: clamp(2.4rem, 4vw, 3.6rem);
 }
@@ -2129,13 +2151,17 @@ h3 {
 
 .news-card > a {
   display: grid;
+  grid-template-columns: clamp(14rem, 22vw, 18rem) minmax(0, 1fr);
+  min-height: clamp(14rem, 22vw, 18rem);
   overflow: hidden;
 }
 .news-image {
+  position: relative;
   display: block;
-  aspect-ratio: var(--image-ratio);
+  width: clamp(14rem, 22vw, 18rem);
+  height: clamp(14rem, 22vw, 18rem);
   overflow: hidden;
-  border-bottom: 1px solid var(--border);
+  border-right: 1px solid var(--border);
   background: var(--surface-elevated);
 }
 .news-image img {
@@ -2143,38 +2169,75 @@ h3 {
   height: 100%;
   object-fit: cover;
 }
+.news-image-overlay::after {
+  position: absolute;
+  inset: 0;
+  background: rgb(4 5 9 / 0.38);
+  content: '';
+  pointer-events: none;
+}
+.news-image-overlay .news-image-background {
+  transform: scale(1.1);
+  filter: blur(3px);
+  opacity: 0.86;
+}
+.news-image-overlay-text {
+  position: absolute;
+  z-index: 1;
+  inset: 50% 0.75rem auto;
+  max-width: calc(100% - 1.5rem);
+  transform: translateY(-50%);
+  color: var(--text-primary);
+  font-family: 'Trebuchet MS', ui-sans-serif, sans-serif;
+  font-size: clamp(1.05rem, 1.65vw, 1.75rem);
+  font-style: italic;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  text-align: center;
+  text-shadow: 0 0.15rem 0.8rem rgb(0 0 0 / 0.75);
+}
 .news-copy {
   display: grid;
   align-content: start;
   gap: 0.9rem;
-  padding: 1.3rem;
+  min-width: 0;
+  min-height: clamp(14rem, 22vw, 18rem);
+  padding: clamp(1.3rem, 3vw, 2.2rem);
 }
 .news-copy h3 {
   margin: 0;
-  font-size: 1.35rem;
+  font-size: clamp(1.35rem, 2vw, 2rem);
 }
 .news-copy .card-action {
   align-self: end;
 }
 .news-card.featured.has-image > a {
-  grid-template-columns: minmax(0, 1.08fr) minmax(17rem, 0.92fr);
+  grid-template-columns: clamp(14rem, 22vw, 18rem) minmax(0, 1fr);
 }
 .news-card.featured .news-image {
   border-right: 1px solid var(--border);
-  border-bottom: 0;
 }
 .news-card.featured .news-copy {
-  padding: clamp(1.5rem, 4vw, 2.5rem);
+  padding: clamp(1.3rem, 3vw, 2.2rem);
 }
 .news-card.featured h3 {
-  font-size: clamp(1.7rem, 3.2vw, 2.7rem);
+  font-size: clamp(1.35rem, 2vw, 2rem);
 }
 
 .news-grid,
 .guide-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: 1rem;
+}
+.news-load-more-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+.news-load-more[hidden] {
+  display: none;
 }
 .deck-guide-grid {
   display: grid;
@@ -3621,9 +3684,23 @@ h3 {
 .beginner-guides-about a {
   color: var(--accent);
   font-weight: 700;
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.16em;
+  text-decoration: none;
+}
+.news-about {
+  max-width: none;
+}
+.news-about > p {
+  max-width: 56rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+}
+.news-about > p + p {
+  margin-top: 1.2rem;
+}
+.news-about a {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
 }
 .key-facts,
 .callout {
@@ -3919,12 +3996,21 @@ h3 {
   .footer-bottom {
     display: grid;
   }
+  .news-card > a,
   .news-card.featured.has-image > a {
     grid-template-columns: 1fr;
   }
+  .news-image,
   .news-card.featured .news-image {
+    width: 100%;
+    height: auto;
     border-right: 0;
     border-bottom: 1px solid var(--border);
+    aspect-ratio: 1 / 1;
+  }
+  .news-card > a,
+  .news-copy {
+    min-height: 0;
   }
   .filter-toolbar {
     display: block;
