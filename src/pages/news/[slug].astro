@@ -57,7 +57,7 @@ const structuredData = [
   canonicalPath={`/news/${article.slug}/`}
   structuredData={structuredData}
 >
-  <div class="shell article-shell">
+  <div class="shell article-shell news-article-shell">
     <Breadcrumbs
       items={[{ label: 'Home', href: '/' }, { label: 'News', href: '/news/' }, { label: article.title }]}
     />
@@ -66,7 +66,6 @@ const structuredData = [
         class:list={[
           'article-header',
           {
-            'news-article-header': Boolean(article.image),
             'wide-title-header': article.showContents === false,
           },
         ]}
@@ -90,11 +89,6 @@ const structuredData = [
             )}
           </div>
         </div>
-        {article.image && (
-          <figure class="article-header-image">
-            <img src={article.image.src} alt={article.image.alt} width={article.image.width} height={article.image.height} />
-          </figure>
-        )}
       </header>
 
       <div class:list={['article-layout', { 'article-layout-full': article.showContents === false }]}>
@@ -152,7 +146,13 @@ const structuredData = [
                 </div>
               )}
               {section.cardIds && (
-                <div class="card-grid article-card-grid">
+                <div
+                  class:list={[
+                    'card-grid',
+                    'article-card-grid',
+                    { 'news-first-set-card-grid': section.cardIds.length === 4 },
+                  ]}
+                >
                   {cards
                     .filter((card) => section.cardIds?.includes(card.id))
                     .map((card) => <CardTile card={card} showDetails={false} />)}
