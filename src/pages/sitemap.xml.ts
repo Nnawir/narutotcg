@@ -10,7 +10,7 @@ const urls = [
   '/beginner-guides/',
   '/deck-guides/',
   '/legal-notice-and-privacy/',
-  ...sets.map((set) => `/cards-list/${set.slug}/`),
+  ...sets.filter((set) => set.slug !== 'n01').map((set) => `/cards-list/${set.slug}/`),
   ...guides.map((guide) => `/beginner-guides/${guide.slug}/`),
   ...deckGuides.map((guide) => `/deck-guides/${guide.slug}/`),
   ...[...news, ...roadmapArticles].map((article) => `/news/${article.slug}/`),

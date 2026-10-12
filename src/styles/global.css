@@ -3746,18 +3746,35 @@ h3 {
 .beginner-guides-about {
   max-width: 62rem;
 }
+.cards-list-about {
+  max-width: none;
+}
 .beginner-guides-section .guide-grid {
   max-width: 60rem;
 }
-.beginner-guides-about > p {
+.beginner-guides-next-step {
+  max-width: 56rem;
+  margin-top: 1.8rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+}
+.beginner-guides-next-step a {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+.beginner-guides-about > p,
+.cards-list-about > p {
   max-width: 56rem;
   color: var(--text-secondary);
   line-height: 1.75;
 }
-.beginner-guides-about > p + p {
+.beginner-guides-about > p + p,
+.cards-list-about > p + p {
   margin-top: 1.2rem;
 }
-.beginner-guides-about a {
+.beginner-guides-about a,
+.cards-list-about a {
   color: var(--accent);
   font-weight: 700;
   text-decoration: none;
