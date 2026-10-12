@@ -1,9 +1,9 @@
 name = "naruto-card-guide-simulator"
-main = "workers/src/index.ts"
+main = "src/index.ts"
 compatibility_date = "2026-09-24"
 
 [alias]
-"@tcg-engines/naruto-cards" = "./vendor/tcg-engines/submodules/naruto/packages/cards/src/index.ts"
+"@tcg-engines/naruto-cards" = "../vendor/tcg-engines/submodules/naruto/packages/cards/src/index.ts"
 
 [[durable_objects.bindings]]
 name = "MATCHMAKER"
@@ -23,4 +23,4 @@ new_sqlite_classes = ["Matchmaker", "GameRoom"]
 # binding = "MATCH_RESULTS"
 # database_name = "naruto-simulator-results"
 # database_id = "<replace-with-d1-database-id>"
-# migrations_dir = "workers/migrations"
+# migrations_dir = "migrations"
