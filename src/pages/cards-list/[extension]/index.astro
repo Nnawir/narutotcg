@@ -6,7 +6,9 @@ import type { CardSet } from '../../../data/content';
 import { cards, sets } from '../../../data/content';
 
 export function getStaticPaths() {
-  return sets.map((set) => ({ params: { extension: set.slug }, props: { set } }));
+  return sets
+    .filter((set) => set.slug !== 'n01')
+    .map((set) => ({ params: { extension: set.slug }, props: { set } }));
 }
 
 const { set } = Astro.props as { set: CardSet };

@@ -5,4 +5,5 @@ Disallow: /simulator/
 Disallow: /tournaments-decklists/
 Disallow: /meta-analysis/
 Disallow: /banlist/
+Disallow: /cdn-cgi/
 Sitemap: https://narutocardguide.com/sitemap.xml

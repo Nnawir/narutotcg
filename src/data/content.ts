@@ -434,7 +434,7 @@ export const news: NewsArticle[] = [
   },
   {
     slug: 'bandai-card-games-fest-london-2027',
-    title: 'BANDAI CARD GAMES Fest 26-27 in LONDON has been announced.',
+    title: 'BANDAI CARD GAMES Fest London 2027',
     summary: 'Bandai announced a London BANDAI CARD GAMES Fest with a NARUTO CARD GAME Tutorial Session.',
     category: 'Events',
     publishedAt: '2026-08-28',
@@ -613,7 +613,7 @@ export const news: NewsArticle[] = [
   },
   {
     slug: 'premium-card-collection-vol-00-chakra-set-revealed',
-    title: 'Premium Card Collection Vol.00 and Official Naruto VS Sasuke Playmat Revealed !',
+    title: 'NARUTO Card Collection Vol.00 Revealed',
     summary:
       'The NARUTO Card Game Premium Card Collection Vol.00 — CHAKRA Set reveals five Chakra cards and a Naruto Summon card.',
     category: 'Card Reveals',
@@ -1171,7 +1171,7 @@ export const guides: Guide[] = [
           },
           {
             text: 'Chakra : A resource card used to activate Support effects such as Ninjutsu.',
-            image: { src: '/Cards/Chakra cards/C-001.png', alt: 'Chakra card example' },
+            image: { src: '/Cards/Chakra cards/C-001.webp', alt: 'Chakra card example' },
           },
           {
             text: 'Summon : A card required to play Character cards onto the battlefield.',
@@ -1299,7 +1299,7 @@ export const guides: Guide[] = [
   },
   {
     slug: 'glossary-key-terms',
-    title: 'Glossary : Card Stats, Keywords & Game Vocabulary Explained',
+    title: 'Card Game Glossary: Stats & Keywords',
     summary: 'A quick reference for the words and keywords you will encounter while learning the game.',
     category: 'Glossary',
     difficulty: 'Beginner',
@@ -1480,7 +1480,7 @@ export const guides: Guide[] = [
           examples: [
             {
               label: 'Chakra card',
-              image: { src: '/Cards/Chakra cards/C-001.png', alt: 'Chakra card example' },
+              image: { src: '/Cards/Chakra cards/C-001.webp', alt: 'Chakra card example' },
             },
             {
               label: 'Shikamaru Nara N01-008',

@@ -1,0 +1,23 @@
+# NarutoCardGuide
+
+> NarutoCardGuide is an independent reference site for the NARUTO CARD GAME, covering confirmed cards, rules, beginner explanations, deck guides, official news, products, and events.
+
+NarutoCardGuide is not affiliated with or endorsed by Bandai or the NARUTO rights holders. Information is compiled from confirmed announcements and official materials where available.
+
+## Main sections
+
+- [Home](https://narutocardguide.com/): Overview of the site, recent news, featured cards, and beginner resources.
+- [Cards List](https://narutocardguide.com/cards-list/): Browse revealed cards grouped by starter deck, first set, demo cards, Chakra cards, and Summon cards.
+- [Beginner Guides](https://narutocardguide.com/beginner-guides/): Learn the rules, card types, game vocabulary, and core fundamentals.
+- [Deck Guides](https://narutocardguide.com/deck-guides/): Explore practical deck plans, leader strategies, mulligan guidance, and upgrade paths.
+- [News and Roadmap](https://narutocardguide.com/news/): Read official announcements, card reveals, product updates, event information, and roadmap dates.
+
+## Key guides
+
+- [Complete Naruto Card Game Rules](https://narutocardguide.com/beginner-guides/complete-naruto-card-game-rules/): Explanation of the game flow, zones, turns, card types, attacks, Chakra, and effects.
+- [Glossary: Card Stats, Keywords, and Game Vocabulary](https://narutocardguide.com/beginner-guides/glossary-key-terms/): Reference for the terms and keywords used in the NARUTO CARD GAME.
+- [Naruto Uzumaki Demo Deck](https://narutocardguide.com/deck-guides/naruto-uzumaki-demo-deck/): A simple decklist and practical strategy guide for learning through play.
+
+## Related resources
+
+- [Legal Notice and Privacy](https://narutocardguide.com/legal-notice-and-privacy/): Site ownership, contact information, privacy, analytics, and external-link information.
