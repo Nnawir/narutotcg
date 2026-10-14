@@ -30,6 +30,7 @@ export type NewsArticle = {
     image?: ImageAsset;
     rewards?: Array<{ name: string; description: string; image: ImageAsset }>;
     cardIds?: string[];
+    table?: { headers: string[]; rows: string[][] };
     closingNavigation?: {
       before: string;
       firstLabel: string;
@@ -40,7 +41,7 @@ export type NewsArticle = {
       after?: string;
     };
     eventLinks?: Array<{ title: string; date: string; href: string }>;
-    links?: Array<{ label: string; href: string }>;
+    links?: Array<{ label: string; href: string; prefix?: string; suffix?: string }>;
   }>;
   relatedCardIds: string[];
   relatedGuideSlugs: string[];
@@ -216,6 +217,121 @@ const bandaiEventsImage: ImageAsset = {
 };
 
 export const news: NewsArticle[] = [
+  {
+    slug: 'official-demo-events-announced-worldwide-premier-demo-event',
+    title: 'Premier Demo Events Announced Worldwide!',
+    summary:
+      'Official NARUTO CARD GAME demo events are coming worldwide, with two event waves, Naruto and Sasuke Demo Decks, and exclusive merchandise.',
+    category: 'Events',
+    publishedAt: '2026-10-14',
+    sourceLabel: 'NARUTO CARD GAME official demo event announcement',
+    sourceUrl: 'https://www.naruto-cardgame.com/en/welcome/',
+    featured: true,
+    image: {
+      src: '/assets/visuals/naruto-tcg-bandai-events.webp',
+      alt: 'NARUTO CARD GAME Bandai events artwork',
+      width: 500,
+      height: 500,
+    },
+    imageOverlayText: 'Premier Demo Deck Event!',
+    showContents: true,
+    confirmedFacts: [
+      'Wave 1 runs from February 5 to 19, 2027.',
+      'Wave 2 runs from February 19 to March 5, 2027.',
+      'Registration is planned to open in January 2027 through the BANDAI TCG+ app.',
+      'The official worldwide launch is scheduled for June 2027.',
+    ],
+    sections: [
+      {
+        heading: 'Two waves of demo events',
+        paragraphs: [
+          'The first NARUTO CARD GAME demo events are coming worldwide in two waves. Wave 1 will run from February 5–19, 2027, followed by Wave 2 from February 19 to March 5, 2027.',
+          'Events will take place at participating stores listed through BANDAI TCG+. More location details are coming soon.',
+        ],
+      },
+      {
+        heading: 'Naruto vs. Sasuke : Choose your deck !',
+        paragraphs: [
+          'Players will be able to choose between the Naruto Uzumaki Demo Deck and the Sasuke Uchiha Demo Deck. The events are designed to help new players discover the rules, experience the battle system, and face other Shinobi.',
+        ],
+        cardIds: ['N01-001', 'N01-012'],
+        links: [{ prefix: 'Learn how to play the Demo Decks in', label: 'Deck Guides', suffix: '.', href: '/deck-guides/' }],
+      },
+      {
+        heading: 'How to participate',
+        paragraphs: [
+          'Applications will be handled through the BANDAI TCG+ app, with registration planned to open in January 2027. Applications must be submitted using your own BANDAI TCG+ account. Multiple accounts and applications submitted on behalf of another person are prohibited.',
+        ],
+      },
+      {
+        heading: 'Official merchandise revealed',
+        paragraphs: [
+          'The Premium Card Collection Vol.00 — CHAKRA Set will be available during Wave 1 and Wave 2 with a $20 USD MSRP. The Official Playmat Naruto vs. Sasuke will be available during Wave 1 with a $40 USD MSRP.',
+          'Both products are also planned to be available at BANDAI CARD GAMES Fest 26–27 in Orlando and London. Merchandise availability may vary between event waves and locations. Participants will have purchasing opportunities, with additional public sales possible if stock remains.',
+        ],
+        rewards: [
+          {
+            name: 'CHAKRA Card — PCC0-C-001',
+            description: 'Premium Card Collection Vol.00 — CHAKRA Set.',
+            image: { src: '/Cards/Chakra cards/PCC0-C-001.webp', alt: 'PCC0-C-001 CHAKRA card', width: 480, height: 670 },
+          },
+          {
+            name: 'CHAKRA Card — CP-002',
+            description: 'Premium Card Collection Vol.00 — CHAKRA Set.',
+            image: { src: '/Cards/Chakra cards/PCC0-C-002.webp', alt: 'CP-002 CHAKRA card', width: 480, height: 670 },
+          },
+          {
+            name: 'CHAKRA Card — CP-003',
+            description: 'Premium Card Collection Vol.00 — CHAKRA Set.',
+            image: { src: '/Cards/Chakra cards/PCC0-C-003.webp', alt: 'CP-003 CHAKRA card', width: 480, height: 670 },
+          },
+          {
+            name: 'CHAKRA Card — CP-004',
+            description: 'Premium Card Collection Vol.00 — CHAKRA Set.',
+            image: { src: '/Cards/Chakra cards/PCC0-C-004.webp', alt: 'CP-004 CHAKRA card', width: 480, height: 670 },
+          },
+          {
+            name: 'CHAKRA Card — CP-005',
+            description: 'Premium Card Collection Vol.00 — CHAKRA Set.',
+            image: { src: '/Cards/Chakra cards/PCC0-C-005.webp', alt: 'CP-005 CHAKRA card', width: 480, height: 670 },
+          },
+          {
+            name: 'Naruto Summon Card',
+            description: 'Premium Card Collection Vol.00 — CHAKRA Set.',
+            image: { src: '/Cards/Summon cards/PCC0-S-001.webp', alt: 'PCC0-S-001 Naruto Summon card', width: 600, height: 838 },
+          },
+          {
+            name: 'Official Naruto vs. Sasuke Playmat',
+            description: 'Official playmat arriving for the demo event merchandise lineup.',
+            image: { src: '/assets/visuals/playmat.webp', alt: 'Official Naruto vs. Sasuke playmat', width: 642, height: 360 },
+          },
+        ],
+      },
+      {
+        heading: '11 NARUTO CARD GAME preview events confirmed across Japan',
+        paragraphs: [],
+        table: {
+          headers: ['Month', 'Date', 'Location', 'Store'],
+          rows: [
+            ['January 2027', 'January 16', 'Tokyo', 'Dragon Star Ikebukuro Store'],
+            ['January 2027', 'January 17', 'Saitama', 'Hobby Station Omiya Store'],
+            ['January 2027', 'January 23', 'Hiroshima', 'Lepton Sun Mall Store'],
+            ['January 2027', 'January 24', 'Fukuoka', 'Yellow Submarine Magicers Fukuoka Store'],
+            ['January 2027', 'January 31', 'Tokyo', 'Card Lab Ikebukuro Store'],
+            ['February 2027', 'February 7', 'Osaka', 'Card Box Nihonbashi Store'],
+            ['February 2027', 'February 11', 'Ehime', 'Card Game Shop Oretan Matsuyama Store'],
+            ['February 2027', 'February 14', 'Sendai', 'Full Comp PLAYERSCENTER Sendai Ekimae Store'],
+            ['March 2027', 'March 14', 'Kyoto', 'GIRAFULL Kyoto Store'],
+            ['March 2027', 'March 20', 'Aichi', 'Trading Card Game Shop 193 Osu Store'],
+            ['March 2027', 'March 21', 'Hokkaido', 'Tournament Center Batroco Sapporo Odori'],
+          ],
+        },
+        links: [{ prefix: 'Explore the', label: 'Roadmap', suffix: ' and discover the next events.', href: '/news/#roadmap' }],
+      },
+    ],
+    relatedCardIds: [],
+    relatedGuideSlugs: [],
+  },
   {
     slug: 'spiel-essen-2026-event-information',
     title: 'SPIEL Essen Event Information',

@@ -122,7 +122,12 @@ const structuredData = [
                 </figure>
               )}
               {section.rewards && (
-                <div class="participation-rewards">
+                <div
+                  class:list={[
+                    'participation-rewards',
+                    { 'news-merchandise-rewards': article.slug === 'official-demo-events-announced-worldwide-premier-demo-event' },
+                  ]}
+                >
                   {section.rewards.map((reward) => (
                     <article class="participation-reward">
                       <button
@@ -137,12 +142,32 @@ const structuredData = [
                           <img src={reward.image.src} alt={reward.image.alt} width={reward.image.width} height={reward.image.height} loading="lazy" />
                         </figure>
                       </button>
-                      <div>
-                        <h3>{reward.name}</h3>
-                        <p>{reward.description}</p>
-                      </div>
+                      {article.slug !== 'official-demo-events-announced-worldwide-premier-demo-event' && (
+                        <div>
+                          <h3>{reward.name}</h3>
+                          <p>{reward.description}</p>
+                        </div>
+                      )}
                     </article>
                   ))}
+                </div>
+              )}
+              {section.table && (
+                <div class="article-table-wrap news-events-table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        {section.table.headers.map((header) => <th scope="col">{header}</th>)}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {section.table.rows.map((row) => (
+                        <tr>
+                          {row.map((cell) => <td>{cell}</td>)}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               )}
               {section.cardIds && (
@@ -183,7 +208,12 @@ const structuredData = [
               )}
               {section.links && (
                 <div class="article-inline-links">
-                  {section.links.map((link) => <a class="text-link" href={link.href}>{link.label}</a>)}
+                  {section.links.map((link) => (
+                    <span>
+                      {link.prefix && `${link.prefix} `}
+                      <a class="text-link" href={link.href}>{link.label}</a>{link.suffix}
+                    </span>
+                  ))}
                 </div>
               )}
             </section>
