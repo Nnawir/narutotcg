@@ -2423,10 +2423,11 @@ h3 {
 .combo-guide-row {
   display: grid;
   grid-template-columns: minmax(20rem, 0.8fr) minmax(0, 1.2fr);
-  align-items: center;
+  align-items: start;
   gap: clamp(2rem, 6vw, 6rem);
   padding: 1.5rem 0;
 }
+.combo-guide-copy { padding-top: 0.25rem; }
 .combo-guide-row + .combo-guide-row { border-top: 1px solid var(--border); }
 .combo-guide-cards {
   display: flex;
@@ -2481,6 +2482,15 @@ h3 {
     var(--surface);
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.035), 0 1rem 2.25rem rgb(0 0 0 / 0.14);
 }
+.matchup-pair-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+.matchup-pair-grid .matchup-guide-card {
+  width: auto;
+  margin: 0;
+}
 .matchup-guide-card::before {
   position: absolute;
   top: 0;
@@ -2512,6 +2522,9 @@ h3 {
 .matchup-guide-card h3 { margin: 1rem 0 1.25rem; font-size: 1.25rem; }
 .matchup-guide-card ul { margin: 0; padding-left: 1.35rem; }
 .matchup-guide-card li { padding-left: 0.2rem; line-height: 1.7; }
+@media (max-width: 56rem) {
+  .matchup-pair-grid { grid-template-columns: 1fr; }
+}
 .decklist-heading {
   display: flex;
   align-items: start;

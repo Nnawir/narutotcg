@@ -12,6 +12,11 @@ const { guide } = Astro.props;
 const deckCards = guide.decklist
   .map((entry) => ({ ...entry, card: cards.find((card) => card.id === entry.cardId) }))
   .filter((entry) => entry.card);
+const decklistText = guide.decklist
+  .map(({ cardId, copies }) => `${copies} x ${cardId.replace('N01', 'N')}`)
+  .join('\n');
+const isNarutoGuide = guide.slug === 'naruto-uzumaki-demo-deck';
+const isSasukeGuide = guide.slug === 'sasuke-uchiha-demo-deck';
 ---
 
 <BaseLayout title={guide.title} description={guide.summary} canonicalPath={`/deck-guides/${guide.slug}/`}>
@@ -23,9 +28,9 @@ const deckCards = guide.decklist
       <p class="eyebrow card-list-eyebrow">Deck Guides</p>
       <h1>{guide.title}</h1>
       <p class="article-standfirst">
-        Explore the 31-card Naruto Uzumaki demo deck, including the decklist, core combos, and strategies for playing against Sasuke Leader and the Naruto mirror match.
+        {guide.intro}
       </p>
-      <a class="guide-jump-badge" href="#matchup">Matchup <span aria-hidden="true">↓</span></a>
+      {(isNarutoGuide || isSasukeGuide) && <a class="guide-jump-badge" href="#matchup">Matchup <span aria-hidden="true">↓</span></a>}
     </div>
     <figure class="deck-guide-detail-image">
       <img src={guide.image.src} alt={guide.image.alt} />
@@ -36,9 +41,9 @@ const deckCards = guide.decklist
       <div class="decklist-heading">
         <div>
           <h2>Decklist</h2>
-          <p class="decklist-intro">The complete 31-card Naruto Uzumaki Demo Deck.</p>
+          <p class="decklist-intro">The complete {guide.decklist.reduce((total, entry) => total + entry.copies, 0)}-card {guide.title}.</p>
         </div>
-        <button class="copy-sim-button" type="button" data-copy-deck>Copy for Sim</button>
+        <button class="copy-sim-button" type="button" data-copy-deck data-decklist={decklistText}>Copy for Sim</button>
       </div>
       <div class="decklist-grid">
         {deckCards.map(({ card, copies }) => (
@@ -63,7 +68,7 @@ const deckCards = guide.decklist
         ))}
       </div>
     </section>
-    <section class="guide-content-section combo-guide-section" id="main-actions-and-combos">
+    {isNarutoGuide && <section class="guide-content-section combo-guide-section" id="main-actions-and-combos">
       <h2>Main actions and Combos</h2>
 
       <div class="combo-guide-list">
@@ -129,8 +134,8 @@ const deckCards = guide.decklist
         </div>
       </article>
       </div>
-    </section>
-    <section class="guide-content-section defensive-guide-section" id="main-defensive-moves">
+    </section>}
+    {isNarutoGuide && <section class="guide-content-section defensive-guide-section" id="main-defensive-moves">
       <h2>Main Defensive Moves</h2>
       <div class="combo-guide-list">
         <article class="combo-guide-row">
@@ -169,8 +174,8 @@ const deckCards = guide.decklist
           </div>
         </article>
       </div>
-    </section>
-    <section class="guide-content-section matchup-guide-section" id="matchup">
+    </section>}
+    {isNarutoGuide && <section class="guide-content-section matchup-guide-section" id="matchup">
       <h2>Matchup</h2>
       <article class="matchup-guide-card">
         <button class="matchup-leader-preview" type="button" data-card-preview data-image-src="/Cards/N01/N01-012.webp" data-image-alt="Sasuke Uchiha N01-012 leader card" aria-label="Zoom Sasuke Uchiha N01-012 leader card">
@@ -184,7 +189,90 @@ const deckCards = guide.decklist
           <li>Clear the opponent’s board whenever possible so they cannot use it to summon their EX Characters.</li>
         </ul>
       </article>
-    </section>
+    </section>}
+    {isSasukeGuide && <>
+      <section class="guide-content-section combo-guide-section" id="main-actions-and-combos">
+        <h2>Main actions and Combos</h2>
+        <div class="combo-guide-list">
+          <article class="combo-guide-row">
+            <div class="combo-guide-cards">
+              <button class="combo-card-preview" type="button" data-card-preview data-image-src="/Cards/N01/N01-012.webp" data-image-alt="Sasuke Uchiha leader N01-012 card" aria-label="Zoom Sasuke Uchiha leader N01-012 card"><img src="/Cards/N01/N01-012.webp" alt="Sasuke Uchiha leader" loading="lazy" /></button>
+              <span class="combo-arrow" aria-hidden="true">+</span>
+              <button class="combo-card-preview" type="button" data-card-preview data-image-src="/Cards/N01/N01-019.webp" data-image-alt="Jugo N01-019 card" aria-label="Zoom Jugo N01-019 card"><img src="/Cards/N01/N01-019.webp" alt="Jugo" loading="lazy" /></button>
+            </div>
+            <div class="combo-guide-copy"><h3>Sasuke Leader + Jugo</h3><p>Summon Jugo. On the following turn, use the Leader effect to place a non-EX card on top of your deck, then use Jugo to summon that prepared card and extend your board.</p></div>
+          </article>
+
+          <article class="combo-guide-row">
+            <div class="combo-guide-cards">
+              <button class="combo-card-preview" type="button" data-card-preview data-image-src="/Cards/N01/N01-012.webp" data-image-alt="Sasuke Uchiha leader N01-012 card" aria-label="Zoom Sasuke Uchiha leader N01-012 card"><img src="/Cards/N01/N01-012.webp" alt="Sasuke Uchiha leader" loading="lazy" /></button>
+              <span class="combo-arrow" aria-hidden="true">+</span>
+              <button class="combo-card-preview" type="button" data-card-preview data-image-src="/Cards/N01/N01-022.webp" data-image-alt="Manda N01-022 card" aria-label="Zoom Manda N01-022 card"><img src="/Cards/N01/N01-022.webp" alt="Manda" loading="lazy" /></button>
+            </div>
+            <div class="combo-guide-copy"><h3>Sasuke Leader + Manda</h3><p>Activate the Leader effect to place a non-EX card on top of your deck. Summon Manda, place a Character from the field into the trash, and then play the prepared non-EX card from the top of your deck.</p></div>
+          </article>
+
+          <article class="combo-guide-row">
+            <div class="combo-guide-cards">
+              <button class="combo-card-preview" type="button" data-card-preview data-image-src="/Cards/N01/N01-019.webp" data-image-alt="Jugo N01-019 card" aria-label="Zoom Jugo N01-019 card"><img src="/Cards/N01/N01-019.webp" alt="Jugo" loading="lazy" /></button>
+              <button class="combo-card-preview" type="button" data-card-preview data-image-src="/Cards/N01/N01-010.webp" data-image-alt="Karin N01-010 card" aria-label="Zoom Karin N01-010 card"><img src="/Cards/N01/N01-010.webp" alt="Karin" loading="lazy" /></button>
+              <span class="combo-arrow" aria-hidden="true">+</span>
+              <button class="combo-card-preview" type="button" data-card-preview data-image-src="/Cards/N01/N01-014.webp" data-image-alt="Sasuke Uchiha N01-014 card" aria-label="Zoom Sasuke Uchiha N01-014 card"><img src="/Cards/N01/N01-014.webp" alt="Sasuke Uchiha" loading="lazy" /></button>
+            </div>
+            <div class="combo-guide-copy"><h3>Jugo or Karin + Sasuke</h3><p>Keep a Character on the board, then summon Jugo and/or activate Karin’s Support effect. Follow with Sasuke to KO an opposing Character and turn that setup into immediate pressure.</p></div>
+          </article>
+
+          <article class="combo-guide-row">
+            <div class="combo-guide-cards">
+              <button class="combo-card-preview" type="button" data-card-preview data-image-src="/Cards/N01/N01-012.webp" data-image-alt="Sasuke Uchiha leader N01-012 card" aria-label="Zoom Sasuke Uchiha leader N01-012 card"><img src="/Cards/N01/N01-012.webp" alt="Sasuke Uchiha leader" loading="lazy" /></button>
+              <button class="combo-card-preview" type="button" data-card-preview data-image-src="/Cards/N01/N01-013.webp" data-image-alt="Itachi Uchiha N01-013 card" aria-label="Zoom Itachi Uchiha N01-013 card"><img src="/Cards/N01/N01-013.webp" alt="Itachi Uchiha" loading="lazy" /></button>
+              <button class="combo-card-preview" type="button" data-card-preview data-image-src="/Cards/N01/N01-022.webp" data-image-alt="Manda N01-022 card" aria-label="Zoom Manda N01-022 card"><img src="/Cards/N01/N01-022.webp" alt="Manda" loading="lazy" /></button>
+            </div>
+            <div class="combo-guide-copy"><h3>Sasuke Leader + Itachi + Manda</h3><p>Use the Leader effect to place an Uchiha Clan card on top of your deck. Summon Itachi to stop a Leader or Character from attacking, then summon Manda to turn the prepared top card into another play.</p></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="guide-content-section defensive-guide-section" id="main-defensive-moves">
+        <h2>Main Defensive Moves</h2>
+        <div class="combo-guide-list">
+          <article class="combo-guide-row"><div class="combo-guide-cards"><button class="combo-card-preview" type="button" data-card-preview data-image-src="/Cards/N01/N01-010.webp" data-image-alt="Karin N01-010 card" aria-label="Zoom Karin N01-010 card"><img src="/Cards/N01/N01-010.webp" alt="Karin" loading="lazy" /></button></div><div class="combo-guide-copy"><h3>Karin</h3><p>Recover 2 Life when she is summoned through her Support effect. Because that effect summons Karin, she is also a useful way to trigger Sasuke N01-014.</p></div></article>
+          <article class="combo-guide-row"><div class="combo-guide-cards"><button class="combo-card-preview" type="button" data-card-preview data-image-src="/Cards/N01/N01-016.webp" data-image-alt="Shisui Uchiha N01-016 card" aria-label="Zoom Shisui Uchiha N01-016 card"><img src="/Cards/N01/N01-016.webp" alt="Shisui Uchiha" loading="lazy" /></button></div><div class="combo-guide-copy"><h3>Shisui Uchiha</h3><p>Negate the effect of a card. The important drawback is that you cannot turn your Chakra cards face-up until the end of your next End Phase.</p></div></article>
+          <article class="combo-guide-row"><div class="combo-guide-cards"><button class="combo-card-preview" type="button" data-card-preview data-image-src="/Cards/N01/N01-021.webp" data-image-alt="Suigetsu Hozuki N01-021 card" aria-label="Zoom Suigetsu Hozuki N01-021 card"><img src="/Cards/N01/N01-021.webp" alt="Suigetsu Hozuki" loading="lazy" /></button></div><div class="combo-guide-copy"><h3>Hozuki</h3><p>Protect a Character from opposing Support effects. Hozuki is summoned when you activate his Support, making him another useful way to enable Sasuke N01-014.</p></div></article>
+          <article class="combo-guide-row"><div class="combo-guide-cards"><button class="combo-card-preview" type="button" data-card-preview data-image-src="/Cards/N01/N01-017.webp" data-image-alt="Orochimaru N01-017 card" aria-label="Zoom Orochimaru N01-017 card"><img src="/Cards/N01/N01-017.webp" alt="Orochimaru" loading="lazy" /></button><button class="combo-card-preview" type="button" data-card-preview data-image-src="/Cards/N01/N01-015.webp" data-image-alt="Sasuke Uchiha N01-015 card" aria-label="Zoom Sasuke Uchiha N01-015 card"><img src="/Cards/N01/N01-015.webp" alt="Sasuke Uchiha" loading="lazy" /></button></div><div class="combo-guide-copy"><h3>Orochimaru + Sasuke N01-015</h3><p>Use their removal effects to clear the opponent’s board. This pair gives the deck a strong way to control opposing Characters and keep the board manageable.</p></div></article>
+          <article class="combo-guide-row"><div class="combo-guide-cards"><button class="combo-card-preview" type="button" data-card-preview data-image-src="/Cards/N01/N01-020.webp" data-image-alt="Sakura N01-020 card" aria-label="Zoom Sakura N01-020 card"><img src="/Cards/N01/N01-020.webp" alt="Sakura" loading="lazy" /></button></div><div class="combo-guide-copy"><h3>Sakura</h3><p>Return a Character to its owner’s hand during the opponent’s attack, giving you a flexible way to interrupt an opposing board.</p></div></article>
+        </div>
+      </section>
+      <section class="guide-content-section matchup-guide-section" id="matchup">
+        <h2>Matchup</h2>
+        <div class="matchup-pair-grid">
+          <article class="matchup-guide-card">
+            <button class="matchup-leader-preview" type="button" data-card-preview data-image-src="/Cards/N01/N01-001.webp" data-image-alt="Naruto Uzumaki N01-001 leader card" aria-label="Zoom Naruto Uzumaki N01-001 leader card">
+              <img src="/Cards/N01/N01-001.webp" alt="Naruto Uzumaki leader" loading="lazy" />
+            </button>
+            <h3>Naruto Uzumaki</h3>
+            <ul>
+              <li>Play second to give yourself a chance to mulligan and find the cards you want.</li>
+              <li>Play a Character even if it has a Support effect. It is better than passing, and it gives you future targets for EX Character effects.</li>
+              <li>KO or return Minato to its owner’s hand to stop the Gamabunta–Minato combo.</li>
+              <li>Naruto is an aggressive deck, so remove its Characters before it can chain together multiple attacks.</li>
+            </ul>
+          </article>
+
+          <article class="matchup-guide-card">
+            <button class="matchup-leader-preview" type="button" data-card-preview data-image-src="/Cards/N01/N01-012.webp" data-image-alt="Sasuke Uchiha N01-012 leader card" aria-label="Zoom Sasuke Uchiha N01-012 leader card">
+              <img src="/Cards/N01/N01-012.webp" alt="Sasuke Uchiha leader" loading="lazy" />
+            </button>
+            <h3>Sasuke Uchiha</h3>
+            <ul>
+              <li>Freeze, return, or KO the opposing Jugo before it generates value.</li>
+              <li>Play EX Sasuke to KO a Character and attack a Character in Rest, such as Jugo.</li>
+              <li>The mirror match is long and demanding. Stay focused and manage the opposing board as carefully as possible.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+    </>}
     {guide.sections.map((section) => (
       <section class="guide-content-section" id={section.heading === 'Matchup' ? 'matchup' : undefined}>
         <h2>{section.heading}</h2>
@@ -198,17 +286,7 @@ const deckCards = guide.decklist
 
 <script>
   const copyDeckButton = document.querySelector('[data-copy-deck]');
-  const decklistText = `1 x N-001
-3 x N-002
-3 x N-004
-3 x N-006
-3 x N-007
-3 x N-008
-3 x N-009
-3 x N-005
-3 x N-003
-3 x N-011
-3 x N-018`;
+  const decklistText = copyDeckButton instanceof HTMLElement ? copyDeckButton.dataset.decklist ?? '' : '';
 
   copyDeckButton?.addEventListener('click', async () => {
     if (!(copyDeckButton instanceof HTMLButtonElement)) return;
