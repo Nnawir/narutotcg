@@ -3202,6 +3202,22 @@ h3 {
   max-width: calc(100vw - 3.1rem);
   max-height: calc(100vh - 3.1rem);
   object-fit: contain;
+  transform-origin: center;
+  transition: transform 120ms ease;
+}
+.card-lightbox-zoom-control {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: 0.55rem;
+  padding: 0.25rem 0.2rem 0;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.card-lightbox-zoom-control input {
+  width: min(18rem, 42vw);
+  accent-color: var(--accent);
 }
 .card-lightbox-close {
   position: absolute;
@@ -3411,6 +3427,25 @@ h3 {
   display: block;
   width: 100%;
   height: auto;
+}
+.article-section-image-button {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+.article-section-image-button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 0.2rem;
+}
+.news-article-shell .card-section-image {
+  width: min(100%, 16rem);
+}
+.news-article-shell .cheat-sheet-section-image {
+  width: 70%;
+  margin-inline: auto;
 }
 
 /* Keep News article typography and card collections compact and easy to scan. */
@@ -4201,6 +4236,12 @@ h3 {
 }
 
 @media (max-width: 45rem) {
+  .card-lightbox-zoom-control {
+    display: none;
+  }
+  .home-mobile-hide-eyebrow {
+    display: none;
+  }
   .article-header.wide-title-header {
     width: 100%;
     max-width: none;

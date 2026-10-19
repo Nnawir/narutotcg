@@ -7,9 +7,11 @@ import HeroFloatingCards from '../components/HeroFloatingCards.astro';
 import NewsCard from '../components/NewsCard.astro';
 import { cards, guides, news } from '../data/content';
 
-const latestNews = [...news].sort((a, b) =>
+const sortedNews = [...news].sort((a, b) =>
   (b.publishedAt ?? '').localeCompare(a.publishedAt ?? ''),
-).slice(0, 2);
+);
+const latestPublishedNews = sortedNews[0];
+const latestNews = sortedNews.slice(0, 2);
 const featuredCardIds = ['SAMPLE-19', 'SAMPLE-20', 'SAMPLE-21', 'SAMPLE-22'];
 const homeCards = featuredCardIds.flatMap((id) => {
   const card = cards.find((item) => item.id === id);
@@ -32,10 +34,10 @@ const beginnerGuides = [...guides].sort((a, b) => a.order - b.order).slice(0, 2)
   </section>
 
   <section class="home-hero">
-    <a class="news-promo" href="/news/three-starter-decks-revealed-2027/">
+    <a class="news-promo" href={latestPublishedNews ? `/news/${latestPublishedNews.slug}/` : '/news/'}>
       <span class="news-promo-badge">New</span>
       <span class="news-promo-copy">
-        <strong>Three Starter Decks Revealed for 2027</strong>
+        <strong>{latestPublishedNews?.title ?? 'Latest news'}</strong>
         <span>Latest article</span>
       </span>
       <span class="news-promo-arrow" aria-hidden="true">→</span>
@@ -67,7 +69,7 @@ const beginnerGuides = [...guides].sort((a, b) => a.order - b.order).slice(0, 2)
   <section class="section shell" aria-labelledby="latest-news-title">
     <div class="section-heading">
       <div>
-        <p class="eyebrow">Verified reporting</p>
+        <p class="eyebrow home-mobile-hide-eyebrow">Verified reporting</p>
         <h2 id="latest-news-title">Latest News</h2>
         <p>Official announcements and careful context, without rumor or filler.</p>
       </div>
@@ -101,7 +103,7 @@ const beginnerGuides = [...guides].sort((a, b) => a.order - b.order).slice(0, 2)
   <section class="section shell" aria-labelledby="latest-cards-title">
     <div class="section-heading">
       <div>
-        <p class="eyebrow">New card reveals</p>
+        <p class="eyebrow home-mobile-hide-eyebrow">New card reveals</p>
         <h2 id="latest-cards-title">Latest Card Reveals</h2>
         <p>Explore the latest revealed cards from Naruto Card Game. Click any card to browse the Cards List.</p>
       </div>
@@ -130,7 +132,7 @@ const beginnerGuides = [...guides].sort((a, b) => a.order - b.order).slice(0, 2)
   <section class="section shell" aria-labelledby="new-player-title">
     <div class="section-heading">
       <div>
-        <p class="eyebrow">A clear starting point</p>
+        <p class="eyebrow home-mobile-hide-eyebrow">A clear starting point</p>
         <h2 id="new-player-title">New to the Game ?</h2>
         <p>Learn the rules, understand your cards, and build a strong foundation for your first games.</p>
       </div>
@@ -142,7 +144,7 @@ const beginnerGuides = [...guides].sort((a, b) => a.order - b.order).slice(0, 2)
   </section>
 
   <section class="section shell home-seo" aria-labelledby="about-site-title">
-    <p class="eyebrow">About NarutoCardGuide</p>
+    <p class="eyebrow home-mobile-hide-eyebrow">About NarutoCardGuide</p>
     <h2 id="about-site-title">Your Naruto Card Game resource</h2>
     <p>
       NarutoCardGuide is a reference hub for new and aspiring NARUTO CARD GAME players who want clear answers
