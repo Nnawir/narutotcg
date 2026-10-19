@@ -73,6 +73,10 @@ const canonicalUrl = new URL(canonicalPath, Astro.site ?? Astro.url.origin).toSt
         ×
       </button>
       <img data-card-lightbox-image alt="" />
+      <label class="card-lightbox-zoom-control">
+        <span>Zoom</span>
+        <input data-card-lightbox-zoom type="range" min="1" max="2.5" step="0.1" value="1" aria-label="Zoom image" />
+      </label>
     </dialog>
   </body>
 </html>
@@ -80,6 +84,11 @@ const canonicalUrl = new URL(canonicalPath, Astro.site ?? Astro.url.origin).toSt
 <script>
   const lightbox = document.querySelector('#card-lightbox');
   const lightboxImage = lightbox?.querySelector('[data-card-lightbox-image]');
+  const zoomControl = lightbox?.querySelector('[data-card-lightbox-zoom]');
+  const resetZoom = () => {
+    if (zoomControl instanceof HTMLInputElement) zoomControl.value = '1';
+    if (lightboxImage instanceof HTMLImageElement) lightboxImage.style.transform = 'scale(1)';
+  };
   const closeLightbox = () => {
     if (lightbox instanceof HTMLDialogElement && lightbox.open) lightbox.close();
   };
@@ -90,12 +99,22 @@ const canonicalUrl = new URL(canonicalPath, Astro.site ?? Astro.url.origin).toSt
     if (!(lightbox instanceof HTMLDialogElement) || !(lightboxImage instanceof HTMLImageElement)) return;
     lightboxImage.src = target.dataset.imageSrc ?? '';
     lightboxImage.alt = target.dataset.imageAlt ?? '';
+    resetZoom();
     document.documentElement.classList.add('lightbox-open');
     lightbox.showModal();
   });
 
+  zoomControl?.addEventListener('input', () => {
+    if (zoomControl instanceof HTMLInputElement && lightboxImage instanceof HTMLImageElement) {
+      lightboxImage.style.transform = `scale(${zoomControl.value})`;
+    }
+  });
+
   lightbox?.querySelector('[data-card-lightbox-close]')?.addEventListener('click', closeLightbox);
-  lightbox?.addEventListener('close', () => document.documentElement.classList.remove('lightbox-open'));
+  lightbox?.addEventListener('close', () => {
+    document.documentElement.classList.remove('lightbox-open');
+    resetZoom();
+  });
   lightbox?.addEventListener('click', (event) => {
     if (event.target === lightbox) closeLightbox();
   });

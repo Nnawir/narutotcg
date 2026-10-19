@@ -22,6 +22,8 @@ const previousArticle = orderedNews[articleIndex + 1];
 const nextArticle = orderedNews[articleIndex - 1];
 const siteOrigin = Astro.site ?? Astro.url.origin;
 const absoluteUrl = (path: string) => new URL(path, siteOrigin).toString();
+const renderNewsText = (text: string) =>
+  text.replace('[[ROADMAP]]', '<a class="text-link" href="/news/#roadmap">Roadmap</a>');
 const structuredData = [
   {
     '@context': 'https://schema.org',
@@ -108,19 +110,49 @@ const structuredData = [
             <section aria-labelledby={`section-${section.heading.toLowerCase().replaceAll(' ', '-')}`}>
               <h2 id={`section-${section.heading.toLowerCase().replaceAll(' ', '-')}`}>{section.heading}</h2>
               {section.paragraphs.map((paragraph) => (
-                <p>{paragraph}</p>
+                <p set:html={renderNewsText(paragraph)}></p>
               ))}
               {section.image && (
-                <figure class="article-section-image">
-                  <img
-                    src={section.image.src}
-                    alt={section.image.alt}
-                    width={section.image.width}
-                    height={section.image.height}
-                    loading="lazy"
-                  />
+                <figure
+                  class:list={[
+                    'article-section-image',
+                    {
+                      'card-section-image': section.image.src.startsWith('/Cards/'),
+                      'cheat-sheet-section-image': section.image.src === '/assets/visuals/cheat_sheet.webp',
+                    },
+                  ]}
+                >
+                  {section.image.src.startsWith('/Cards/') ? (
+                    <button
+                      class="article-section-image-button"
+                      type="button"
+                      data-card-preview
+                      data-image-src={section.image.src}
+                      data-image-alt={section.image.alt}
+                      aria-label={`Zoom ${section.image.alt}`}
+                    >
+                      <img
+                        src={section.image.src}
+                        alt={section.image.alt}
+                        width={section.image.width}
+                        height={section.image.height}
+                        loading="lazy"
+                      />
+                    </button>
+                  ) : (
+                    <img
+                      src={section.image.src}
+                      alt={section.image.alt}
+                      width={section.image.width}
+                      height={section.image.height}
+                      loading="lazy"
+                    />
+                  )}
                 </figure>
               )}
+              {section.afterImageParagraphs?.map((paragraph) => (
+                <p set:html={renderNewsText(paragraph)}></p>
+              ))}
               {section.rewards && (
                 <div
                   class:list={[

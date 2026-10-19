@@ -31,6 +31,7 @@ export type NewsArticle = {
     rewards?: Array<{ name: string; description: string; image: ImageAsset }>;
     cardIds?: string[];
     table?: { headers: string[]; rows: string[][] };
+    afterImageParagraphs?: string[];
     closingNavigation?: {
       before: string;
       firstLabel: string;
@@ -217,6 +218,103 @@ const bandaiEventsImage: ImageAsset = {
 };
 
 export const news: NewsArticle[] = [
+  {
+    slug: 'naruto-card-game-first-game-demo-cheat-sheet',
+    title: 'Your First Game Cheat Sheet',
+    summary:
+      'A quick reference for learning the NARUTO CARD GAME and getting ready to play with the Demo Decks at upcoming events.',
+    category: 'Rules',
+    publishedAt: '2026-10-19',
+    sourceLabel: 'NARUTO CARD GAME preview rules and demo reports',
+    sourceUrl: 'https://www.naruto-cardgame.com/en/welcome/',
+    featured: true,
+    image: {
+      src: '/assets/visuals/cheat_sheet.webp',
+      alt: 'NARUTO CARD GAME first game demo cheat sheet',
+      width: 1024,
+      height: 1300,
+    },
+    imageOverlayText: 'Your First Game Cheat Sheet!',
+    showContents: false,
+    showStandfirst: false,
+    confirmedFacts: [],
+    sections: [
+      {
+        heading: 'Your first game cheat sheet',
+        paragraphs: [
+          'Get ready for your first NARUTO CARD GAME demo with this quick cheat sheet: the goal, setup, turn flow, Support timing, combat and chain resolution, all in one place.',
+          'It is designed to help new players learn the basics quickly and take their first steps with the Naruto and Sasuke Demo Decks during upcoming demo events. Keep it nearby before your game, use it as a quick reminder between turns, and share it with your demo partner. See the [[ROADMAP]] for the next events.',
+          'Save this reference so you can check the basics before you play. Got a question about a rule ? Drop it in the comments and let’s get you ready.',
+        ],
+        image: {
+          src: '/assets/visuals/cheat_sheet.webp',
+          alt: 'NARUTO CARD GAME first game demo cheat sheet with core rules and turn flow',
+          width: 1024,
+          height: 1300,
+        },
+        afterImageParagraphs: [
+          'This overview is based on preview rules and demo reports. Details may change before the official release.',
+        ],
+        closingNavigation: {
+          before: 'Ready to learn more ? Start with the',
+          firstLabel: 'Beginner Guides',
+          between: 'or read the complete rules in',
+          secondLabel: 'Complete Naruto Card Game Rules',
+          firstHref: '/beginner-guides/',
+          secondHref: '/beginner-guides/complete-naruto-card-game-rules/',
+          after: '.',
+        },
+      },
+    ],
+    relatedCardIds: [],
+    relatedGuideSlugs: [],
+  },
+  {
+    slug: 'sakura-alternative-art-revealed',
+    title: 'Sakura Alternative Art Revealed!',
+    summary: 'A beautiful new Sakura Haruno artwork has been revealed for the NARUTO CARD GAME.',
+    category: 'Card Reveals',
+    publishedAt: '2026-10-19',
+    sourceLabel: 'NARUTO CARD GAME official artwork reveal',
+    sourceUrl: 'https://www.naruto-cardgame.com/en/welcome/',
+    featured: true,
+    image: {
+      src: '/Cards/N01/SAMPLE-9.webp',
+      alt: 'Sakura Haruno alternative NARUTO CARD GAME artwork',
+      width: 600,
+      height: 838,
+    },
+    imageOverlayText: 'Sakura Art Revealed!',
+    showContents: false,
+    showStandfirst: false,
+    confirmedFacts: [],
+    sections: [
+      {
+        heading: 'New Sakura art revealed',
+        paragraphs: [
+          'New Sakura art has been revealed! This beautiful alternative artwork gives Sakura Haruno a striking new look for the NARUTO CARD GAME.',
+          'Now we just have to wait and see what effects Sakura is going to bring to the game.',
+        ],
+        image: {
+          src: '/Cards/N01/SAMPLE-9.webp',
+          alt: 'Sakura Haruno alternative NARUTO CARD GAME artwork',
+          width: 600,
+          height: 838,
+        },
+        closingNavigation: {
+          before: 'Want to keep exploring ? Discover the latest announcements in',
+          firstLabel: 'News',
+          between: 'and browse the full collection in',
+          secondLabel: 'Cards List',
+          firstHref: '/news/',
+          secondHref: '/cards-list/',
+          after: '.',
+        },
+      },
+    ],
+    relatedCardIds: [],
+    relatedGuideSlugs: [],
+  },
   {
     slug: 'official-demo-events-announced-worldwide-premier-demo-event',
     title: 'Premier Demo Events Announced Worldwide!',
