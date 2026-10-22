@@ -219,6 +219,95 @@ const bandaiEventsImage: ImageAsset = {
 
 export const news: NewsArticle[] = [
   {
+    slug: 'starter-deck-update-product-information-slides',
+    title: 'Starter Deck Update: Product Details Circulating Online',
+    summary:
+      'Unconfirmed product-information slides appear to list the Starter Deck contents, release date and pricing for the NARUTO CARD GAME.',
+    category: 'Products',
+    publishedAt: '2026-10-22',
+    sourceLabel: 'Unconfirmed product-information slides circulating online',
+    sourceUrl: 'https://www.naruto-cardgame.com/en/welcome/',
+    featured: true,
+    image: {
+      src: '/Cards/N01/SAMPLE-21.webp',
+      alt: 'SAMPLE-21 Gaara Starter Deck artwork',
+      width: 480,
+      height: 670,
+    },
+    imageOverlayText: 'Starter Deck Update!',
+    showContents: true,
+    confirmedFacts: [
+      'The product details in this article come from slides circulating online and have not been officially confirmed by Bandai.',
+      'The slides appear to list a June 25, 2027 release date and a $16.99 MSRP for each Starter Deck.',
+      'The NT-01 Booster Pack slide appears to list a $4.99 MSRP, 12 cards per pack, 24 packs per display box and 12 display boxes per case.',
+    ],
+    sections: [
+      {
+        heading: 'Starter Deck update',
+        paragraphs: [
+          'The slides appear to list each Starter Deck with a 50-card deck, 5 Chakra Cards, 1 Summon Card, 1 Life Counter, 1 Bonus Pack and 1 NT-01 Booster Pack.',
+          'They also list a June 25, 2027 release date and a $16.99 MSRP. A separate slide lists the NT-01 Booster Pack at $4.99, with 12 cards per pack, 24 packs per display box and 12 display boxes per case.',
+        ],
+      },
+      {
+        heading: 'Starter Deck product information',
+        paragraphs: [
+          'The first slide appears to cover Naruto ST01, Sasuke ST02 and Gaara ST03. Here is a precise transcription of the product details shown on the circulating slide.',
+        ],
+        image: {
+          src: '/assets/visuals/product_information_1.webp',
+          alt: 'Unconfirmed Starter Deck product-information slide',
+          width: 958,
+          height: 509,
+        },
+        table: {
+          headers: ['Product detail', 'Information shown on the slide'],
+          rows: [
+            ['Products', 'Naruto ST01, Sasuke ST02 and Gaara ST03'],
+            ['Release date', 'June 25, 2027'],
+            ['MSRP', '$16.99'],
+            ['Contents', '50-card deck'],
+            ['Included cards', '5 Chakra Cards and 1 Summon Card'],
+            ['Accessories', '1 Life Counter'],
+            ['Packs included', '1 Bonus Pack and 1 NT-01 Booster Pack'],
+          ],
+        },
+      },
+      {
+        heading: 'NT-01 Booster Pack information',
+        paragraphs: [
+          'The second product-information slide appears to describe the NT-01 Booster Pack configuration and sales points.',
+        ],
+        image: {
+          src: '/assets/visuals/product_information_2.webp',
+          alt: 'Unconfirmed NT-01 Booster Pack product-information slide',
+          width: 961,
+          height: 512,
+        },
+        table: {
+          headers: ['Booster detail', 'Information shown on the slide'],
+          rows: [
+            ['Product', 'Enter! Naruto Uzumaki! (NT-01)'],
+            ['Release date', 'June 25, 2027'],
+            ['MSRP', '$4.99 per pack'],
+            ['Pack configuration', '12 cards per pack'],
+            ['Display box', '24 packs per display box'],
+            ['Case configuration', '12 display boxes per case'],
+          ],
+        },
+      },
+      {
+        heading: 'Unconfirmed product details',
+        paragraphs: [
+          '⚠️ These details have not been officially confirmed by Bandai. Treat everything shown in the slides as unconfirmed until Bandai publishes the final product information.',
+          'Release dates, contents, prices and pack configurations may change before release. This article will be updated when official information becomes available. Explore the cards revealed so far in [[CARDS_LIST]] to see what is available for the game.',
+        ],
+      },
+    ],
+    relatedCardIds: [],
+    relatedGuideSlugs: [],
+  },
+  {
     slug: 'naruto-card-game-first-game-demo-cheat-sheet',
     title: 'Your First Game Cheat Sheet',
     summary:
@@ -244,7 +333,7 @@ export const news: NewsArticle[] = [
         paragraphs: [
           'Get ready for your first NARUTO CARD GAME demo with this quick cheat sheet: the goal, setup, turn flow, Support timing, combat and chain resolution, all in one place.',
           'It is designed to help new players learn the basics quickly and take their first steps with the Naruto and Sasuke Demo Decks during upcoming demo events. Keep it nearby before your game, use it as a quick reminder between turns, and share it with your demo partner. See the [[ROADMAP]] for the next events.',
-          'Save this reference so you can check the basics before you play. Got a question about a rule ? Drop it in the comments and let’s get you ready.',
+          'Save this reference so you can check the basics before you play.',
         ],
         image: {
           src: '/assets/visuals/cheat_sheet.webp',

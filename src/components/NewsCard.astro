@@ -20,7 +20,13 @@ const cardImage = article.image ?? {
   <a href={`/news/${article.slug}/`}>
     {showImage && (
       <span
-        class:list={['news-image', { 'news-image-overlay': Boolean(article.imageOverlayText) }]}
+        class:list={[
+          'news-image',
+          {
+            'news-image-overlay': Boolean(article.imageOverlayText),
+            'news-image-focus-top': article.slug === 'starter-deck-update-product-information-slides',
+          },
+        ]}
         style={`--image-ratio: ${cardImage.width} / ${cardImage.height}`}
       >
         <img
