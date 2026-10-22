@@ -1,22 +1,86 @@
 ---
 import BaseLayout from '../../components/BaseLayout.astro';
+import CardTile from '../../components/CardTile.astro';
 import EmptyState from '../../components/EmptyState.astro';
-import { cards, guides } from '../../data/content';
+import { deckGuides } from '../../data/deck-guides';
+import { cards, guides, news } from '../../data/content';
 
-const searchItems = [
-  ...cards.map((card) => ({
-    type: 'Card',
-    title: card.name,
-    meta: `${card.id} · ${card.setCode} · ${card.setName}`,
-    href: undefined,
-    search: `${card.name} ${card.id} ${card.setCode} ${card.setName}`.toLowerCase(),
+const searchText = (values: unknown[]) => values.filter(Boolean).join(' ').toLowerCase();
+
+const cardSearchItems = cards.map((card) => ({
+  card,
+  search: searchText([
+    card.name,
+    card.id,
+    card.setCode,
+    card.setName,
+    ...card.confirmedFields.flatMap((field) => [field.label, field.value]),
+  ]),
+}));
+
+const pageSearchItems = [
+  {
+    type: 'Page',
+    title: 'Cards List',
+    meta: 'Browse all revealed cards and sets',
+    href: '/cards-list/',
+    search: 'card cards cardlist card list archive collection set sets chakra summon ex character leader',
+  },
+  {
+    type: 'Page',
+    title: 'News & Roadmap',
+    meta: 'Official announcements and events',
+    href: '/news/',
+    search:
+      'news roadmap announcement event events paris games week paris games weeks card reveal product release',
+  },
+  {
+    type: 'Page',
+    title: 'Beginner Guides',
+    meta: 'Learn the rules and core mechanics',
+    href: '/beginner-guides/',
+    search: 'beginner guide guides rules glossary learn how to play chakra summon ex card types',
+  },
+  {
+    type: 'Page',
+    title: 'Deck Guides',
+    meta: 'Build and pilot demo decks',
+    href: '/deck-guides/',
+    search: 'deck decks decklist deck list naruto sasuke leader character strategy',
+  },
+  ...news.map((article) => ({
+    type: 'Article',
+    title: article.title,
+    meta: `${article.category} · ${article.publishedAt ?? 'Official update'}`,
+    href: `/news/${article.slug}/`,
+    search: searchText([
+      article.title,
+      article.slug,
+      article.summary,
+      article.category,
+      ...article.confirmedFacts,
+      ...article.sections.flatMap((section) => [section.heading, ...section.paragraphs]),
+    ]),
   })),
   ...guides.map((guide) => ({
     type: 'Guide',
     title: guide.title,
     meta: `${guide.category} · ${guide.difficulty} · ${guide.readingTime}`,
     href: `/beginner-guides/${guide.slug}/`,
-    search: `${guide.title} ${guide.summary} ${guide.category}`.toLowerCase(),
+    search: searchText([
+      guide.title,
+      guide.slug,
+      guide.summary,
+      guide.category,
+      ...guide.sections.flatMap((section) => [section.heading, ...section.paragraphs]),
+    ]),
+  })),
+  ...deckGuides.map((guide) => ({
+    type: 'Deck Guide',
+    title: guide.title,
+    meta: `Deck Guide · ${guide.summary}`,
+    href: `/deck-guides/${guide.slug}/`,
+    search: searchText([guide.title, guide.slug, guide.summary]),
   })),
 ];
 ---
@@ -39,10 +103,17 @@ const searchItems = [
     <h2 id="search-results-title" class="visually-hidden">
       Search results
     </h2>
-    {searchItems.length > 0 ? (
+    {cardSearchItems.length + pageSearchItems.length > 0 ? (
       <>
-        <div class="search-results" id="search-results">
-          {searchItems.map((item) => (
+        <div class="card-grid search-card-results" id="search-card-results">
+          {cardSearchItems.map((item) => (
+            <div class="search-card-result" data-search-item={item.search} hidden>
+              <CardTile card={item.card} href="/cards-list/" showDetails />
+            </div>
+          ))}
+        </div>
+        <div class="search-results" id="search-page-results">
+          {pageSearchItems.map((item) => (
             <a class="search-result" href={item.href} data-search-item={item.search} hidden>
               <span class="result-type">{item.type}</span>
               <span>
@@ -70,7 +141,13 @@ const searchItems = [
 
 <script>
   const rawQuery = new URLSearchParams(window.location.search).get('q')?.trim() ?? '';
-  const query = rawQuery.toLowerCase();
+  const normalize = (value) =>
+    value
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase();
+  const query = normalize(rawQuery);
+  const queryTerms = query.split(/\s+/).filter(Boolean);
   const results = [...document.querySelectorAll('[data-search-item]')];
   const summary = document.querySelector('#search-summary');
   const empty = document.querySelector('#search-empty');
@@ -78,7 +155,13 @@ const searchItems = [
   if (globalInput instanceof HTMLInputElement) globalInput.value = rawQuery;
   let visible = 0;
   results.forEach((result) => {
-    const show = Boolean(query) && (result.getAttribute('data-search-item') ?? '').includes(query);
+    const searchableText = normalize(result.getAttribute('data-search-item') ?? '');
+    const show =
+      queryTerms.length > 0 &&
+      queryTerms.every(
+        (term) =>
+          searchableText.includes(term) || (term.endsWith('s') && searchableText.includes(term.slice(0, -1))),
+      );
     result.toggleAttribute('hidden', !show);
     if (show) visible += 1;
   });

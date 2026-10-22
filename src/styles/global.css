@@ -4143,6 +4143,10 @@ h3 {
   color: var(--text-primary);
   text-decoration: none;
 }
+.search-result[hidden],
+.search-card-result[hidden] {
+  display: none;
+}
 .search-result:hover {
   border-color: var(--border-strong);
   background: var(--surface-elevated);
