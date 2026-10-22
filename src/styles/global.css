@@ -2230,6 +2230,9 @@ h3 {
   filter: blur(3px);
   opacity: 0.86;
 }
+.news-image-focus-top .news-image-background {
+  object-position: center 18%;
+}
 .news-image-overlay-text {
   position: absolute;
   z-index: 1;
@@ -2257,6 +2260,9 @@ h3 {
 .news-copy h3 {
   margin: 0;
   font-size: clamp(1.25rem, 2vw, 2.1rem);
+}
+.news-card .summary {
+  font-size: 0.85rem;
 }
 .news-copy .card-action {
   align-self: end;
@@ -3447,10 +3453,14 @@ h3 {
   width: 70%;
   margin-inline: auto;
 }
+.news-article-shell .product-information-image {
+  width: min(100%, 46rem);
+  margin-inline: auto;
+}
 
 /* Keep News article typography and card collections compact and easy to scan. */
 .news-article-shell .article-header h1 {
-  font-size: clamp(1.8rem, 3.1vw, 2.8rem);
+  font-size: clamp(1.53rem, 2.635vw, 2.38rem);
 }
 .news-article-shell .article-body h2 {
   font-size: clamp(1.35rem, 2.2vw, 1.8rem);
@@ -4026,6 +4036,19 @@ h3 {
 .key-facts li + li {
   margin-top: 0.55rem;
 }
+.key-facts-compact {
+  padding: 1.25rem 1.35rem;
+  font-size: 0.85rem;
+}
+.news-article-shell .key-facts-compact h2 {
+  font-size: 1rem;
+}
+.key-facts-compact ul {
+  padding-left: 1.25rem;
+}
+.key-facts-compact li + li {
+  margin-top: 0.55rem;
+}
 .article-aside {
   position: sticky;
   top: 50%;
@@ -4036,7 +4059,7 @@ h3 {
   border-radius: var(--radius);
   padding: 1.15rem;
   background: var(--surface);
-  transform: translateY(-50%);
+  transform: translate(2rem, -50%);
 }
 .article-aside h2 {
   margin-bottom: 0.75rem;

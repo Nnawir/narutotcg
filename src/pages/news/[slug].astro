@@ -23,7 +23,11 @@ const nextArticle = orderedNews[articleIndex - 1];
 const siteOrigin = Astro.site ?? Astro.url.origin;
 const absoluteUrl = (path: string) => new URL(path, siteOrigin).toString();
 const renderNewsText = (text: string) =>
-  text.replace('[[ROADMAP]]', '<a class="text-link" href="/news/#roadmap">Roadmap</a>');
+  text
+    .replace('[[ROADMAP]]', '<a class="text-link" href="/news/#roadmap">Roadmap</a>')
+    .replace('[[CARDS_LIST]]', '<a class="text-link" href="/cards-list/">Cards List</a>');
+const isZoomableSectionImage = (src: string) =>
+  src.startsWith('/Cards/') || src.includes('/product_information_');
 const structuredData = [
   {
     '@context': 'https://schema.org',
@@ -96,7 +100,13 @@ const structuredData = [
       <div class:list={['article-layout', { 'article-layout-full': article.showContents === false }]}>
         <div class="article-body">
           {article.confirmedFacts.length > 0 && (
-            <aside class="key-facts" aria-labelledby="confirmed-title">
+            <aside
+              class:list={[
+                'key-facts',
+                { 'key-facts-compact': article.slug === 'starter-deck-update-product-information-slides' },
+              ]}
+              aria-labelledby="confirmed-title"
+            >
               <h2 id="confirmed-title">What is confirmed</h2>
               <ul>
                 {article.confirmedFacts.map((fact) => (
@@ -118,11 +128,12 @@ const structuredData = [
                     'article-section-image',
                     {
                       'card-section-image': section.image.src.startsWith('/Cards/'),
+                      'product-information-image': section.image.src.includes('/product_information_'),
                       'cheat-sheet-section-image': section.image.src === '/assets/visuals/cheat_sheet.webp',
                     },
                   ]}
                 >
-                  {section.image.src.startsWith('/Cards/') ? (
+                  {isZoomableSectionImage(section.image.src) ? (
                     <button
                       class="article-section-image-button"
                       type="button"
