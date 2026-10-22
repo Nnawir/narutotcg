@@ -88,6 +88,7 @@ const canonicalUrl = new URL(canonicalPath, Astro.site ?? Astro.url.origin).toSt
   const resetZoom = () => {
     if (zoomControl instanceof HTMLInputElement) zoomControl.value = '1';
     if (lightboxImage instanceof HTMLImageElement) lightboxImage.style.transform = 'scale(1)';
+    lightbox?.classList.remove('lightbox-horizontal');
   };
   const closeLightbox = () => {
     if (lightbox instanceof HTMLDialogElement && lightbox.open) lightbox.close();
@@ -99,6 +100,9 @@ const canonicalUrl = new URL(canonicalPath, Astro.site ?? Astro.url.origin).toSt
     if (!(lightbox instanceof HTMLDialogElement) || !(lightboxImage instanceof HTMLImageElement)) return;
     lightboxImage.src = target.dataset.imageSrc ?? '';
     lightboxImage.alt = target.dataset.imageAlt ?? '';
+    lightboxImage.onload = () => {
+      lightbox?.classList.toggle('lightbox-horizontal', lightboxImage.naturalWidth >= lightboxImage.naturalHeight);
+    };
     resetZoom();
     document.documentElement.classList.add('lightbox-open');
     lightbox.showModal();

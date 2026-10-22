@@ -3225,6 +3225,9 @@ h3 {
   width: min(18rem, 42vw);
   accent-color: var(--accent);
 }
+.card-lightbox.lightbox-horizontal .card-lightbox-zoom-control {
+  display: none;
+}
 .card-lightbox-close {
   position: absolute;
   top: 0.3rem;
@@ -3455,6 +3458,18 @@ h3 {
 }
 .news-article-shell .product-information-image {
   width: min(100%, 46rem);
+  margin-inline: auto;
+}
+.news-article-shell .event-card-section-image {
+  width: min(100%, 12rem);
+  margin-inline: auto;
+}
+.news-article-shell .event-playmat-section-image {
+  width: min(100%, 30rem);
+  margin-inline: auto;
+}
+.news-article-shell .event-sticker-section-image {
+  width: min(100%, 12rem);
   margin-inline: auto;
 }
 
@@ -4019,7 +4034,7 @@ h3 {
 .callout {
   border-left: 3px solid var(--accent);
   border-radius: 0 var(--radius) var(--radius) 0;
-  padding: 1.25rem 1.35rem;
+  padding: 1rem 1.1rem;
   background: var(--surface);
 }
 .key-facts h2,
@@ -4034,10 +4049,10 @@ h3 {
   padding-left: 1.25rem;
 }
 .key-facts li + li {
-  margin-top: 0.55rem;
+  margin-top: 0.4rem;
 }
 .key-facts-compact {
-  padding: 1.25rem 1.35rem;
+  padding: 1rem 1.1rem;
   font-size: 0.85rem;
 }
 .news-article-shell .key-facts-compact h2 {
@@ -4047,7 +4062,13 @@ h3 {
   padding-left: 1.25rem;
 }
 .key-facts-compact li + li {
-  margin-top: 0.55rem;
+  margin-top: 0.4rem;
+}
+
+/* Keep every confirmed-information callout compact, including those inside news articles. */
+.article-body .key-facts h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
 }
 .article-aside {
   position: sticky;

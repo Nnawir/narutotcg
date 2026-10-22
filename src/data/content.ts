@@ -28,6 +28,7 @@ export type NewsArticle = {
     heading: string;
     paragraphs: string[];
     image?: ImageAsset;
+    additionalImages?: ImageAsset[];
     rewards?: Array<{ name: string; description: string; image: ImageAsset }>;
     cardIds?: string[];
     table?: { headers: string[]; rows: string[][] };
@@ -677,58 +678,91 @@ export const news: NewsArticle[] = [
   },
   {
     slug: 'lucca-comics-games-2026-event-information',
-    title: 'Lucca Comics & Games Event Information',
-    summary: 'Bandai announced NARUTO CARD GAME Tutorial Sessions at Lucca Comics & Games in Italy.',
+    title: 'NARUTO CARD GAME Is Coming to Lucca Comics & Games 2026',
+    summary:
+      'Official demo sessions, an exclusive participant gift and limited NARUTO CARD GAME merchandise are heading to Lucca, in Italy.',
     category: 'Events',
-    publishedAt: '2026-09-04',
+    publishedAt: '2026-10-22',
     sourceLabel: 'NARUTO CARD GAME Official Website — Lucca Comics & Games Event Information',
     sourceUrl: 'https://www.naruto-cardgame.com/en/news/lucca-2026.php',
     featured: false,
     image: bandaiEventsImage,
-    confirmedFacts: [
-      'Lucca Comics & Games runs from October 28 to November 1, 2026.',
-      'The event is at Piazza Santa Maria, Lucca, Italy.',
-      'Bandai lists a NARUTO CARD GAME Tutorial Session.',
-    ],
+    imageOverlayText: 'Lucca Comics & Games 2026!',
+    confirmedFacts: [],
     sections: [
       {
-        heading: 'What is happening',
+        heading: 'The shinobi invasion continues',
         paragraphs: [
-          'NARUTO CARD GAME is scheduled to appear at Lucca Comics & Games from October 28 to November 1, 2026. The Bandai announcement names Piazza Santa Maria in Lucca, Italy as the location.',
-          'The event will include free Tutorial Sessions. Entry to Lucca Comics & Games is required to join the activities.',
+          'Get ready, Italy ! NARUTO CARD GAME is heading to Lucca Comics & Games, bringing official demo sessions, an exclusive promotional gift and special merchandise ahead of the worldwide launch in 2027.',
+          'The event takes place from October 28 to November 1, 2026 at Piazza Santa Maria in Lucca, Italy. Festival admission is required for all NARUTO CARD GAME activities.',
         ],
       },
       {
-        heading: 'Tutorial Session',
+        heading: 'How and when to register',
         paragraphs: [
-          'Bandai has not yet announced participation details for the Lucca Tutorial Sessions, and demo decks will not be available to take home.',
-          'A visitor may participate in one Tutorial Session during the event. See Participation Rewards below for the conditions and reward listed for eligible participants.',
+          'Experience the game before its official release through free hands-on tutorial sessions. Registration is handled through BANDAI TCG+ on a first-come, first-served basis, and each person may register for one session only.',
+          'Tutorial sessions are for on-site play only: the demo decks cannot be taken home. Registration opens on October 14, 2026 at 11:00 AM CEST through BANDAI TCG+.',
+        ],
+        links: [
+          { prefix: 'Learn how to play the demo decks in', label: 'Deck Guides', suffix: '.', href: '/deck-guides/' },
         ],
       },
       {
-        heading: 'Participation Rewards',
+        heading: 'Exclusive participant gift',
         paragraphs: [
-          'Eligible Tutorial Session participants who are registered to the NARUTO TCG UPDATES CHANNEL on BANDAI TCG+ and complete the questionnaire after their session may receive one CP-001 Chakra Card. The participation gift is limited to one per person and is not automatically given to every Lucca Comics & Games visitor.',
+          'Eligible participants can receive a CP-001 Chakra Card and an official Logo Sticker after completing the required steps. Participants must be registered to the NARUTO TCG UPDATES CHANNEL on TCG+ and complete the survey after their tutorial session.',
+          'Promotional items are limited to one set per person and are not automatically given to every festival visitor.',
         ],
-        rewards: [
+        image: {
+          src: '/Cards/Chakra cards/CP-001.webp',
+          alt: 'CP-001 Chakra Card participant gift',
+          width: 600,
+          height: 833,
+        },
+        additionalImages: [
           {
-            name: 'CP-001 Chakra Card',
-            description:
-              'The Tutorial Session participation gift, limited to one card per person when the stated conditions are met.',
-            image: {
-              src: '/Cards/Chakra cards/CP-001.webp',
-              alt: 'CP-001 Chakra Card',
-              width: 600,
-              height: 833,
-            },
+            src: '/assets/visuals/Logo sticker Ny CC 26.webp',
+            alt: 'Official NARUTO CARD GAME Logo Sticker',
+            width: 800,
+            height: 800,
           },
         ],
       },
       {
-        heading: 'Merchandise',
+        heading: 'Official playmat',
         paragraphs: [
-          'The official announcement lists the NARUTO CARD GAME Official Playmat as arriving in 2027, with a $35 MSRP plus tax. Bandai says purchase information will be announced later.',
-          'The Playmat is limited to one item per person and is available in limited quantities each day. Bandai notes that event contents may change without notice.',
+          'The official NARUTO CARD GAME playmat will be available for purchase during Lucca Comics & Games 2026 at $35 plus tax. Quantities are limited each day, with a maximum of one playmat per person throughout the event.',
+          'Purchase reservation tickets are released one week before each event day. Reservations for October 28 open on October 21, and reservations for October 29 open on October 22. The same process continues for each remaining event day.',
+          'Each ticket reserves a specific time slot to purchase one playmat on site on the corresponding date. One playmat maximum is allowed per person.',
+        ],
+        image: {
+          src: '/assets/visuals/playmat_lucca.webp',
+          alt: 'Official NARUTO CARD GAME Lucca playmat',
+          width: 1200,
+          height: 675,
+        },
+      },
+      {
+        heading: 'Everything you need to know',
+        paragraphs: [],
+        table: {
+          headers: ['Topic', 'Information'],
+          rows: [
+            ['Dates', 'October 28–November 1, 2026'],
+            ['Location', 'Piazza Santa Maria, Lucca, Italy'],
+            ['Tutorial sessions', 'Free official sessions; registration through BANDAI TCG+; one session per person'],
+            ['Participant gift', 'CP-001 Chakra Card + Logo Sticker for eligible participants'],
+            ['Playmat', '$35 + tax; limited daily quantities; one per person'],
+            ['Admission', 'Lucca Comics & Games festival admission is required'],
+          ],
+        },
+        links: [
+          {
+            prefix: 'Explore the',
+            label: 'Roadmap',
+            suffix: ' to discover upcoming and other NARUTO CARD GAME events.',
+            href: '/news/#roadmap',
+          },
         ],
       },
     ],
