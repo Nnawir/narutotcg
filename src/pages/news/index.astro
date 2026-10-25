@@ -27,7 +27,10 @@ const sortedNews = [...news].sort((a, b) => (b.publishedAt ?? '').localeCompare(
         <p class="eyebrow">Published by Bandai</p>
         <h2 id="official-news-title">Official news</h2>
       </div>
-      <p>Publication dates are distinct from the event dates shown above.</p>
+      <div class="official-news-meta">
+        <p class="news-count">{sortedNews.length} news</p>
+        <p>Publication dates are distinct from the event dates shown above.</p>
+      </div>
     </div>
     <div class="news-grid" id="official-news-grid">
       {sortedNews.map((article) => (
