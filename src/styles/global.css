@@ -3022,12 +3022,28 @@ h3 {
 .mobile-timeline {
   display: none;
 }
-.official-news .section-heading > p {
+.official-news .section-heading > p,
+.official-news-meta {
   max-width: 23rem;
   margin: 0;
   color: var(--text-secondary);
   font-size: 0.9rem;
   line-height: 1.55;
+}
+.official-news-meta {
+  display: grid;
+  gap: 0.35rem;
+  text-align: right;
+}
+.official-news-meta p {
+  margin: 0;
+}
+.official-news-meta .news-count {
+  color: var(--beige);
+  font-size: 0.8rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 .filter-region {
   border-top: 1px solid var(--border);
@@ -3561,6 +3577,10 @@ h3 {
 }
 .article-inline-links {
   margin: 1.5rem 0 2rem;
+}
+.article-inline-links .text-link {
+  display: inline;
+  min-height: 0;
 }
 .article-body li {
   color: #cfcbc5;

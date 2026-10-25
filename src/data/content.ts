@@ -220,6 +220,102 @@ const bandaiEventsImage: ImageAsset = {
 
 export const news: NewsArticle[] = [
   {
+    slug: 'naruto-card-game-first-official-products-revealed',
+    title: 'NARUTO CARD GAME First Official Products Revealed!',
+    summary:
+      'The first official NARUTO CARD GAME products have been revealed, including three Starter Decks and the NT-01 Booster Pack.',
+    category: 'Products',
+    publishedAt: '2026-10-25',
+    sourceLabel: 'NARUTO CARD GAME official product information reveal',
+    sourceUrl: 'https://www.naruto-cardgame.com/en/welcome/',
+    featured: true,
+    image: {
+      src: '/Cards/N01/SAMPLE-22.webp',
+      alt: 'NARUTO CARD GAME official product information artwork',
+      width: 480,
+      height: 670,
+    },
+    imageOverlayText: 'Official Products Revealed!',
+    showContents: true,
+    confirmedFacts: [
+      'The worldwide release is scheduled for June 25, 2027.',
+      'Three Starter Decks are planned: Naruto ST01, Sasuke ST02 and Gaara ST03.',
+      'Each Starter Deck has an MSRP of $16.99.',
+      'The NT-01 Booster Pack has an MSRP of $4.99.',
+    ],
+    sections: [
+      {
+        heading: 'The first official products',
+        paragraphs: [
+          'It is official, Shinobi! The first NARUTO CARD GAME Starter Decks and the NT-01 Booster Pack have been revealed, including their contents, configuration and prices.',
+          'The worldwide release is scheduled for June 25, 2027. The first products will introduce the game with three themed Starter Decks and the Enter Naruto Uzumaki booster set.',
+        ],
+      },
+      {
+        heading: 'Three Starter Decks',
+        paragraphs: [
+          'The first wave of Starter Decks brings three iconic characters to the forefront: Naruto Uzumaki in ST01, Sasuke Uchiha in ST02 and Gaara in ST03. Each deck is listed at an MSRP of $16.99.',
+        ],
+        cardIds: ['SAMPLE-19', 'SAMPLE-20', 'SAMPLE-21'],
+        table: {
+          headers: ['Starter Deck', 'Leader', 'MSRP'],
+          rows: [
+            ['ST01', 'Naruto Uzumaki', '$16.99'],
+            ['ST02', 'Sasuke Uchiha', '$16.99'],
+            ['ST03', 'Gaara', '$16.99'],
+          ],
+        },
+      },
+      {
+        heading: 'What each Starter Deck includes',
+        paragraphs: [
+          'Each Starter Deck includes the core materials needed to begin playing, along with bonus products for the first release.',
+        ],
+        table: {
+          headers: ['Contents', 'Quantity'],
+          rows: [
+            ['Card deck', '50 cards'],
+            ['Chakra Cards', '5'],
+            ['Summon Card', '1'],
+            ['Life Counter', '1'],
+            ['Bonus Pack', '1'],
+            ['NT-01 Booster Pack', '1, English version'],
+          ],
+        },
+      },
+      {
+        heading: 'Booster Pack NT-01 — Enter Naruto Uzumaki',
+        paragraphs: [
+          'The first booster release is titled Enter Naruto Uzumaki (NT-01). Each pack contains 12 cards and is listed at an MSRP of $4.99.',
+          'The configuration is listed as 24 booster packs per display box and 12 display boxes per case. The set will feature characters from Naruto and Naruto Shippuden, multiple rarities, chase cards and exclusive Leader Cards that are not included in the Starter Decks.',
+        ],
+        cardIds: ['SAMPLE-22', 'SAMPLE-23', 'SAMPLE-24', 'SAMPLE-25'],
+        table: {
+          headers: ['Booster detail', 'Information'],
+          rows: [
+            ['Product', 'Enter Naruto Uzumaki (NT-01)'],
+            ['MSRP', '$4.99 per booster pack'],
+            ['Cards per pack', '12'],
+            ['Packs per display box', '24'],
+            ['Display boxes per case', '12'],
+          ],
+        },
+      },
+      {
+        heading: 'Keep exploring',
+        paragraphs: [
+          'Stay informed about future announcements and discover the cards revealed so far as the June 2027 launch approaches.',
+        ],
+        links: [
+          { prefix: 'Follow the latest updates in', label: 'News', suffix: ' and explore the revealed cards in', href: '/news/' },
+          { prefix: '', label: 'Cards List', suffix: '.', href: '/cards-list/' },
+        ],
+      },
+    ],
+    relatedCardIds: [],
+    relatedGuideSlugs: [],
+  },
+  {
     slug: 'starter-deck-update-product-information-slides',
     title: 'Starter Deck Update: Product Details Circulating Online',
     summary:
@@ -400,6 +496,58 @@ export const news: NewsArticle[] = [
           secondHref: '/cards-list/',
           after: '.',
         },
+      },
+    ],
+    relatedCardIds: [],
+    relatedGuideSlugs: [],
+  },
+  {
+    slug: 'chakra-set-not-available-at-bcg-fest-2026-2027',
+    title: 'Chakra Set Not Available at BCG Fest',
+    summary:
+      'Bandai has corrected its previous announcement: the Premium Card Collection Vol.00 — CHAKRA Set will not be sold at the Orlando or London BANDAI CARD GAMES Fest events.',
+    category: 'Official News',
+    publishedAt: '2026-10-25',
+    sourceLabel: 'NARUTO CARD GAME BANDAI CARD GAMES Fest correction update',
+    sourceUrl: 'https://www.naruto-cardgame.com/en/welcome/',
+    featured: false,
+    image: bandaiEventsImage,
+    imageOverlayText: 'CHAKRA Set Update!',
+    confirmedFacts: [
+      'The CHAKRA Set will not be available for purchase at BANDAI CARD GAMES Fest 26–27 in Orlando or London.',
+      'The CHAKRA Set remains listed for Premier Demo Event Waves 1 and 2.',
+      'The Official Playmat Naruto vs. Sasuke remains listed for both BANDAI CARD GAMES Fest events.',
+    ],
+    sections: [
+      {
+        heading: 'A correction to the BCG Fest announcement',
+        paragraphs: [
+          'Bandai has officially corrected its previous announcement regarding the Premium Card Collection Vol.00 — CHAKRA Set. The product will not be available for purchase at BANDAI CARD GAMES Fest 26–27 in Orlando or London.',
+          'This is disappointing news for collectors who were looking forward to getting these exclusive cards at the international Fest events. Additional international purchasing opportunities may be announced later.',
+        ],
+      },
+      {
+        heading: 'What is still available',
+        paragraphs: [
+          'The Premium Card Collection Vol.00 — CHAKRA Set remains listed for purchase during Premier Demo Event Waves 1 and 2. The Official Playmat Naruto vs. Sasuke is still listed for both BANDAI CARD GAMES Fest events.',
+        ],
+      },
+      {
+        heading: 'Premium Card Collection Vol.00 — CHAKRA Set',
+        paragraphs: [
+          'Here is the currently revealed artwork from the CHAKRA Set. The collection includes five Chakra Cards and one Summon Card, but these cards will not be sold at the Orlando or London BCG Fest events.',
+        ],
+        cardIds: ['PCC0-S-001', 'PCC0-C-005', 'PCC0-C-001', 'PCC0-C-002', 'PCC0-C-003', 'PCC0-C-004'],
+      },
+      {
+        heading: 'Stay up to date',
+        paragraphs: [
+          'Keep an eye on future announcements for any new international purchasing opportunities and event updates.',
+        ],
+        links: [
+          { prefix: 'See the latest updates in', label: 'News', suffix: ' and follow upcoming events on the', href: '/news/' },
+          { prefix: '', label: 'Roadmap', suffix: '.', href: '/news/#roadmap' },
+        ],
       },
     ],
     relatedCardIds: [],
@@ -1335,6 +1483,7 @@ export const timelineItems: TimelineItem[] = [
 ];
 const pcc0Cards: Card[] = (
   [
+    ['PCC0-C-001', 'PCC0-C-001.webp', 'CHAKRA', 'Chakra Cards', '/Cards/Chakra cards/'],
     ['PCC0-C-002', 'PCC0-C-002.webp', 'CHAKRA', 'Chakra Cards', '/Cards/Chakra cards/'],
     ['PCC0-C-003', 'PCC0-C-003.webp', 'CHAKRA', 'Chakra Cards', '/Cards/Chakra cards/'],
     ['PCC0-C-004', 'PCC0-C-004.webp', 'CHAKRA', 'Chakra Cards', '/Cards/Chakra cards/'],
