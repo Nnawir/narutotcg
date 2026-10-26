@@ -2285,6 +2285,98 @@ h3 {
   grid-template-columns: minmax(0, 1fr);
   gap: 1rem;
 }
+.latest-news-list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.85rem;
+}
+.latest-news {
+  padding-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+.latest-news + .official-news {
+  padding-top: clamp(2.5rem, 5vw, 4rem);
+}
+.latest-news-card > a {
+  display: block;
+  min-height: 0;
+}
+.static-news-card > .news-card-static-link {
+  display: block;
+  min-height: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text-primary);
+  text-decoration: none;
+}
+.static-news-card > .news-card-static-link::before {
+  position: absolute;
+  top: 0;
+  left: 1rem;
+  width: 2.7rem;
+  height: 3px;
+  border-radius: 0 0 3px 3px;
+  background: linear-gradient(90deg, var(--accent), #f0cf89);
+  content: '';
+  pointer-events: none;
+}
+.static-news-card > .news-card-static-link {
+  cursor: default;
+}
+.static-news-card > .news-card-static-link:hover {
+  border-color: var(--border);
+  background: var(--surface);
+  transform: none;
+}
+.latest-news-card .news-copy {
+  position: relative;
+  display: block;
+  min-height: 0;
+  padding: 1rem 10rem 1rem 1.25rem;
+}
+.latest-news-card .meta-row {
+  margin-bottom: 0.45rem;
+}
+.latest-news-card .summary {
+  display: block;
+  color: var(--text-primary);
+  font-size: 1.09rem;
+  line-height: 1.45;
+}
+.latest-news-card .card-action {
+  position: absolute;
+  top: 50%;
+  right: 1.25rem;
+  display: inline;
+  min-height: 0;
+  margin: 0;
+  transform: translateY(-50%);
+  white-space: nowrap;
+}
+@media (max-width: 45rem) {
+  .latest-news .eyebrow,
+  .official-news .eyebrow {
+    display: none;
+  }
+  .latest-news-card .news-copy {
+    padding: 0.7rem 0.9rem;
+  }
+  .latest-news-card .summary {
+    font-size: 0.88rem;
+    line-height: 1.35;
+  }
+  .latest-news-card .meta-row {
+    margin-bottom: 0.25rem;
+    font-size: 0.76rem;
+  }
+  .latest-news-card .card-action {
+    position: static;
+    display: inline-flex;
+    margin-top: 0.25rem;
+    font-size: 0.82rem;
+    transform: none;
+  }
+}
 .guide-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
