@@ -2,8 +2,26 @@
 import type { NewsArticle } from '../data/content';
 import { formatDate } from '../lib/format';
 
-type Props = { article: NewsArticle; featured?: boolean; showImage?: boolean };
-const { article, featured = false, showImage = true } = Astro.props;
+type Props = {
+  article: NewsArticle;
+  featured?: boolean;
+  showImage?: boolean;
+  compact?: boolean;
+  clickable?: boolean;
+  href?: string;
+  actionHref?: string;
+  actionLabel?: string;
+};
+const {
+  article,
+  featured = false,
+  showImage = true,
+  compact = false,
+  clickable = true,
+  href,
+  actionHref,
+  actionLabel = 'Read article',
+} = Astro.props;
 const cardImage = article.image ?? {
   src: '/assets/visuals/chakra-ink-news.webp',
   alt: 'NARUTO CARD GAME news artwork',
@@ -13,45 +31,57 @@ const cardImage = article.image ?? {
 ---
 
 <article
-  class:list={['news-card', { featured, 'has-image': showImage }]}
+  class:list={['news-card', { featured, 'has-image': showImage, 'latest-news-card': compact, 'static-news-card': !clickable }]}
   data-news-card
   data-category={article.category}
 >
-  <a href={`/news/${article.slug}/`}>
-    {showImage && (
-      <span
-        class:list={[
-          'news-image',
-          {
-            'news-image-overlay': Boolean(article.imageOverlayText),
-            'news-image-focus-top': article.slug === 'starter-deck-update-product-information-slides',
-          },
-        ]}
-        style={`--image-ratio: ${cardImage.width} / ${cardImage.height}`}
-      >
-        <img
-          class:list={{ 'news-image-background': Boolean(article.imageOverlayText) }}
-          src={cardImage.src}
-          alt={article.imageOverlayText ? '' : cardImage.alt}
-          aria-hidden={article.imageOverlayText ? 'true' : undefined}
-          width={cardImage.width}
-          height={cardImage.height}
-          loading={featured ? 'eager' : 'lazy'}
-          decoding="async"
-        />
-        {article.imageOverlayText && <span class="news-image-overlay-text">{article.imageOverlayText}</span>}
+  {clickable ? (
+    <a href={href ?? `/news/${article.slug}/`}>
+      {showImage && (
+        <span
+          class:list={[
+            'news-image',
+            {
+              'news-image-overlay': Boolean(article.imageOverlayText),
+              'news-image-focus-top': article.slug === 'starter-deck-update-product-information-slides',
+            },
+          ]}
+          style={`--image-ratio: ${cardImage.width} / ${cardImage.height}`}
+        >
+          <img
+            class:list={{ 'news-image-background': Boolean(article.imageOverlayText) }}
+            src={cardImage.src}
+            alt={article.imageOverlayText ? '' : cardImage.alt}
+            aria-hidden={article.imageOverlayText ? 'true' : undefined}
+            width={cardImage.width}
+            height={cardImage.height}
+            loading={featured ? 'eager' : 'lazy'}
+            decoding="async"
+          />
+          {article.imageOverlayText && <span class="news-image-overlay-text">{article.imageOverlayText}</span>}
+        </span>
+      )}
+      <span class="news-copy">
+        <span class="meta-row">
+          <span>{article.category}</span>
+          {article.publishedAt && <time datetime={article.publishedAt}>{formatDate(article.publishedAt)}</time>}
+        </span>
+        {!compact && <h3>{article.title}</h3>}
+        <span class="summary">{article.summary}</span>
+        <span class="card-action">{actionLabel} <span aria-hidden="true">→</span></span>
       </span>
-    )}
-    <span class="news-copy">
-      <span class="meta-row">
-        <span>{article.category}</span>
-        {article.publishedAt && <time datetime={article.publishedAt}>{formatDate(article.publishedAt)}</time>}
+    </a>
+  ) : (
+    <div class="news-card-static-link">
+      <span class="news-copy">
+        <span class="meta-row">
+          <span>{article.category}</span>
+          {article.publishedAt && <time datetime={article.publishedAt}>{formatDate(article.publishedAt)}</time>}
+        </span>
+        {!compact && <h3>{article.title}</h3>}
+        <span class="summary">{article.summary}</span>
+        {actionHref && <a class="card-action" href={actionHref}>{actionLabel} <span aria-hidden="true">→</span></a>}
       </span>
-      <h3>{article.title}</h3>
-      <span class="summary">{article.summary}</span>
-      <span class="card-action">
-        Read article <span aria-hidden="true">→</span>
-      </span>
-    </span>
-  </a>
+    </div>
+  )}
 </article>

@@ -2,9 +2,10 @@
 import BaseLayout from '../../components/BaseLayout.astro';
 import NewsCard from '../../components/NewsCard.astro';
 import NewsTimeline from '../../components/NewsTimeline.astro';
-import { news, timelineItems } from '../../data/content';
+import { news, quickUpdates, timelineItems } from '../../data/content';
 
 const sortedNews = [...news].sort((a, b) => (b.publishedAt ?? '').localeCompare(a.publishedAt ?? ''));
+const latestNews = [...quickUpdates, ...sortedNews].slice(0, 4);
 ---
 
 <BaseLayout
@@ -21,11 +22,32 @@ const sortedNews = [...news].sort((a, b) => (b.publishedAt ?? '').localeCompare(
     </p>
   </header>
 
+  <section class="section shell latest-news" aria-labelledby="latest-news-title">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Quick updates</p>
+        <h2 id="latest-news-title">Latest Updates</h2>
+      </div>
+    </div>
+    <div class="latest-news-list">
+      {latestNews.map((article) => (
+        <NewsCard
+          article={article}
+          compact
+          showImage={false}
+          clickable
+          href={quickUpdates.includes(article) ? '/news/#roadmap' : undefined}
+          actionLabel={quickUpdates.includes(article) ? 'Roadmap' : 'Read article'}
+        />
+      ))}
+    </div>
+  </section>
+
   <section class="section shell official-news" aria-labelledby="official-news-title">
     <div class="section-heading">
       <div>
         <p class="eyebrow">Published by Bandai</p>
-        <h2 id="official-news-title">Official news</h2>
+        <h2 id="official-news-title">News Articles</h2>
       </div>
       <div class="official-news-meta">
         <p class="news-count">{sortedNews.length} news</p>

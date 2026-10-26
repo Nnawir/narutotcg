@@ -5,13 +5,14 @@ import EmptyState from '../components/EmptyState.astro';
 import GuideCard from '../components/GuideCard.astro';
 import HeroFloatingCards from '../components/HeroFloatingCards.astro';
 import NewsCard from '../components/NewsCard.astro';
-import { cards, guides, news } from '../data/content';
+import { cards, guides, news, quickUpdates } from '../data/content';
 
 const sortedNews = [...news].sort((a, b) =>
   (b.publishedAt ?? '').localeCompare(a.publishedAt ?? ''),
 );
 const latestPublishedNews = sortedNews[0];
 const latestNews = sortedNews.slice(0, 2);
+const homeQuickUpdates = [...quickUpdates, ...sortedNews].slice(0, 3);
 const featuredCardIds = ['SAMPLE-19', 'SAMPLE-20', 'SAMPLE-21', 'SAMPLE-22'];
 const homeCards = featuredCardIds.flatMap((id) => {
   const card = cards.find((item) => item.id === id);
@@ -66,11 +67,32 @@ const beginnerGuides = [...guides].sort((a, b) => a.order - b.order).slice(0, 2)
     </div>
   </section>
 
+  <section class="section shell latest-news home-quick-updates" aria-labelledby="quick-updates-title">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow home-mobile-hide-eyebrow">Quick updates</p>
+        <h2 id="quick-updates-title">Latest Updates</h2>
+      </div>
+    </div>
+    <div class="latest-news-list">
+      {homeQuickUpdates.map((article) => (
+        <NewsCard
+          article={article}
+          compact
+          showImage={false}
+          clickable
+          href={quickUpdates.includes(article) ? '/news/#roadmap' : undefined}
+          actionLabel={quickUpdates.includes(article) ? 'Roadmap' : 'Read article'}
+        />
+      ))}
+    </div>
+  </section>
+
   <section class="section shell" aria-labelledby="latest-news-title">
     <div class="section-heading">
       <div>
         <p class="eyebrow home-mobile-hide-eyebrow">Verified reporting</p>
-        <h2 id="latest-news-title">Latest News</h2>
+        <h2 id="latest-news-title">Latest Articles News</h2>
         <p>Official announcements and careful context, without rumor or filler.</p>
       </div>
       {news.length > 0 && (

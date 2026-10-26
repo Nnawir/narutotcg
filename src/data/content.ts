@@ -59,6 +59,8 @@ export type TimelineItem = {
   dateLabel: string;
   sourceUrl: string;
   articleSlug?: string;
+  showSource?: boolean;
+  linkable?: boolean;
 };
 
 export type CardPrinting = {
@@ -1246,6 +1248,24 @@ export const news: NewsArticle[] = [
   },
 ];
 
+export const quickUpdates: NewsArticle[] = [
+  {
+    slug: 'dubai-tabletop-me-2026-quick-update',
+    title: 'NARUTO CARD GAME Is Coming to Dubai',
+    summary:
+      'NARUTO CARD GAME is heading to @tabletop.me 2026 in Dubai from November 6–8, 2026, with free official tutorial sessions and on-site registration.',
+    category: 'Events',
+    publishedAt: '2026-10-26',
+    sourceLabel: 'NARUTO CARD GAME quick update',
+    sourceUrl: '/news/#roadmap',
+    featured: false,
+    confirmedFacts: [],
+    sections: [],
+    relatedCardIds: [],
+    relatedGuideSlugs: [],
+  },
+];
+
 export const roadmapArticles: NewsArticle[] = [
   {
     slug: 'tutorial-sessions-roadmap',
@@ -1459,6 +1479,41 @@ export const timelineItems: TimelineItem[] = [
     dateLabel: 'October 28–November 1, 2026',
     sourceUrl: 'https://www.naruto-cardgame.com/en/news/lucca-2026.php',
     articleSlug: 'lucca-comics-games-2026-event-information',
+  },
+  {
+    id: 'tabletop-me-dubai-2026',
+    title: 'NARUTO CARD GAME at @tabletop.me 2026',
+    summary:
+      'Free tutorial sessions at The Concourse Convention Center, Dubai Outlet Mall, Dubai, UAE. On-site registration is planned; festival admission is required.',
+    type: 'Event',
+    date: '2026-11-06',
+    dateLabel: 'November 6–8, 2026',
+    sourceUrl: 'https://www.instagram.com/tabletop.me/',
+    showSource: false,
+    linkable: false,
+  },
+  {
+    id: 'bandai-card-games-fest-orlando-2027',
+    title: 'BANDAI CARD GAMES Fest 26-27 in Orlando',
+    summary:
+      'Orange County Convention Center, Orlando, FL. Pre-registration required; tournament participants only.',
+    type: 'Event',
+    date: '2027-01-07',
+    dateLabel: 'January 7–10, 2027',
+    sourceUrl: 'https://maps.app.goo.gl/x2GkVzAar98j5Zke6',
+    showSource: false,
+    linkable: false,
+  },
+  {
+    id: 'japan-preview-events-2027',
+    title: '11 NARUTO CARD GAME Preview Events Confirmed Across Japan',
+    summary:
+      'Eleven preview events are confirmed across Tokyo, Saitama, Hiroshima, Fukuoka, Osaka, Ehime, Sendai, Kyoto, Aichi and Hokkaido from January through March 2027.',
+    type: 'Event',
+    date: '2027-01-16',
+    dateLabel: 'January–March 2027',
+    sourceUrl: 'https://www.naruto-cardgame.com/en/welcome/',
+    articleSlug: 'official-demo-events-announced-worldwide-premier-demo-event',
   },
   {
     id: 'london-2027',

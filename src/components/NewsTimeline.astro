@@ -42,7 +42,9 @@ const { items } = Astro.props;
             <span class="timeline-type">{item.type}</span>
             <time datetime={item.date}>{item.dateLabel}</time>
             <h3>
-              {item.articleSlug ? (
+              {item.linkable === false ? (
+                item.title
+              ) : item.articleSlug ? (
                 <a href={`/news/${item.articleSlug}/`}>{item.title}</a>
               ) : (
                 <a href={item.sourceUrl} target="_blank" rel="noopener noreferrer">
@@ -52,13 +54,13 @@ const { items } = Astro.props;
               )}
             </h3>
             <p>{item.summary}</p>
-            {item.articleSlug ? (
+            {item.showSource !== false && (item.articleSlug ? (
               <a class="timeline-source" href={`/news/${item.articleSlug}/`}>Read article →</a>
             ) : (
               <a class="timeline-source" href={item.sourceUrl} target="_blank" rel="noopener noreferrer">
                 Official source ↗
               </a>
-            )}
+            ))}
           </div>
         </article>
       ))}
@@ -79,7 +81,9 @@ const { items } = Astro.props;
         <span class="timeline-type">{item.type}</span>
         <time datetime={item.date}>{item.dateLabel}</time>
         <h3>
-          {item.articleSlug ? (
+          {item.linkable === false ? (
+            item.title
+          ) : item.articleSlug ? (
             <a href={`/news/${item.articleSlug}/`}>{item.title}</a>
           ) : (
             <a href={item.sourceUrl} target="_blank" rel="noopener noreferrer">
@@ -88,13 +92,13 @@ const { items } = Astro.props;
           )}
         </h3>
         <p>{item.summary}</p>
-        {item.articleSlug ? (
+        {item.showSource !== false && (item.articleSlug ? (
           <a class="timeline-source" href={`/news/${item.articleSlug}/`}>Read article →</a>
         ) : (
           <a class="timeline-source" href={item.sourceUrl} target="_blank" rel="noopener noreferrer">
             Official source ↗
           </a>
-        )}
+        ))}
       </li>
     ))}
   </ol>
