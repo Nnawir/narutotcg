@@ -18,7 +18,7 @@ const homeCards = featuredCardIds.flatMap((id) => {
   const card = cards.find((item) => item.id === id);
   return card ? [card] : [];
 });
-const beginnerGuides = [...guides].sort((a, b) => a.order - b.order).slice(0, 2);
+const beginnerGuides = [...guides].sort((a, b) => a.order - b.order).slice(0, 3);
 ---
 
 <BaseLayout
@@ -81,8 +81,9 @@ const beginnerGuides = [...guides].sort((a, b) => a.order - b.order).slice(0, 2)
           compact
           showImage={false}
           clickable
-          href={quickUpdates.includes(article) ? '/news/#roadmap' : undefined}
-          actionLabel={quickUpdates.includes(article) ? 'Roadmap' : 'Read article'}
+          href={article.previewImage ? undefined : quickUpdates.includes(article) ? '/news/#roadmap' : undefined}
+          previewImage={article.previewImage}
+          actionLabel={article.previewImage ? 'View card' : quickUpdates.includes(article) ? 'Roadmap' : 'Read article'}
         />
       ))}
     </div>
@@ -110,7 +111,7 @@ const beginnerGuides = [...guides].sort((a, b) => a.order - b.order).slice(0, 2)
           ))}
         </div>
         <div class="news-view-more-wrap">
-          <a class="button secondary" href="/news/">View More</a>
+          <a class="button secondary" href="/news/#official-news-title">View More</a>
         </div>
       </>
     ) : (

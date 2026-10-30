@@ -23,6 +23,7 @@ export type NewsArticle = {
   showStandfirst?: boolean;
   image?: ImageAsset;
   imageOverlayText?: string;
+  previewImage?: ImageAsset;
   confirmedFacts: string[];
   sections: Array<{
     heading: string;
@@ -1250,6 +1251,46 @@ export const news: NewsArticle[] = [
 
 export const quickUpdates: NewsArticle[] = [
   {
+    slug: 'orochimaru-sword-of-kusanagi-card-reveal',
+    title: 'Orochimaru Card Reveal',
+    summary: 'A new NARUTO CARD GAME card featuring Orochimaru and the Sword of Kusanagi has been revealed.',
+    category: 'Card Reveals',
+    publishedAt: '2026-10-30',
+    sourceLabel: 'NARUTO CARD GAME quick update',
+    sourceUrl: '/news/#roadmap',
+    featured: false,
+    previewImage: {
+      src: '/Cards/N01/SAMPLE-1.webp',
+      alt: 'Orochimaru with the Sword of Kusanagi NARUTO CARD GAME card',
+      width: 480,
+      height: 670,
+    },
+    confirmedFacts: [],
+    sections: [],
+    relatedCardIds: [],
+    relatedGuideSlugs: [],
+  },
+  {
+    slug: 'itachi-uchiha-card-reveal',
+    title: 'Itachi Uchiha Card Reveal',
+    summary: 'Another Itachi Uchiha card has been revealed for the NARUTO CARD GAME.',
+    category: 'Card Reveals',
+    publishedAt: '2026-10-30',
+    sourceLabel: 'NARUTO CARD GAME quick update',
+    sourceUrl: '/news/#roadmap',
+    featured: false,
+    previewImage: {
+      src: '/Cards/N01/SAMPLE-6.webp',
+      alt: 'Itachi Uchiha NARUTO CARD GAME card',
+      width: 480,
+      height: 670,
+    },
+    confirmedFacts: [],
+    sections: [],
+    relatedCardIds: [],
+    relatedGuideSlugs: [],
+  },
+  {
     slug: 'dubai-tabletop-me-2026-quick-update',
     title: 'NARUTO CARD GAME Is Coming to Dubai',
     summary:
@@ -1835,8 +1876,82 @@ export const guides: Guide[] = [
       },
     ],
     relatedCardIds: [],
-    relatedGuideSlugs: ['glossary-key-terms'],
+    relatedGuideSlugs: ['how-to-play-support-cards', 'glossary-key-terms'],
     order: 1,
+  },
+  {
+    slug: 'how-to-play-support-cards',
+    title: 'How to Play Support Cards : Timing & Effects',
+    summary: 'Learn when Support cards can be activated and how their timing windows shape the game.',
+    category: 'Rules',
+    difficulty: 'Beginner',
+    readingTime: '4 min read',
+    verifiedAt: '2026-10-30',
+    image: {
+      src: '/assets/visuals/support-cards-guide.png',
+      alt: 'Support Activated badge centered on a dark vermilion background',
+      width: 1664,
+      height: 936,
+    },
+    sections: [
+      {
+        id: 'deploy-support-cards',
+        heading: 'How to deploy Support cards',
+        paragraphs: [
+          'Support cards are deployed onto the field as Characters, then set face-down in the Support area.',
+          'Once a Support card is set, its effect can be activated with Chakra during the Main phase, as long as the printed timing condition is met.',
+          'Each effect has a cost that must be paid by flipping the required number of Chakra cards face-down.',
+          'The next sections present selected cards from the game to explore the depth of the Support card mechanic.',
+        ],
+      },
+      {
+        id: 'quick-support-timing',
+        heading: 'Quick and Support timing',
+        paragraphs: [
+          'Does [[QUICK]] mean you can play a Support anytime ? Not quite !',
+          'Welcome to this first Support card breakdown. We’ll examine cards, effects, and rules one step at a time, starting with the basics and working our way up to interactions and combos.',
+          'Choji and Shikamaru are both Support cards, but their effects have different timing windows. Compare the two cards below to see when each one can be played.',
+        ],
+        cards: [
+          {
+            text: 'Choji Akimichi : Quick gives this Support a broad activation window, as long as its timing and Chakra cost are valid.',
+            image: { src: '/Cards/N01/N01-002.webp', alt: 'Choji Akimichi N01-002 Support card' },
+          },
+          {
+            text: 'Shikamaru Nara : This Support responds specifically during your opponent’s attack and can interrupt that attack.',
+            image: { src: '/Cards/N01/N01-008.webp', alt: 'Shikamaru Nara N01-008 Support card' },
+          },
+        ],
+      },
+      {
+        id: 'kakashi-support-response',
+        heading: 'Kakashi and Support Activated',
+        paragraphs: [
+          'Can Kakashi stop any move ? Not quite !',
+          'This example focuses on Kakashi Hatake and Lightning Blade.',
+          'Set Kakashi face-down before your opponent’s turn, then activate him in response to your opponent playing a Support to negate it. The cost is 1 Chakra and 2 Life.',
+          'Use the card below to see exactly when Lightning Blade can be used and when it cannot. Would you save Kakashi for a game-changing Support ?',
+        ],
+        cards: [
+          {
+            text: 'Kakashi Hatake : Lightning Blade negates a Support after it is activated, but only from the correct response window and at a cost of 1 Chakra and 2 Life.',
+            image: { src: '/Cards/N01/N01-009.webp', alt: 'Kakashi Hatake N01-009 Support card' },
+          },
+        ],
+      },
+      {
+        id: 'support-card-takeaways',
+        heading: 'Reading Support card timing',
+        paragraphs: [
+          'Support cards are defined by their timing windows. Read the printed condition first, then check whether the current turn, attack, or effect gives you permission to activate the card.',
+          'Quick is flexible, but it is not unlimited. A response keyword such as During Your Opponent’s Attack or Support Activated is narrower and must be saved for the matching moment.',
+        ],
+      },
+    ],
+    officialResources: [],
+    relatedCardIds: [],
+    relatedGuideSlugs: ['complete-naruto-card-game-rules', 'glossary-key-terms'],
+    order: 2,
   },
   {
     slug: 'glossary-key-terms',
@@ -2061,7 +2176,7 @@ export const guides: Guide[] = [
     ],
     officialResources: [],
     relatedCardIds: [],
-    relatedGuideSlugs: ['complete-naruto-card-game-rules'],
+    relatedGuideSlugs: ['complete-naruto-card-game-rules', 'how-to-play-support-cards'],
     order: 3,
   },
 ];
