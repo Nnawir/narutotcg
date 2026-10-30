@@ -2112,6 +2112,7 @@ h3 {
   min-width: 0;
 }
 .news-card > a,
+.news-card > .news-card-preview-link,
 .guide-card > a,
 .card-tile > .card-tile-trigger {
   height: 100%;
@@ -2126,6 +2127,7 @@ h3 {
     transform 160ms ease;
 }
 .news-card > a,
+.news-card > .news-card-preview-link,
 .guide-card > a,
 .card-tile > .card-tile-trigger,
 .learning-step,
@@ -2152,6 +2154,7 @@ h3 {
     0 1rem 2.25rem rgb(0 0 0 / 0.14);
 }
 .news-card > a::before,
+.news-card > .news-card-preview-link::before,
 .guide-card > a::before,
 .card-tile > .card-tile-trigger::before,
 .learning-step::before,
@@ -2180,6 +2183,7 @@ h3 {
   pointer-events: none;
 }
 .news-card > a:hover,
+.news-card > .news-card-preview-link:hover,
 .guide-card > a:hover,
 .card-tile > .card-tile-trigger:hover {
   border-color: var(--border-strong);
@@ -2193,6 +2197,7 @@ h3 {
   transform: translateY(-6px);
 }
 .news-card > a:focus-visible,
+.news-card > .news-card-preview-link:focus-visible,
 .guide-card > a:focus-visible,
 .card-tile > .card-tile-trigger:focus-visible {
   outline-offset: 4px;
@@ -2203,6 +2208,15 @@ h3 {
   grid-template-columns: clamp(14rem, 19vw, 20rem) minmax(0, 1fr);
   min-height: clamp(14rem, 19vw, 20rem);
   overflow: hidden;
+}
+.news-card > .news-card-preview-link {
+  display: block;
+  width: 100%;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: zoom-in;
 }
 .news-image {
   position: relative;
@@ -2300,6 +2314,9 @@ h3 {
   display: block;
   min-height: 0;
 }
+.latest-news-card > .news-card-preview-link {
+  min-height: 0;
+}
 .static-news-card > .news-card-static-link {
   display: block;
   min-height: 0;
@@ -2384,6 +2401,7 @@ h3 {
 }
 .home-guide-grid {
   width: 80%;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-inline: auto;
 }
 .news-load-more-wrap {
@@ -3715,6 +3733,14 @@ h3 {
   left: -0.23em;
   width: 6.92em;
 }
+.inline-keyword-quick {
+  width: 2.45em;
+}
+.inline-keyword-quick img {
+  top: -0.08em;
+  left: -0.08em;
+  width: 2.61em;
+}
 .article-body ol,
 .article-body ul {
   margin: 1rem 0 1.5rem;
@@ -4097,7 +4123,8 @@ h3 {
   max-width: none;
 }
 .beginner-guides-section .guide-grid {
-  max-width: 60rem;
+  max-width: 64rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 .beginner-guides-next-step {
   max-width: 56rem;
@@ -4228,6 +4255,10 @@ h3 {
 }
 .related-section h2 {
   font-size: 1.5rem;
+}
+.guide-related-grid {
+  max-width: 64rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .card-detail-grid {
@@ -4380,6 +4411,15 @@ h3 {
   .deck-guide-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+  .home-guide-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .beginner-guides-section .guide-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .guide-related-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
   .article-layout {
     grid-template-columns: 1fr;
   }
@@ -4507,6 +4547,12 @@ h3 {
   .news-home-grid,
   .guide-grid,
   .deck-guide-grid {
+    grid-template-columns: 1fr;
+  }
+  .beginner-guides-section .guide-grid {
+    grid-template-columns: 1fr;
+  }
+  .guide-related-grid {
     grid-template-columns: 1fr;
   }
   .home-guide-grid {

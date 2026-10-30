@@ -26,6 +26,9 @@ const renderGuideText = (text: string) =>
   ).replace(
     '[[DURING_ATTACK]]',
     '<span class="inline-keyword inline-keyword-during-attack"><img src="/assets/keywords/during-your-opponent\'s-attack.webp" alt="During Your Opponent\'s Attack" /></span>',
+  ).replace(
+    '[[QUICK]]',
+    '<span class="inline-keyword inline-keyword-quick"><img src="/assets/keywords/quick.webp" alt="Quick" /></span>',
   );
 const structuredData = [
   {
@@ -340,9 +343,12 @@ const structuredData = [
         </section>
       )}
       {relatedGuides.length > 0 && (
-        <section class="related-section" aria-labelledby="more-guides-title">
+        <section
+          class:list={['related-section', guide.slug === 'how-to-play-support-cards' && 'support-guide-related']}
+          aria-labelledby="more-guides-title"
+        >
           <h2 id="more-guides-title">Continue learning</h2>
-          <div class="guide-grid">
+          <div class="guide-grid guide-related-grid">
             {relatedGuides.map((item) => (
               <GuideCard guide={item} />
             ))}

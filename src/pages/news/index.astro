@@ -37,7 +37,8 @@ const latestNews = [...quickUpdates, ...sortedNews].slice(0, 4);
           showImage={false}
           clickable
           href={quickUpdates.includes(article) ? '/news/#roadmap' : undefined}
-          actionLabel={quickUpdates.includes(article) ? 'Roadmap' : 'Read article'}
+          previewImage={article.previewImage}
+          actionLabel={article.previewImage ? 'View card' : quickUpdates.includes(article) ? 'Roadmap' : 'Read article'}
         />
       ))}
     </div>

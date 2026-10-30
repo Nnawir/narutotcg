@@ -9,6 +9,7 @@ type Props = {
   compact?: boolean;
   clickable?: boolean;
   href?: string;
+  previewImage?: NewsArticle['image'];
   actionHref?: string;
   actionLabel?: string;
 };
@@ -19,6 +20,7 @@ const {
   compact = false,
   clickable = true,
   href,
+  previewImage,
   actionHref,
   actionLabel = 'Read article',
 } = Astro.props;
@@ -36,6 +38,26 @@ const cardImage = article.image ?? {
   data-category={article.category}
 >
   {clickable ? (
+    previewImage ? (
+      <button
+        class="news-card-preview-link"
+        type="button"
+        data-card-preview
+        data-image-src={previewImage.src}
+        data-image-alt={previewImage.alt}
+        aria-label={`View ${article.title}`}
+      >
+        <span class="news-copy">
+          <span class="meta-row">
+            <span>{article.category}</span>
+            {article.publishedAt && <time datetime={article.publishedAt}>{formatDate(article.publishedAt)}</time>}
+          </span>
+          {!compact && <h3>{article.title}</h3>}
+          <span class="summary">{article.summary}</span>
+          <span class="card-action">{actionLabel} <span aria-hidden="true">→</span></span>
+        </span>
+      </button>
+    ) : (
     <a href={href ?? `/news/${article.slug}/`}>
       {showImage && (
         <span
@@ -71,6 +93,7 @@ const cardImage = article.image ?? {
         <span class="card-action">{actionLabel} <span aria-hidden="true">→</span></span>
       </span>
     </a>
+    )
   ) : (
     <div class="news-card-static-link">
       <span class="news-copy">
