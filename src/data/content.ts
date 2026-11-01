@@ -1940,6 +1940,22 @@ export const guides: Guide[] = [
         ],
       },
       {
+        id: 'shisui-support-negate',
+        heading: 'Shisui and the lasting cost of a negate',
+        paragraphs: [
+          'Shisui’s Koto Amatsukami is another Support Activated effect : it responds when your opponent activates a Support.',
+          'Pay 1 Chakra to negate that activated Support.',
+          'Afterward, from this turn until the end of your next turn’s End Phase, you cannot turn your Chakra face-up.',
+          'Unlike Kakashi, this restriction lasts beyond the immediate response. It does not stop you from activating other Supports, but the Chakra you spend remains unavailable, so plan your resources carefully.',
+        ],
+        cards: [
+          {
+            text: 'Shisui Uchiha : Koto Amatsukami negates an activated Support, then prevents you from turning Chakra face-up until the end of your next turn’s End Phase.',
+            image: { src: '/Cards/N01/N01-016.webp', alt: 'Shisui Uchiha N01-016 Support card' },
+          },
+        ],
+      },
+      {
         id: 'support-card-takeaways',
         heading: 'Reading Support card timing',
         paragraphs: [
